@@ -12,8 +12,11 @@ namespace DO;
 public record Engineer
 (
     int Id,
-    string Name,
-    publicEngineerExperience Level,
+    string? Name=null,
+    EngineerExperience? Level=null,
     string? Email = null,
     double? Cost = null
-);
+)
+{
+ public Engineer() : this(0) { }
+}

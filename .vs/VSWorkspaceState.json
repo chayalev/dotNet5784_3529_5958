@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\DalFacade",
-    "\\DalFacade\\DO"
+    "\\DalList",
+    "\\DalTest",
+    "\\Stage0"
   ],
-  "SelectedNode": "\\DalFacade\\DO\\Engineer.cs",
+  "SelectedNode": "\\Stage0\\Program3529.cs",
   "PreviewInSolutionExplorer": false
 }

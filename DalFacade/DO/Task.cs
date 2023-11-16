@@ -23,7 +23,7 @@ namespace DO;
 public record Task
 (
   int Id,
-  string Description,
+  string? Description=null,
   TimeSpan? RequiredEffortTime=null,
   string? Alias = null,
   bool IsMilestone=false,
@@ -35,10 +35,9 @@ public record Task
   string? Deliverables = null,
   string? Remarks = null,
   int? EngineerId = null,
-  int? CopmlexityLevel = null
+  EngineerExperience? CopmlexityLevel = null
 )
 {
-    public Task() : this(0,"") { }
-    
+    public Task() : this(0) { }
 }
 
