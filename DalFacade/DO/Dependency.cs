@@ -4,8 +4,8 @@ namespace DO;
 ///  Dependency Entity represents a dependence with all its props
 /// </summary>
 /// <param name="Id">unique ID (created automatically)</param>
-/// <param name="DependentTask"></param>
-/// <param name="DependsOnTask"></param>
+/// <param name="DependentTask">ID number of pending task</param>
+/// <param name="DependsOnTask">Previous assignment ID number</param>
 public record Dependency
 (
     int Id,

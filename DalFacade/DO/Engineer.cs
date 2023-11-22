@@ -4,11 +4,11 @@ namespace DO;
 /// <summary>
 /// Engineer Entity represents an engineer with all its props
 /// </summary>
-/// <param name="Id"></param>
-/// <param name="Name"></param>
-/// <param name="Level"></param>
-/// <param name="Email"></param>
-/// <param name="Cost"></param>
+/// <param name="Id">The ID of the engineer</param>
+/// <param name="Name">Full name of engineer</param>
+/// <param name="Level">The level of the engineer work</param>
+/// <param name="Email">The email of the engineer</param>
+/// <param name="Cost">cost per hour</param>
 public record Engineer
 (
     int Id,

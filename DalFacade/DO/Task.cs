@@ -5,19 +5,19 @@ namespace DO;
 /// Task Entity represents a task with all its props
 /// </summary>
 /// <param name="Id"> unique ID (created automatically)</param>
-/// <param name="Description"></param>
-/// <param name="RequiredEffortTime"></param>
-/// <param name="Alias"></param>
-/// <param name="IsMilestone"></param>
-/// <param name="CreatedAtDate"></param>
-/// <param name="StartDate"></param>
-/// <param name="ScheduledDate"></param>
-/// <param name="DeadlineDate"></param>
-/// <param name="CompleteDate"></param>
-/// <param name="Deliverables"></param>
-/// <param name="Remarks"></param>
-/// <param name="EngineerId"></param>
-/// <param name="CopmlexityLevel"></param>
+/// <param name="Description">Description of the task</param>
+/// <param name="RequiredEffortTime">The amount of time required to perform the task</param>
+/// <param name="Alias">Alias of the task</param>
+/// <param name="IsMilestone">Milestone</param>
+/// <param name="CreatedAtDate">Task creation date</param>
+/// <param name="StartDate">Planned date for work to begin</param>
+/// <param name="ScheduledDate">Date of commencement of work on the assignment</param>
+/// <param name="DeadlineDate">Possible final end date</param>
+/// <param name="CompleteDate">Actual end date</param>
+/// <param name="Deliverables">Deliverables</param>
+/// <param name="Remarks">Remarks</param>
+/// <param name="EngineerId">The engineer ID assigned to the task</param>
+/// <param name="CopmlexityLevel">The difficulty level of the task</param>
 
 
 public record Task
@@ -26,7 +26,7 @@ public record Task
   string? Description=null,
   TimeSpan? RequiredEffortTime=null,
   string? Alias = null,
-  bool IsMilestone=false,
+  bool? IsMilestone=false,
   DateTime? CreatedAtDate=null,
   DateTime? StartDate=null,
   DateTime? ScheduledDate=null,
@@ -39,12 +39,12 @@ public record Task
 )
 {
     public Task() : this(0) { }
-    //public Task(int Id, string? Description, TimeSpan? RequiredEffortTime, string Alias, bool IsMilestone, DateTime? CreatedAtDate, DateTime? StartDate, DateTime? ScheduledDate, DateTime? DeadlineDate, DateTime? CompleteDatestring, string? Deliverables, string? Remarks, int? EngineerId, EngineerExperience? CopmlexityLevel)
+  //  public Task(int Id, string? Description, TimeSpan? RequiredEffortTime, string Alias, bool IsMilestone, DateTime? CreatedAtDate, DateTime? StartDate, DateTime? ScheduledDate, DateTime? DeadlineDate, DateTime? CompleteDatestring, string? Deliverables, string? Remarks, int? EngineerId, EngineerExperience? CopmlexityLevel):this(Id,Description,)
     //{
-    //    this.Id = Id;   
+    //    this.Id = Id;
     //    this.Description = Description;
     //    this.RequiredEffortTime = RequiredEffortTime;
-    //    this.Alias = Alias; 
+    //    this.Alias = Alias;
     //    this.IsMilestone = IsMilestone;
     //    this.CreatedAtDate = CreatedAtDate;
     //    this.StartDate = StartDate;
@@ -53,7 +53,7 @@ public record Task
     //    this.Deliverables = Deliverables;
     //    this.Remarks = Remarks;
     //    this.EngineerId = EngineerId;
-    //    this.CopmlexityLevel= CopmlexityLevel;
-    //}
+    //    this.CopmlexityLevel = CopmlexityLevel;
+   // }
 }
 
