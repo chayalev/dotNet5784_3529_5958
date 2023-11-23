@@ -10,6 +10,7 @@ public class DependencyImplementation : IDependency
     {
         int newID = DataSource.Config.NextDependencyId;
         Dependency newDependency = item with { Id=newID};
+        DataSource.Dependencies.Add(newDependency);
         return newID;
     }
 

@@ -1,0 +1,16 @@
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\bin\DalTest.exe
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\bin\DalTest.deps.json
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\bin\DalTest.runtimeconfig.json
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\bin\DalTest.dll
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\bin\DalTest.pdb
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.csproj.AssemblyReference.cache
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.AssemblyInfoInputs.cache
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.AssemblyInfo.cs
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.csproj.CoreCompileInputs.cache
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.csproj.CopyComplete
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.dll
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\refint\DalTest.dll
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.pdb
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\DalTest.genruntimeconfig.cache
+C:\Users\1\Source\Repos\AvitalStober\dotNet5784_3529_5958\DalTest\obj\Debug\ref\DalTest.dll
