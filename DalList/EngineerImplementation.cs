@@ -17,6 +17,8 @@ public class EngineerImplementation : IEngineer
     {
         if (!DataSource.Engineers.Any(Engineer => Engineer.Id == id))
             throw new Exception("An object of type Engineer with such an ID already exists");
+        if (DataSource.Tasks.Any(Task => Task.EngineerId == id))
+            throw new Exception("Can not delete Engineer in the middle of task");
         DataSource.Engineers.RemoveAll(Engineer => Engineer.Id == id);
     }
 
@@ -37,5 +39,9 @@ public class EngineerImplementation : IEngineer
             throw new Exception("An object of type Engineer with such an ID already exists");
         DataSource.Engineers.RemoveAll(Engineer => Engineer.Id == item.Id);
         DataSource.Engineers.Add(item);
+    }
+    public void Reset()
+    {
+        DataSource.Engineers.Clear();
     }
 }

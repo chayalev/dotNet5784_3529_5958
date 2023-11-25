@@ -38,4 +38,9 @@ public class DependencyImplementation : IDependency
         DataSource.Dependencies.RemoveAll(Dependency => Dependency.Id == item.Id);
         DataSource.Dependencies.Add(item);
     }
+
+    public void Reset()
+    {
+        DataSource.Dependencies.Clear();
+    } 
 }
