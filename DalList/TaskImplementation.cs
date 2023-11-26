@@ -11,6 +11,7 @@ public class TaskImplementation : ITask
             throw new Exception("An object of type Task with such an ID already exists");
         int newID = DataSource.Config.NextTaskId;
         Task newTask = item with { Id = newID };
+        DataSource.Tasks.Add(newTask);
         return newID;
     }
 
