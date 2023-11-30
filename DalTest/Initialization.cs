@@ -1,18 +1,20 @@
 ﻿
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection;
+
 namespace DalTest;
 
 using Dal;
 using DalApi;
 using DO;
-using System.Data.Common;
-using System.Security.Cryptography;
-using System.Xml.Linq;
+using System.Runtime.Intrinsics.Arm;
 
 public static class Initialization
 {
-    private static IDependency? s_dalDependency;
-    private static IEngineer? s_dalEngineer;
-    private static ITask? s_dalTask;
+    private static IDependency? s_dalDependency = new DependencyImplementation();
+    private static IEngineer? s_dalEngineer = new EngineerImplementation();
+    private static ITask? s_dalTask = new TaskImplementation();
 
     //Random number
     private static readonly Random s_rand = new();
@@ -20,38 +22,42 @@ public static class Initialization
     private static void createDependency()
     {
         int? _dependentTask = null, _dependsOnTask = null;
+        //counter to the random task
+        int countTasks = s_dalTask?.ReadAll().Count() ?? 1;
         for (int i = 0; i < 40; i++)
         {
-            _dependentTask = s_rand.Next(1, s_dalTask!.ReadAll().Count);
+            //Generates a random number from the id of all lists
+            _dependentTask = s_dalTask?.ReadAll()[s_rand.Next(1, countTasks)].Id;
             do
-                _dependsOnTask = s_rand.Next(1, s_dalTask!.ReadAll().Count);
-            while (_dependentTask != _dependsOnTask);
-
+                _dependsOnTask = s_dalTask?.ReadAll()[s_rand.Next(1, countTasks)].Id;
+            while (_dependentTask == _dependsOnTask && (s_dalDependency?.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
+            //create 3 dependencies with same depended Task
             if (i == 15)
             {
                 for (int j = 15; j < 18; j++)
                 {
                     Dependency newDependency1 = new(0, 12, j);
-                    s_dalDependency!.Create(newDependency1);
+                    s_dalDependency?.Create(newDependency1);
                 }
                 for (int j = 15; j < 18; j++)
                 {
                     Dependency newDependency1 = new(0, 13, j);
-                    s_dalDependency!.Create(newDependency1);
+                    s_dalDependency?.Create(newDependency1);
                 }
             }
+            //create the new task
+            Dependency newDependency = new(0, _dependentTask, _dependsOnTask);
+            s_dalDependency?.Create(newDependency);
         }
-        Dependency newDependency = new(0, _dependentTask, _dependsOnTask);
-        s_dalDependency!.Create(newDependency);
     }
     private static void createEngineer()
     {
+        //array for all the names
         string[] engineerNames =
     {
         "Dani Levi", "Eli Amar", "Yair Cohen",
         "Ariela Levin", "Dina Klein", "Shira Israelof"
     };
-
 
         foreach (var _name in engineerNames)
         {
@@ -59,7 +65,7 @@ public static class Initialization
             //random id and check that nobody use it before
             do
                 _id = s_rand.Next(200000000, 400000000);
-            while (s_dalEngineer!.Read(_id) != null);
+            while (s_dalEngineer?.Read(_id) != null);
 
             string _email = _name.Split(' ')[0] + "@gmail.com";
 
@@ -67,11 +73,10 @@ public static class Initialization
 
             double _cost = s_rand.NextDouble() * (500.0 - 100.0) + 100;
 
-
-
+            //create the engineer
             Engineer newEngineer = new(_id, _name, _level, _email, _cost);
 
-            s_dalEngineer!.Create(newEngineer);
+            s_dalEngineer?.Create(newEngineer);
         }
 
     }
@@ -86,41 +91,35 @@ public static class Initialization
     };
         string[] deliverables =
     {
-        "wert", "sdfgh", "sdfg", "fgh", "xcdfv", "cxv",
-        "sxdcfg", "dcfg", "dfgh", "xcvb", "fghj", "asdf", "erty",
-        "dfgh", "dfgh", "sdfg", "sdfg", "dsfg", "rty", "fdgh",
-        "fgh", "dfg", "tghyuj", "fghj"
+        "Algorithmic data compression", "Secure authentication design", "Scalable cloud solution", "Real-time computer vision", "Fraud detection model", "Efficient database management",
+        "High-performance web app", "Natural language processing", "Blockchain application", "Mobile task management", "Distributed computing", "Augmented reality education", "IoT cybersecurity",
+        "Responsive e-commerce", "Personalized content recommendation", "Speech recognition", "Social media analytics", "Software-defined networking", "Software-defined networking", "Virtual reality gaming",
+            "fgh", "dfg", "tghyuj", "fghj"
     };
-        string[] remarks =
-  {
-        "wert", "sdfgh", "sdfg", "fgh", "xcdfv", "cxv",
-        "sxdcfg", "dcfg", "dfgh", "xcvb", "fghj", "asdf", "erty",
-        "dfgh", "dfgh", "sdfg", "sdfg", "dsfg", "rty", "fdgh",
-        "fgh", "dfg", "tghyuj", "fghj"
-    };
+       
         foreach (var _alias in taskAliases)
         {
             string? _description = _alias + "DESCRIPTION";
 
             bool? _stone = false;
 
+            //start date 
             DateTime start = new DateTime(2000, 1, 1);
             int range = (DateTime.Today - start).Days;
-            DateTime _makeTask = start.AddDays(s_rand.Next(range));
+            DateTime _startTask = start.AddDays(s_rand.Next(range));
 
-            string? _deliverable = deliverables[s_rand.Next(deliverables.Length)];
-
-            string? _remarks = remarks[s_rand.Next(remarks.Length)];
+            //last date
+            DateTime _completeDate = _startTask.AddDays(s_rand.Next(range));
+          
+            string? _deliverable = deliverables[_alias.IndexOf(_alias)];
 
             EngineerExperience _level = (EngineerExperience)s_rand.Next(0, 5);
-            //DateTime _createTask = new DateTime(2000,1,1);
-            //TimeSpan _range = (s_rand.Next(10, 100));
-            //DateTime _startPlanning = new DateTime(s_rand.Next(2024, 2030), s_rand.Next(1, 13), s_rand.Next(1, 31));
+           
+            //create the task
+            Task newTask = new(0, Description: _description, Alias: _alias, IsMilestone: _stone, StartDate: _startTask,
+                Deliverables: _deliverable, CopmlexityLevel: _level);
 
-            Task newTask = new(0, Description: _description, Alias: _alias, IsMilestone: _stone, CreatedAtDate: _makeTask,
-                Deliverables: _deliverable, Remarks: _remarks, CopmlexityLevel: _level);
-
-            s_dalTask!.Create(newTask);
+           s_dalTask?.Create(newTask);
         }
     }
 
@@ -130,12 +129,13 @@ public static class Initialization
         IEngineer? dalEngineer = null;
         ITask? dalTask = null;
 
-        createDependency();
+        //creates the entity lists
         createEngineer();
         createTask();
+        createDependency();
 
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        dalDependency= s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        dalEngineer = s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        dalTask = s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
     }
 }
