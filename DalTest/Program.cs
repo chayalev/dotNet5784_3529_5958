@@ -23,20 +23,39 @@ namespace DalTest
               "To exit press 1\n"
               );
         }
+      
+        private static string? StringParse(string? _lastSt)
+        {
+            string st =Console.ReadLine()??"";
+            if (string.IsNullOrEmpty(st))
+            { 
+                return _lastSt;
+            }
+            else
+            {
+                return st;
+            }
 
+        }
         //function to create the engineer
         private static Engineer CreateEngineer(int id)
         {
+            Engineer? _engineer=new Engineer();
+            int _result;
+            double _resultD;
             Console.WriteLine("Press the values: ");
             Console.WriteLine("id,name,level,email,cost");
+            if (id != 0)
+                _engineer = s_dalEngineer?.Read(id);
             //Get the valeus of engineer
             Engineer newEngineer = new Engineer()
             {
-                Id = int.Parse(Console.ReadLine()??""),
-                Name = Console.ReadLine(),
-                Level = (EngineerExperience)int.Parse(Console.ReadLine() ?? ""),
-                Email = Console.ReadLine() ?? "",
-                Cost = double.Parse(Console.ReadLine() ?? "0")
+                Id = int.TryParse(Console.ReadLine(), out  _result)?_result: _engineer!.Id,
+                //Name = StringParse()==null?_engineer?.Name: StringParse(),
+                Name = StringParse(_engineer?.Name),
+                Level = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out  _result) ? _result : (int?)_engineer?.Level),
+                Email = StringParse(_engineer?.Email),
+                Cost = double.TryParse(Console.ReadLine(), out  _resultD) ? _resultD : _engineer?.Cost
             };
             //return the values to create the entity
             return newEngineer;
@@ -45,24 +64,32 @@ namespace DalTest
         //function to create the task
         private static DO.Task CreateTask(int id)
         {
+            DO.Task? _task = new DO.Task();
+            int _result;
+            bool _resultB;
+            DateTime _resultD;
+            //if the user want to update the details
+            if (id != 0)
+                _task = s_dalTask?.Read(id);
             Console.WriteLine("Press the values: ");
-            Console.WriteLine("Description,Alias,IsMilestone,CreatedAtDate,StartDate,ScheduledDate,DeadlineDate,CompleteDate,Deliverables,Remarks,CopmlexityLevel,EngineerId");
+            Console.WriteLine("Description,Alias,IsMilestone,CreatedAtDate,RequiredEffortTime,StartDate,ScheduledDate,DeadlineDate,CompleteDate,Deliverables,Remarks,CopmlexityLevel,EngineerId");
             //Get the valeus of task
             DO.Task newTask = new DO.Task()
             {
                 Id=id,
-                Description = Console.ReadLine() ?? "",
-                Alias = Console.ReadLine() ?? "",
-                IsMilestone = bool.Parse(Console.ReadLine() ?? "false"),
-                CreatedAtDate = DateTime.Parse(Console.ReadLine() ?? ""),
-                StartDate = DateTime.Parse(Console.ReadLine() ?? ""),
-                ScheduledDate = DateTime.Parse(Console.ReadLine() ?? ""),
-                DeadlineDate = DateTime.Parse(Console.ReadLine() ?? ""),
-                CompleteDate = DateTime.Parse(Console.ReadLine() ?? ""),
-                Deliverables = Console.ReadLine(),
-                Remarks = Console.ReadLine(),
-                CopmlexityLevel = (EngineerExperience)int.Parse(Console.ReadLine() ?? ""),
-                EngineerId = int.Parse(Console.ReadLine() ?? "")
+                Description = StringParse(_task?.Description),
+                Alias = StringParse(_task?.Alias),
+                IsMilestone = bool.TryParse(Console.ReadLine(), out _resultB) ? _resultB : _task?.IsMilestone,
+                CreatedAtDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
+                RequiredEffortTime=TimeSpan.TryParse(Console.ReadLine(), out TimeSpan _resultT) ? _resultT : _task?.RequiredEffortTime,
+                StartDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
+                ScheduledDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
+                DeadlineDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
+                CompleteDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
+                Deliverables = StringParse(_task?.Deliverables),
+                Remarks = StringParse(_task?.Remarks),
+                CopmlexityLevel = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out int _result1) ? _result1 : (int?)_task?.CopmlexityLevel),
+                EngineerId = int.TryParse(Console.ReadLine(), out _result) ? _result : _task?.EngineerId,
             };
             //return the values to create the entity
             return newTask;
@@ -71,16 +98,23 @@ namespace DalTest
         //function to create the dependency
         private static Dependency CreateDependency(int id)
         {
-            Console.WriteLine("Press the values: ");
-            Console.WriteLine("DependentTask,DependsOnTask");
-            //Get the valeus of dependency
-            Dependency newDep = new Dependency()
+            int _result;
+            int? _dependsOnTask, _dependentTask;
+            Dependency? _dependency = new Dependency();
+            if (id!= 0)
+                _dependency = s_dalDependency?.Read(id);
+            do
             {
-                Id = id,
-                DependentTask = int.Parse(Console.ReadLine() ?? throw new Exception("No information entered")),
-                DependsOnTask = int.Parse(Console.ReadLine() ?? throw new Exception("No information entered"))
-            };
+                Console.WriteLine("Press the values: ");
+                Console.WriteLine("DependentTask,DependsOnTask");
+                //Get the valeus of dependency
+                _dependentTask = int.TryParse(Console.ReadLine(), out _result) ? _result : _dependency?.DependentTask;
+                _dependsOnTask = int.TryParse(Console.ReadLine(), out _result) ? _result : _dependency?.DependsOnTask;
+            }
+            //check that the values are fine
+            while (_dependentTask == _dependsOnTask || (s_dalDependency?.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
             //return the values to create the entity
+            Dependency newDep = new Dependency(id, _dependentTask, _dependsOnTask);
             return newDep;
         }
 
@@ -111,7 +145,7 @@ namespace DalTest
                                 //create Dependency
                                 else if (entity == "Dependency")
                                     s_dalDependency?.Create(CreateDependency(0));
-                                //create Task
+                               //create Task
                                 else
                                     s_dalTask?.Create(CreateTask(0));
                             }
