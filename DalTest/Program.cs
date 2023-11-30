@@ -23,18 +23,13 @@ namespace DalTest
               "To exit press 1\n"
               );
         }
-      
+        //function to help to parse strings
         private static string? StringParse(string? _lastSt)
         {
             string st =Console.ReadLine()??"";
             if (string.IsNullOrEmpty(st))
-            { 
                 return _lastSt;
-            }
-            else
-            {
-                return st;
-            }
+            return st;
 
         }
         //function to create the engineer
@@ -45,13 +40,13 @@ namespace DalTest
             double _resultD;
             Console.WriteLine("Press the values: ");
             Console.WriteLine("id,name,level,email,cost");
+            //to get the engineer before update
             if (id != 0)
                 _engineer = s_dalEngineer?.Read(id);
             //Get the valeus of engineer
             Engineer newEngineer = new Engineer()
             {
                 Id = int.TryParse(Console.ReadLine(), out  _result)?_result: _engineer!.Id,
-                //Name = StringParse()==null?_engineer?.Name: StringParse(),
                 Name = StringParse(_engineer?.Name),
                 Level = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out  _result) ? _result : (int?)_engineer?.Level),
                 Email = StringParse(_engineer?.Email),
@@ -101,6 +96,7 @@ namespace DalTest
             int _result;
             int? _dependsOnTask, _dependentTask;
             Dependency? _dependency = new Dependency();
+            //to get the dependency before update
             if (id!= 0)
                 _dependency = s_dalDependency?.Read(id);
             do
