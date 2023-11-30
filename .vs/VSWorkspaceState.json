@@ -4,8 +4,9 @@
     "\\DalFacade",
     "\\DalFacade\\DalApi",
     "\\DalFacade\\DO",
-    "\\DalList"
+    "\\DalList",
+    "\\DalTest"
   ],
-  "SelectedNode": "\\DalList\\DataSource.cs",
+  "SelectedNode": "\\DalTest\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
