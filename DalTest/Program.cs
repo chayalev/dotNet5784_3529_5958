@@ -7,10 +7,11 @@ namespace DalTest
     internal class Program
     {
 
-        private static IDependency? s_dalDependency = new DependencyImplementation();
-        private static IEngineer? s_dalEngineer = new EngineerImplementation();
-        private static ITask? s_dalTask = new TaskImplementation();
+        //private static IDependency? s_dalDependency = new DependencyImplementation();
+        //private static IEngineer? s_dalEngineer = new EngineerImplementation();
+        //private static ITask? s_dalTask = new TaskImplementation();
 
+        private static readonly IDal s_dal = new DalList(); //stage 2
         //function to print the options of any entity
         private static void PrintMenu(string entity)
         {
@@ -136,14 +137,14 @@ namespace DalTest
                                 //create Engineer
                                 if (entity == "Engineer")
                                 {
-                                    s_dalEngineer?.Create(CreateEngineer(0));
+                                    s_dal?.Engineer.Create(CreateEngineer(0));
                                 }
                                 //create Dependency
                                 else if (entity == "Dependency")
-                                    s_dalDependency?.Create(CreateDependency(0));
-                               //create Task
+                                    s_dal?.Dependency.Create(CreateDependency(0));
+                                //create Task
                                 else
-                                    s_dalTask?.Create(CreateTask(0));
+                                   s_dal?.Task.Create(CreateTask(0));
                             }
                             catch (Exception ex) { Console.WriteLine(ex.Message); }
                             break;
@@ -158,13 +159,13 @@ namespace DalTest
                                     _id = _result;
                                     //read Engineer
                                     if (entity == "Engineer")
-                                        Console.WriteLine(s_dalEngineer?.Read(_id) ?? throw new Exception("There is no engineer with id: " + _id));
+                                        Console.WriteLine(s_dal?.Engineer.Read(_id) ?? throw new Exception("There is no engineer with id: " + _id));
                                     //read Dependency
                                     else if (entity == "Dependency")
-                                        Console.WriteLine(s_dalDependency?.Read(_id) ?? throw new Exception("There is no dependency with id: " + _id));
+                                        Console.WriteLine(s_dal?.Dependency.Read(_id) ?? throw new Exception("There is no dependency with id: " + _id));
                                     //read Task
                                     else
-                                        Console.WriteLine(s_dalTask?.Read(_id) ?? throw new Exception("There is no task with id: " + _id));
+                                        Console.WriteLine(s_dal?.Task.Read(_id) ?? throw new Exception("There is no task with id: " + _id));
                                 }
                             }
                             catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -177,7 +178,7 @@ namespace DalTest
                                 //read Engineer
                                 if (entity == "Engineer")
                                 {
-                                    List<Engineer>? allEng = s_dalEngineer?.ReadAll() ?? throw new Exception("The list of engineers is empty ");
+                                    List<Engineer>? allEng = s_dal?.Engineer.ReadAll() ?? throw new Exception("The list of engineers is empty ");
                                     foreach (var _eng in allEng)
                                         Console.WriteLine(_eng);
                                 }
@@ -185,14 +186,14 @@ namespace DalTest
                                 //read Dependency
                                 else if (entity == "Dependency")
                                 {
-                                    List<Dependency>? allDep = s_dalDependency?.ReadAll() ?? throw new Exception("The list of dependencies is empty ");
+                                    List<Dependency>? allDep = s_dal?.Dependency.ReadAll() ?? throw new Exception("The list of dependencies is empty ");
                                     foreach (var _dep in allDep)
                                         Console.WriteLine(_dep);
                                 }
                                 //read Task
                                 else
                                 {
-                                    List<DO.Task>? allTask = s_dalTask?.ReadAll() ?? throw new Exception("The list of tasks is empty ");
+                                    List<DO.Task>? allTask = s_dal?.Task.ReadAll() ?? throw new Exception("The list of tasks is empty ");
                                     foreach (var _task in allTask)
                                         Console.WriteLine(_task);
                                 }
@@ -211,20 +212,20 @@ namespace DalTest
                                     //update Engineer
                                     if (entity == "Engineer")
                                     {
-                                        Console.WriteLine(s_dalEngineer?.Read(_id) ?? throw new Exception("There is no engineer with id: " + _id));
-                                        s_dalEngineer.Update(CreateEngineer(_id));
+                                        Console.WriteLine(s_dal?.Engineer?.Read(_id) ?? throw new Exception("There is no engineer with id: " + _id));
+                                        s_dal.Engineer.Update(CreateEngineer(_id));
                                     }
                                     //update Dependency
                                     else if (entity == "Dependency")
                                     {
-                                        Console.WriteLine(s_dalDependency?.Read(_id) ?? throw new Exception("There is no dependency with id: " + _id));
-                                        s_dalDependency.Update(CreateDependency(_id));
+                                        Console.WriteLine(s_dal?.Dependency.Read(_id) ?? throw new Exception("There is no dependency with id: " + _id));
+                                        s_dal.Dependency.Update(CreateDependency(_id));
                                     }
                                     //update Task
                                     else
                                     { 
-                                        Console.WriteLine(s_dalTask?.Read(_id) ?? throw new Exception("There is no task with id: " + _id));
-                                        s_dalTask.Update(CreateTask(_id));
+                                        Console.WriteLine(s_dal?.Task.Read(_id) ?? throw new Exception("There is no task with id: " + _id));
+                                        s_dal.Task.Update(CreateTask(_id));
                                     }
                                 }
                             }
@@ -241,13 +242,13 @@ namespace DalTest
                                     _id = _result;
                                     //delete Engineer
                                     if (entity == "Engineer")
-                                        s_dalEngineer?.Delete(_id);
+                                        s_dal?.Engineer.Delete(_id);
                                     //delete Dependency
                                     else if (entity == "Dependency")
-                                        s_dalDependency?.Delete(_id);
+                                        s_dal?.Dependency.Delete(_id);
                                     //delete Task
                                     else
-                                        s_dalTask?.Delete(_id);
+                                        s_dal?.Task.Delete(_id);
                                 }
                             }
                             catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -273,7 +274,7 @@ namespace DalTest
             try
             {
                 //Initialization the lists of entity
-                Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
+                Initialization.Do(s_dal);
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;

@@ -3,7 +3,7 @@ namespace Dal;
 using DalApi;
 using DO;
 // realization of Engineer interface
-public class EngineerImplementation : IEngineer
+internal class EngineerImplementation : IEngineer
 {
     public int Create(Engineer item)
     {

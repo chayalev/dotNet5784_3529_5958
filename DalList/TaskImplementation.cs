@@ -3,7 +3,7 @@ namespace Dal;
 using DalApi;
 using DO;
 // realization of Task interface
-public class TaskImplementation : ITask
+internal class TaskImplementation : ITask
 {
     public int Create(Task item)
     {
