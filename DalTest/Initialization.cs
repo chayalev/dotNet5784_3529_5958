@@ -12,9 +12,10 @@ using System.Runtime.Intrinsics.Arm;
 
 public static class Initialization
 {
-    private static IDependency? s_dalDependency = new DependencyImplementation();
-    private static IEngineer? s_dalEngineer = new EngineerImplementation();
-    private static ITask? s_dalTask = new TaskImplementation();
+    //private static IDependency? s_dalDependency = new DependencyImplementation();
+    //private static IEngineer? s_dalEngineer = new EngineerImplementation();
+    //private static ITask? s_dalTask = new TaskImplementation();
+    private static IDal? s_dal;
 
     //Random number
     private static readonly Random s_rand = new();
@@ -23,31 +24,31 @@ public static class Initialization
     {
         int? _dependentTask = null, _dependsOnTask = null;
         //counter to the random task
-        int countTasks = s_dalTask?.ReadAll().Count() ?? 1;
+        int countTasks = s_dal?.Task.ReadAll().Count() ?? 1;
         for (int i = 0; i < 40; i++)
         {
             //Generates a random number from the id of all lists
-            _dependentTask = s_dalTask?.ReadAll()[s_rand.Next(1, countTasks)].Id;
+            _dependentTask = s_dal?.Task.ReadAll()[s_rand.Next(1, countTasks)].Id;
             do
-                _dependsOnTask = s_dalTask?.ReadAll()[s_rand.Next(1, countTasks)].Id;
-            while (_dependentTask == _dependsOnTask && (s_dalDependency?.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
+                _dependsOnTask = s_dal?.Task.ReadAll()[s_rand.Next(1, countTasks)].Id;
+            while (_dependentTask == _dependsOnTask && (s_dal?.Dependency.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
             //create 3 dependencies with same depended Task
             if (i == 15)
             {
                 for (int j = 15; j < 18; j++)
                 {
                     Dependency newDependency1 = new(0, 12, j);
-                    s_dalDependency?.Create(newDependency1);
+                    s_dal?.Dependency.Create(newDependency1);
                 }
                 for (int j = 15; j < 18; j++)
                 {
                     Dependency newDependency1 = new(0, 13, j);
-                    s_dalDependency?.Create(newDependency1);
+                    s_dal?.Dependency.Create(newDependency1);
                 }
             }
             //create the new task
             Dependency newDependency = new(0, _dependentTask, _dependsOnTask);
-            s_dalDependency?.Create(newDependency);
+            s_dal?.Dependency.Create(newDependency);
         }
     }
     private static void createEngineer()
@@ -65,7 +66,7 @@ public static class Initialization
             //random id and check that nobody use it before
             do
                 _id = s_rand.Next(200000000, 400000000);
-            while (s_dalEngineer?.Read(_id) != null);
+            while (s_dal?.Engineer.Read(_id) != null);
 
             string _email = _name.Split(' ')[0] + "@gmail.com";
 
@@ -76,7 +77,7 @@ public static class Initialization
             //create the engineer
             Engineer newEngineer = new(_id, _name, _level, _email, _cost);
 
-            s_dalEngineer?.Create(newEngineer);
+            s_dal?.Engineer.Create(newEngineer);
         }
 
     }
@@ -119,23 +120,26 @@ public static class Initialization
             Task newTask = new(0, Description: _description, Alias: _alias, IsMilestone: _stone, StartDate: _startTask,
                 Deliverables: _deliverable, CopmlexityLevel: _level);
 
-           s_dalTask?.Create(newTask);
+           s_dal?.Task.Create(newTask);
         }
     }
 
-    public static void Do(IDependency? s_dalDependency, IEngineer? s_dalEngineer, ITask? s_dalTask)
+    public static void Do(IDal dal)
     {
-        IDependency? dalDependency = null;
-        IEngineer? dalEngineer = null;
-        ITask? dalTask = null;
 
-        //creates the entity lists
-        createEngineer();
-        createTask();
-        createDependency();
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
 
-        dalDependency= s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        dalEngineer = s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        dalTask = s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        //IDependency? dalDependency = null;
+        //IEngineer? dalEngineer = null;
+        //ITask? dalTask = null;
+
+        ////creates the entity lists
+        //createEngineer();
+        //createTask();
+        //createDependency();
+
+        //dalDependency= s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        //dalEngineer = s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        //dalTask = s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
     }
 }

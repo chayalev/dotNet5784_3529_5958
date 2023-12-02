@@ -13,7 +13,7 @@ namespace Stage0
         private static void Welcome3529()
         {
             Console.Write("Enter your name: ");
-            string nameUser = Console.ReadLine();
+            string nameUser = Console.ReadLine() ?? "";
             Console.WriteLine("{0}, welcome to my first console application", nameUser);
         }
     }
