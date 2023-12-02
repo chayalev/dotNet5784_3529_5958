@@ -31,7 +31,7 @@ public static class Initialization
             _dependentTask = s_dal?.Task.ReadAll()[s_rand.Next(1, countTasks)].Id;
             do
                 _dependsOnTask = s_dal?.Task.ReadAll()[s_rand.Next(1, countTasks)].Id;
-            while (_dependentTask == _dependsOnTask && (s_dal?.Dependency.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
+            while (_dependentTask == _dependsOnTask || (s_dal?.Dependency.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
             //create 3 dependencies with same depended Task
             if (i == 15)
             {

@@ -27,23 +27,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Home Pc\\.nuget\\packages\\": {},
+    "C:\\Users\\1\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Home Pc\\source\\repos\\chayalev\\dotNet5784_3529_5958\\DalList\\DalList.csproj",
+      "projectUniqueName": "C:\\Users\\1\\Source\\Repos\\AvitalStober\\dotNet5784_3529_5958\\DalList\\DalList.csproj",
       "projectName": "DalList",
-      "projectPath": "C:\\Users\\Home Pc\\source\\repos\\chayalev\\dotNet5784_3529_5958\\DalList\\DalList.csproj",
-      "packagesPath": "C:\\Users\\Home Pc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Home Pc\\source\\repos\\chayalev\\dotNet5784_3529_5958\\DalList\\obj\\",
+      "projectPath": "C:\\Users\\1\\Source\\Repos\\AvitalStober\\dotNet5784_3529_5958\\DalList\\DalList.csproj",
+      "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\1\\Source\\Repos\\AvitalStober\\dotNet5784_3529_5958\\DalList\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Home Pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -59,8 +59,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Home Pc\\source\\repos\\chayalev\\dotNet5784_3529_5958\\DalFacade\\DalFacade.csproj": {
-              "projectPath": "C:\\Users\\Home Pc\\source\\repos\\chayalev\\dotNet5784_3529_5958\\DalFacade\\DalFacade.csproj"
+            "C:\\Users\\1\\Source\\Repos\\AvitalStober\\dotNet5784_3529_5958\\DalFacade\\DalFacade.csproj": {
+              "projectPath": "C:\\Users\\1\\Source\\Repos\\AvitalStober\\dotNet5784_3529_5958\\DalFacade\\DalFacade.csproj"
             }
           }
         }
