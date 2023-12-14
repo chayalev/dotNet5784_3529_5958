@@ -2,14 +2,16 @@
 namespace Dal;
 using DalApi;
 using DO;
+using System.Linq;
+
 // realization of Engineer interface
 internal class EngineerImplementation : IEngineer
 {
     public int Create(Engineer item)
     {
         //Creating a new Engineer
-        if (DataSource.Engineers.Any(Engineer => Engineer.Id == item.Id))
-            throw new Exception(message: "An object of type Engineer with such an ID already exists");
+        if (DataSource.Engineers.Exists(Engineer => Engineer.Id == item.Id))
+            throw new DalAlreadyExistsException($"Engineer with ID={item.Id} already exists");
         DataSource.Engineers.Add(item);
         return item.Id;
     }
@@ -17,34 +19,39 @@ internal class EngineerImplementation : IEngineer
     public void Delete(int id)
     {
         //Searches for the Engineer according to the id it received
-        Engineer? engineerDelete = DataSource.Engineers.Find(Engineer => Engineer.Id == id);
+        Engineer? engineerDelete = DataSource.Engineers.FirstOrDefault(Engineer => Engineer.Id == id);
         if (engineerDelete == null)
-            throw new Exception("An object of type Engineer with such an ID is not exists");
+            throw new DalDoesNotExistException($"Engineer with ID={id} does not exists");
         //check if the engineer is depended
-        if (DataSource.Tasks.Any(Task => Task.EngineerId == id))
-            throw new Exception("Can not delete Engineer in the middle of task");
+        if (DataSource.Tasks.Exists(Task => Task.EngineerId == id))
+            throw new DalDeletionImpossible($"Engineer in ID={id} in the middle of task");
         DataSource.Engineers.Remove(engineerDelete);
     }
 
-
+    public Engineer? Read(Func<Engineer, bool> filter)// stage 2
+    {
+        return DataSource.Engineers.FirstOrDefault(filter);
+    }
     public Engineer? Read(int id)
     {
         //Returns the requested Engineer, if not found returns null
-        return DataSource.Engineers.Find(Engineer => Engineer.Id == id);
+        return DataSource.Engineers.FirstOrDefault(Engineer => Engineer.Id == id);
     }
 
-    public List<Engineer> ReadAll()
+    public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null) //stage 2
     {
-        //Returns the list of engineers
-        return new List<Engineer>(DataSource.Engineers);
+        if (filter == null)
+            return DataSource.Engineers.Select(item => item);
+        else
+            return DataSource.Engineers.Where(filter);
     }
 
     public void Update(Engineer item)
     {
         //Searches for the engineer according to the id it received
-        Engineer? engineerDelete = DataSource.Engineers.Find(Engineer => Engineer.Id == item.Id);
+        Engineer? engineerDelete = DataSource.Engineers.FirstOrDefault(Engineer => Engineer.Id == item.Id);
         if (engineerDelete == null)
-            throw new Exception("An object of type Task with such an ID is not exists");
+            throw new DalDoesNotExistException($"Engineer with ID={item.Id} does not exists");
         // if the engineer exists - deletes the engineer,and add the update one
         DataSource.Engineers.Remove(engineerDelete);
         DataSource.Engineers.Add(item);
