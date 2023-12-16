@@ -3,6 +3,8 @@
 namespace Dal;
 using DalApi;
 using DO;
+using System.Linq;
+
 // realization of Dependency interface
 internal class DependencyImplementation : IDependency
 {
@@ -18,30 +20,36 @@ internal class DependencyImplementation : IDependency
     public void Delete(int id)
     {
         //Searches for the dependency according to the id it received, if it exists - deletes the dependency
-        Dependency? dependencyDelete = DataSource.Dependencies.Find(Dependency => Dependency.Id == id);
+        Dependency? dependencyDelete = DataSource.Dependencies.FirstOrDefault(Dependency => Dependency.Id == id);
          if (dependencyDelete==null)
-            throw new Exception("An object of type Dependency with such an ID is not exists");
+            throw new DalDoesNotExistException($"Dependency with ID={id} does not exist");
         DataSource.Dependencies.Remove(dependencyDelete);
     }
-
+   public Dependency? Read(Func<Dependency, bool> filter)// stage 2
+    {
+            return DataSource.Dependencies.FirstOrDefault(filter);
+    }
     public Dependency? Read(int id)
     {
         //Returns the requested dependency, if not found returns null
-        return DataSource.Dependencies.Find(Dependency => Dependency.Id == id);
+        return DataSource.Dependencies.FirstOrDefault(Dependency => Dependency.Id == id);
     }
 
-    public List<Dependency> ReadAll()
+     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null) //stage 2
     {
-        //Returns the list of dependencies
-        return new List<Dependency>(DataSource.Dependencies);
+        if (filter == null)
+            return DataSource.Dependencies.Select(item => item);
+        else
+            return DataSource.Dependencies.Where(filter);
+
     }
 
     public void Update(Dependency item)
     {
         //Searches for the dependency according to the id it received
-        Dependency? dependencyDelete = DataSource.Dependencies.Find(Dependency => Dependency.Id == item.Id);
+        Dependency? dependencyDelete = DataSource.Dependencies.FirstOrDefault(Dependency => Dependency.Id == item.Id);
         if (dependencyDelete == null)
-            throw new Exception("An object of type Dependency with such an ID is not exists");
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} does not exist");
         // if the dependency exists - deletes the dependency,and add the update one
         DataSource.Dependencies.Remove(dependencyDelete);
         DataSource.Dependencies.Add(item);
