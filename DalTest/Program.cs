@@ -43,7 +43,7 @@ namespace DalTest
             Console.WriteLine("id,name,level,email,cost");
             //to get the engineer before update
             if (id != 0)
-                _engineer = s_dalEngineer?.Read(id);
+                _engineer = s_dal?.Engineer.Read(id);
             //Get the valeus of engineer
             Engineer newEngineer = new Engineer()
             {
@@ -66,7 +66,7 @@ namespace DalTest
             DateTime _resultD;
             //if the user want to update the details
             if (id != 0)
-                _task = s_dalTask?.Read(id);
+                _task = s_dal?.Task.Read(id);
             Console.WriteLine("Press the values: ");
             Console.WriteLine("Description,Alias,IsMilestone,CreatedAtDate,RequiredEffortTime,StartDate,ScheduledDate,DeadlineDate,CompleteDate,Deliverables,Remarks,CopmlexityLevel,EngineerId");
             //Get the valeus of task
@@ -99,7 +99,7 @@ namespace DalTest
             Dependency? _dependency = new Dependency();
             //to get the dependency before update
             if (id!= 0)
-                _dependency = s_dalDependency?.Read(id);
+                _dependency = s_dal?.Dependency.Read(id);
             do
             {
                 Console.WriteLine("Press the values: ");
@@ -109,7 +109,7 @@ namespace DalTest
                 _dependsOnTask = int.TryParse(Console.ReadLine(), out _result) ? _result : _dependency?.DependsOnTask;
             }
             //check that the values are fine
-            while (_dependentTask == _dependsOnTask || (s_dalDependency?.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
+            while (_dependentTask == _dependsOnTask || (s_dal?.Dependency.ReadAll().Any(dep => dep.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
             //return the values to create the entity
             Dependency newDep = new Dependency(id, _dependentTask, _dependsOnTask);
             return newDep;
