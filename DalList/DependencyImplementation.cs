@@ -22,7 +22,7 @@ internal class DependencyImplementation : IDependency
         //Searches for the dependency according to the id it received, if it exists - deletes the dependency
         Dependency? dependencyDelete = DataSource.Dependencies.FirstOrDefault(Dependency => Dependency.Id == id);
          if (dependencyDelete==null)
-            throw new DalDoesNotExistException($"Dependency with ID={id} does not exist");
+            throw new DalDoesNotExistException($"Dependency with ID= {id} does not exist");
         DataSource.Dependencies.Remove(dependencyDelete);
     }
    public Dependency? Read(Func<Dependency, bool> filter)// stage 2

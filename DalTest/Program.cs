@@ -212,19 +212,19 @@ namespace DalTest
                                     //update Engineer
                                     if (entity == "Engineer")
                                     {
-                                        Console.WriteLine(s_dal?.Engineer.Read(_id) ?? throw new DalDoesNotExistException($"Engineer with ID={_id} does not exists"));
+                                        Console.WriteLine(s_dal?.Engineer.Read(_id) ?? throw new DalDoesNotExistException($"Engineer with ID= {_id} does not exists"));
                                         s_dal.Engineer.Update(CreateEngineer(_id));
                                     }
                                     //update Dependency
                                     else if (entity == "Dependency")
                                     {
-                                        Console.WriteLine(s_dal?.Dependency.Read(_id) ?? throw new DalDoesNotExistException($"Dependency with ID={_id} does not exists"));
+                                        Console.WriteLine(s_dal?.Dependency.Read(_id) ?? throw new DalDoesNotExistException($"Dependency with ID= {_id} does not exists"));
                                         s_dal.Dependency.Update(CreateDependency(_id));
                                     }
                                     //update Task
                                     else
                                     {
-                                        Console.WriteLine(s_dal?.Task.Read(_id) ?? throw new DalDoesNotExistException($"Task with ID={_id} does not exists"));
+                                        Console.WriteLine(s_dal?.Task.Read(_id) ?? throw new DalDoesNotExistException($"Task with ID= {_id} does not exists"));
                                         s_dal.Task.Update(CreateTask(_id));
                                     }
                                 }
