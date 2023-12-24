@@ -33,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\1\\source\\repos\\AvitalStober\\dotNet5784_3529_5958\\DalList\\DalList.csproj",
-      "projectName": "DalList",
-      "projectPath": "C:\\Users\\1\\source\\repos\\AvitalStober\\dotNet5784_3529_5958\\DalList\\DalList.csproj",
+      "projectUniqueName": "C:\\Users\\1\\source\\repos\\AvitalStober\\dotNet5784_3529_5958\\DalXml\\DalXml.csproj",
+      "projectName": "DalXml",
+      "projectPath": "C:\\Users\\1\\source\\repos\\AvitalStober\\dotNet5784_3529_5958\\DalXml\\DalXml.csproj",
       "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\1\\source\\repos\\AvitalStober\\dotNet5784_3529_5958\\DalList\\obj\\",
+      "outputPath": "C:\\Users\\1\\source\\repos\\AvitalStober\\dotNet5784_3529_5958\\DalXml\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

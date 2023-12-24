@@ -5,8 +5,9 @@
     "\\DalFacade\\DalApi",
     "\\DalFacade\\DO",
     "\\DalList",
-    "\\DalTest"
+    "\\DalTest",
+    "\\DalXml"
   ],
-  "SelectedNode": "\\DalList\\DependencyImplementation.cs",
+  "SelectedNode": "\\DalFacade\\DO\\Exceptions.cs",
   "PreviewInSolutionExplorer": false
 }
