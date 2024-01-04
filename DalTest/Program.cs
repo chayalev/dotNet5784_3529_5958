@@ -7,12 +7,15 @@ namespace DalTest
     internal class Program
     {
 
-        //private static IDependency? s_dalDependency = new DependencyImplementation();
-        //private static IEngineer? s_dalEngineer = new EngineerImplementation();
-        //private static ITask? s_dalTask = new TaskImplementation();
 
-        private static readonly IDal s_dal = new DalList(); //stage 2
-        //function to print the options of any entity
+
+       //private static readonly IDal s_dal = new DalList(); //stage 2
+        private static readonly IDal s_dal = new DalXml(); //stage 3
+
+        /// <summary>
+        /// function to print the options of any entity
+        /// </summary>
+        /// <param name="entity"></param>
         private static void PrintMenu(string entity)
         {
             Console.WriteLine(
@@ -24,7 +27,12 @@ namespace DalTest
               "To exit press 1\n"
               );
         }
-        //function to help to parse strings
+        
+        /// <summary>
+        /// function to help to parse strings
+        /// </summary>
+        /// <param name="_lastSt"></param>
+        /// <returns></returns>
         private static string? StringParse(string? _lastSt)
         {
             string st = Console.ReadLine() ?? "";
@@ -33,7 +41,12 @@ namespace DalTest
             return st;
 
         }
-        //function to create the engineer
+        
+        /// <summary>
+        /// function to create the engineer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private static Engineer CreateEngineer(int id)
         {
             Engineer? _engineer = new Engineer();
@@ -57,7 +70,11 @@ namespace DalTest
             return newEngineer;
         }
 
-        //function to create the task
+        /// <summary>
+        /// function to create the task
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private static DO.Task CreateTask(int id)
         {
             DO.Task? _task = new DO.Task();
@@ -91,7 +108,11 @@ namespace DalTest
             return newTask;
         }
 
-        //function to create the dependency
+        /// <summary>
+        /// function to create the dependency
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private static Dependency CreateDependency(int id)
         {
             int _result;
@@ -115,8 +136,12 @@ namespace DalTest
             return newDep;
         }
 
-        //function to make the same actions of the entities
-        //and send the different ones to the appropriate functions
+        /// <summary>
+        /// function to make actions of the entities and send them to the appropriate functions
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <exception cref="DalDoesNotExistException"></exception>
+        /// <exception cref="wrongInput"></exception>
         private static void SubMenu(string entity)
         {
             int chosenCrud = 0, _id, _result;
@@ -274,7 +299,14 @@ namespace DalTest
             try
             {
                 //Initialization the lists of entity
-                Initialization.Do(s_dal);
+                Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
+                string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+                if (ans == "Y") //stage 3
+                {
+                    s_dal.Reset();
+                    Initialization.Do(s_dal);
+                }
+
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;
@@ -297,14 +329,13 @@ namespace DalTest
                             break;
                         default:
                             throw new wrongInput("wrong input");
-
                     }
-                    //Reprint all the entities options
-                    Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
-                    if (int.TryParse(Console.ReadLine(), out result))
-                        entity = result;
-                }
 
+                }
+                //Reprint all the entities options
+                Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
+                if (int.TryParse(Console.ReadLine(), out result))
+                    entity = result;
             }
             //catch the errors of the main
             catch (Exception ex)
@@ -312,5 +343,8 @@ namespace DalTest
                 Console.WriteLine(ex.Message);
             }
         }
+
+
+
     }
 }

@@ -12,12 +12,15 @@ using System.Runtime.Intrinsics.Arm;
 
 public static class Initialization
 {
-    //private static IDependency? s_dalDependency = new DependencyImplementation();
-    //private static IEngineer? s_dalEngineer = new EngineerImplementation();
-    //private static ITask? s_dalTask = new TaskImplementation();
-    private static IDal? s_dal = new DalList();
+    /// <summary>
+    /// Activation of the relevant data base
+    /// </summary>
+    //private static IDal? s_dal = new DalList();//stage 2
+    private static IDal? s_dal = new DalXml();//stage 3
 
-    //Random number
+    /// <summary>
+    /// Random number
+    /// </summary>
     private static readonly Random s_rand = new();
 
     private static void createDependency()
@@ -31,7 +34,7 @@ public static class Initialization
             _dependentTask = s_dal?.Task.ReadAll().ToArray()[s_rand.Next(1, countTasks)]?.Id;
             do
                 _dependsOnTask = s_dal?.Task.ReadAll().ToArray()[s_rand.Next(1, countTasks)]?.Id;
-            while (_dependentTask == _dependsOnTask || (s_dal?.Dependency.ReadAll().Any(dep => dep!.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) ?? false));
+            while (_dependentTask == _dependsOnTask || (s_dal?.Dependency.ReadAll().FirstOrDefault(dep => dep!.DependentTask == _dependsOnTask && dep.DependsOnTask == _dependentTask) != null));
             //create 3 dependencies with same depended Task
             if (i == 15)
             {
@@ -126,22 +129,10 @@ public static class Initialization
 
     public static void Do(IDal dal)
     {
-
-        //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
-
-        //IDependency? dalDependency = null;
-        //IEngineer? dalEngineer = null;
-        //ITask? dalTask = null;
-
-        ////creates the entity lists
+        //creates the entity lists
         createEngineer();
         createTask();
         createDependency();
         s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
-
-
-        //dalDependency= s_dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        //dalEngineer = s_dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        //dalTask = s_dalTask ?? throw new NullReferenceException("DAL can not be null!");
     }
 }

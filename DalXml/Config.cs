@@ -12,4 +12,14 @@ internal static class Config
     internal static int NextDependencyId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextDependencyId"); }
     internal static int NextTaskId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }
 
+    /// <summary>
+    /// start date of project
+    /// </summary>
+    internal static DateTime? startProject = null;
+
+    /// <summary>
+    /// end date of project
+    /// </summary>
+    internal static DateTime? endProject = null;
+
 }

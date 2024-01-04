@@ -1,8 +1,10 @@
-﻿namespace Dal;
-using DalApi;
-using System;
+﻿using DalApi;
+using System.Linq.Expressions;
 
-sealed public class DalList : IDal
+namespace Dal;
+
+//stage 3
+sealed public class DalXml : IDal
 {
     public IDependency Dependency => new DependencyImplementation();
 
@@ -10,15 +12,14 @@ sealed public class DalList : IDal
 
     public ITask Task => new TaskImplementation();
 
-    public DateTime? startDate { get; set; } = null;
-    public DateTime? EndDate { get; set; } = null;
+    public DateTime? startDate { get ; set ; }
+    public DateTime? EndDate { get; set; }
 
     public void Reset()
     {
-        Engineer.Reset();   
         Dependency.Reset();
-        Task.Reset();
+        Engineer.Reset();
+        Task.Reset();   
     }
-
- 
 }
+

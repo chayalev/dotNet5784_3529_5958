@@ -6,6 +6,7 @@ internal static class DataSource
 {
     internal static class Config
     {
+        
         //id for Task entity
         internal const int startTaskId = 1;
         private static int nextTaskId = startTaskId;
@@ -14,6 +15,12 @@ internal static class DataSource
         internal const int startDependencyId = 1;
         private static int nextDependencyId = startDependencyId;
         internal static int NextDependencyId { get => nextDependencyId++; }
+
+        //start date of project
+        internal static DateTime? startProject = null;
+
+        //end date of project
+        internal static DateTime? endProject = null;
 
     }
 
