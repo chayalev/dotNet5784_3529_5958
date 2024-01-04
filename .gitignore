@@ -2,3 +2,11 @@
 /.vs/dotNet5784_3529_5958/FileContentIndex/06a5369e-9963-4779-a6ac-d953cf7b81de.vsidx
 /.vs/dotNet5784_3529_5958/FileContentIndex
 /.vs/slnx.sqlite
+/.vs
+/bin
+/DalFacade/obj
+/DalList/obj
+/DalTest/obj
+/DalXml/obj
+/Stage0/bin/Debug/net7.0
+/Stage0/obj
