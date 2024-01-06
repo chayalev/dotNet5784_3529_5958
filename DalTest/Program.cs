@@ -331,11 +331,12 @@ namespace DalTest
                             throw new wrongInput("wrong input");
                     }
 
+                    //Reprint all the entities options
+                    Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
+                    if (int.TryParse(Console.ReadLine(), out result))
+                        entity = result;
                 }
-                //Reprint all the entities options
-                Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
-                if (int.TryParse(Console.ReadLine(), out result))
-                    entity = result;
+           
             }
             //catch the errors of the main
             catch (Exception ex)
