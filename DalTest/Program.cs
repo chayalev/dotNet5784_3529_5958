@@ -8,9 +8,9 @@ namespace DalTest
     {
 
 
-
-       //private static readonly IDal s_dal = new DalList(); //stage 2
-        private static readonly IDal s_dal = new DalXml(); //stage 3
+        //static readonly IDal s_dal = new DalList(); //stage 2
+        //static readonly IDal s_dal = new DalXml(); //stage 3
+        static readonly IDal s_dal = Factory.Get; //stage 4
 
         /// <summary>
         /// function to print the options of any entity
@@ -304,7 +304,7 @@ namespace DalTest
                 if (ans == "Y") //stage 3
                 {
                     s_dal.Reset();
-                    Initialization.Do(s_dal);
+                    Initialization.Do();
                 }
 
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
@@ -330,12 +330,12 @@ namespace DalTest
                         default:
                             throw new wrongInput("wrong input");
                     }
-
+                    //Reprint all the entities options
+                    Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
+                    if (int.TryParse(Console.ReadLine(), out result))
+                        entity = result;
                 }
-                //Reprint all the entities options
-                Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
-                if (int.TryParse(Console.ReadLine(), out result))
-                    entity = result;
+                
             }
             //catch the errors of the main
             catch (Exception ex)

@@ -3,12 +3,13 @@ using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection;
 
-namespace DalTest;
 
 using Dal;
 using DalApi;
 using DO;
 using System.Runtime.Intrinsics.Arm;
+
+namespace DalTest;
 
 public static class Initialization
 {
@@ -16,7 +17,7 @@ public static class Initialization
     /// Activation of the relevant data base
     /// </summary>
     //private static IDal? s_dal = new DalList();//stage 2
-    private static IDal? s_dal = new DalXml();//stage 3
+    private static IDal? s_dal = DalApi.Factory.Get;
 
     /// <summary>
     /// Random number
@@ -120,19 +121,19 @@ public static class Initialization
             EngineerExperience _level = (EngineerExperience)s_rand.Next(0, 5);
            
             //create the task
-            Task newTask = new(0, Description: _description, Alias: _alias, IsMilestone: _stone, StartDate: _startTask,
+            DO.Task newTask = new(0, Description: _description, Alias: _alias, IsMilestone: _stone, StartDate: _startTask,
                 Deliverables: _deliverable, CopmlexityLevel: _level);
 
            s_dal?.Task.Create(newTask);
         }
     }
 
-    public static void Do(IDal dal)
+    public static void Do()
     {
         //creates the entity lists
         createEngineer();
         createTask();
         createDependency();
-        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
+        s_dal = DalApi.Factory.Get; //stage 4
     }
 }

@@ -81,8 +81,9 @@ internal class TaskImplementation : ITask
     /// </summary>
     public void Reset()
     {
-        XElement listTask = XMLTools.LoadListFromXMLElement(s_task);
-        listTask.RemoveNodes();
+        List<DO.Task>? listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_task);
+        listTask.Clear();
+        XMLTools.SaveListToXMLSerializer(listTask, s_task);
     }
 
     /// <summary>

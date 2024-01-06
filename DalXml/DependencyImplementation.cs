@@ -35,16 +35,16 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency item)
     {
         XElement dependencyRootElem = XMLTools.LoadListFromXMLElement(s_dependency);
-        XElement? dep = (from depen in dependencyRootElem.Elements()
-                         where depen.ToIntNullable("DependentTask") == item.DependentTask && depen.ToIntNullable("DependsOnTask") == item.DependsOnTask
-                         select depen).FirstOrDefault();
+        //XElement? dep = (from depen in dependencyRootElem.Elements()
+        //                 where depen.ToIntNullable("DependentTask") == item.DependentTask && depen.ToIntNullable("DependsOnTask") == item.DependsOnTask
+        //                 select depen).FirstOrDefault();
 
-        if(dep != null)
-            throw new DalAlreadyExistsException("Dependency already exist");
+        //if(dep != null)
+        //    throw new DalAlreadyExistsException("Dependency already exist");
 
         int id = Config.NextDependencyId;
         XElement dependencyElem = new XElement("Dependency",
-            new XElement("Id", id),
+            new XElement("Id",id),
             new XElement("DependentTask", item.DependentTask),
             new XElement("DependsOnTask", item.DependsOnTask)
             );
@@ -52,7 +52,6 @@ internal class DependencyImplementation : IDependency
         XMLTools.SaveListToXMLElement(dependencyRootElem, s_dependency);
         return id;
     }
-
     /// <summary>
     /// Delete a dependency
     /// </summary>
@@ -126,8 +125,9 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     public void Reset()
     {
-        XElement dependencyRootElem = XMLTools.LoadListFromXMLElement(s_dependency); 
-        dependencyRootElem.RemoveNodes();
+        XElement dependencyRootElem = XMLTools.LoadListFromXMLElement(s_dependency);
+        dependencyRootElem.RemoveAll();
+        XMLTools.SaveListToXMLElement(dependencyRootElem, s_dependency);
     }
 
     /// <summary>
