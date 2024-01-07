@@ -11,7 +11,7 @@ namespace BO
         public int Id {  get; init; }
         public string? Name { get; set; }
         public string? Email { get; set; }
-        public enum EngineerExperience { Novice, AdvancedBeginner, Competent, Proficient, Expert };
+        public EngineerExperience Level { get; set; }
         public double? Cost { get; set; }
         public TaskInEngineer? Task {  get; set; }
     }
