@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+/// <summary>
+/// help entity-TaskInEngineer
+/// </summary>
+/// <param name="Id">The ID of the task</param>
+/// <param name="Alias">the alias of the TaskInEngineer</param>
+
+public class TaskInEngineer
 {
-    public class TaskInEngineer
-    {
-        public int Id {  get; init; }
-        public string? Alias { get; set; } 
-    }
+    public int Id { get; init; }
+    public string? Alias { get; set; }
 }
+
