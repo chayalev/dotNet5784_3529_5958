@@ -18,8 +18,10 @@ internal class TaskImplementation : ITask
     /// <exception cref="DalAlreadyExistsException">Returning an error from an existing task</exception>
     public int Create(DO.Task item)
     {
+        int newID=item.Id;
         List<DO.Task>? listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_task);
-        int newID = Config.NextTaskId;
+        if(item.Id == 0)
+            newID = Config.NextTaskId;
         DO.Task newTask = item with { Id = newID, CreatedAtDate = (DateTime.Today).AddYears(-1) };
         listTask.Add(newTask);
         XMLTools.SaveListToXMLSerializer(listTask, s_task);

@@ -34,9 +34,10 @@ internal class DependencyImplementation : IDependency
     /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Dependency item)
     {
+        int id=item.Id;
         XElement dependencyRootElem = XMLTools.LoadListFromXMLElement(s_dependency);
-
-        int id = Config.NextDependencyId;
+        if (item.Id == 0)
+             id = Config.NextDependencyId;
         XElement dependencyElem = new XElement("Dependency",
             new XElement("Id",id),
             new XElement("DependentTask", item.DependentTask),

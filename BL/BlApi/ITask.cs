@@ -13,6 +13,5 @@ public interface ITask
     public IEnumerable<BO.Task> ReadAll();
     public void Update(BO.Task item);
     public void Delete(int id);
-   // public BO.StudentInCourse GetDetailedCourseForStudent(int StudentId, int CourseId);
-
+   
 }
