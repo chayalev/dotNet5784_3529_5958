@@ -10,10 +10,10 @@ public class Task
 {
     public int Id { get; init; }
     public string? Description { get; set; }
-    public string? alias { get; set; }
+    public string? Alias { get; set; }
     public DateTime? CreateAtDate { get; set; }
     public BO.Status Status { get; set; }
-    public IEnumerable<BO.TaskInList>? Dependencies { get; set; }
+    public List<BO.TaskInList>? Dependencies { get; set; }
     public DateTime? LinkMilestone { get; set; }
     public DateTime? BaselineStartDate { get; set; }
     public DateTime? StartDate { get; set; }
