@@ -17,7 +17,7 @@ public class DalAlreadyExistsException : Exception
     public DalAlreadyExistsException(string? message) : base(message) { }
 }
 /// <summary>
-/// Dal Already Exists Exception
+/// Dal Deletion Impossible
 /// </summary>
 [Serializable]
 public class DalDeletionImpossible : Exception

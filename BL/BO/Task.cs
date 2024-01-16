@@ -6,6 +6,25 @@ using System.Threading.Tasks;
 
 namespace BO;
 
+/// <summary>
+/// Main logical entity-Task
+/// </summary>
+/// <param name="Id"> unique ID (created automatically)</param>
+/// <param name="Description">Description of the task</param>
+/// <param name="Alias">Alias of the task</param>
+/// <param name="CreateAtDate">Production date</param>
+/// <param name="Status">Status of task</param>
+/// <param name="Dependencies">Dependency list (task-in-list type)</param>
+/// <param name="LinkMilestone">related milestone</param>
+/// <param name="BaselineStartDate">Estimated start date</param>
+/// <param name="StartDate">Actual start date</param>
+/// <param name="ForecastDate">Estimated completion date</param>
+/// <param name="DeadlineDate">Final date for completion</param>
+/// <param name="ComleteDate">Actual end date</param>
+/// <param name="Deliverables">product</param>
+/// <param name="Remarks">Remarks</param>
+/// <param name="Engineer">If available, the ID and name of the engineer assigned to the task</param>
+/// <param name="ComplexityLevel">Difficulty</param>
 public class Task
 {
     public int Id { get; init; }
