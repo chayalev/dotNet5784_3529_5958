@@ -12,6 +12,7 @@ namespace BO;
 /// /// <param name="Id">The ID of the MilestoneInTask</param>
 /// <param name="Description">Description</param>
 /// <param name="Alias">the alias of the MilestoneInTask</param>
+/// <param name="Alias">the date of start </param>
 /// <param name="Status">the status of the MilestoneInTask</param>
 /// <param name="CompletionPercentage">progress percentage</param>
 public class MilestoneInList
@@ -19,6 +20,8 @@ public class MilestoneInList
     public int Id { get; set; }
     public string? Description { get; set; }
     public string? Alias { get; set; }
+    public DateTime? CreatedAtDate { get; set; } = DateTime.Now;
     public BO.Status? Status { get; set; }
     public double? CompletionPercentage { get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
 }

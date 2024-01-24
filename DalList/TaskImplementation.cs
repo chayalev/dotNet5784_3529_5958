@@ -27,21 +27,21 @@ internal class TaskImplementation : ITask
             throw new DalDeletionImpossible("Can not delete depended task");
         DataSource.Tasks.Remove(taskDelete);
     }
-   public Task? Read(Func<Task, bool> filter)// stage 2
-    {
-        return DataSource.Tasks.FirstOrDefault(filter);
-    }
     public Task? Read(int id)
     {
         //Returns the requested task, if not found returns null
         return DataSource.Tasks.FirstOrDefault(Task => Task.Id == id);
 
     }
-
+    public Task? Read(Func<Task, bool> filter)// stage 2
+    {
+        return DataSource.Tasks.FirstOrDefault(filter);
+    }
+ 
     public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null) //stage 2
     {
         if (filter == null)
-            return DataSource.Tasks.Select(item => item);
+            return DataSource.Tasks;
         else
             return DataSource.Tasks.Where(filter);
     }

@@ -14,9 +14,10 @@ namespace BO;
 /// <param name="Status">The status of the TaskInList work</param>
 public class TaskInList
 {
-    public int Id { get; init; }
-    public string? Descruption { get; set; }
+    public int Id { get; set; }
+    public string? Description { get; set; }
     public string? Alias { get; set; }
     public Status? Status { get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
 }
 

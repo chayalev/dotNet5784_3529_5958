@@ -13,5 +13,6 @@ namespace DalApi
         public DateTime? startDate { get; set; } 
         public DateTime? EndDate { get; set; }
 
+
     }
 }

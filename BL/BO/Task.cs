@@ -31,9 +31,9 @@ public class Task
     public string? Description { get; set; }
     public string? Alias { get; set; }
     public DateTime? CreateAtDate { get; set; }
-    public BO.Status Status { get; set; }
+    public BO.Status StatusTask { get; set; }
     public List<BO.TaskInList>? Dependencies { get; set; }
-    public DateTime? LinkMilestone { get; set; }
+    public MilestoneInTask? LinkMilestone { get; set; }
     public DateTime? BaselineStartDate { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? ForecastDate { get; set; }
@@ -42,5 +42,6 @@ public class Task
     public string? Deliverables { get; set; }
     public string? Remarks { get; set; }
     public EngineerInTask? Engineer { get; set; }
-    public EngineerExperience ComplexityLevel { get; set; }
+    public EngineerExperience? ComplexityLevel { get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
 }

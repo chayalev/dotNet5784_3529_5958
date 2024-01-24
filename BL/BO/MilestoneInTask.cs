@@ -17,8 +17,7 @@ public class MilestoneInTask
 {
     public int Id { get; init; }
     public string? Alias { get; set; }
-    public DateTime? CreatedAt { get; set; } = DateTime.Now;
-    public Status? Status { get; set; }
-    public float? ProgressPercent {  get; set; }
+    public override string ToString() => Tools.ToStringProperty(this);
+
 }
 
