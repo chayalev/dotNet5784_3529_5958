@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLApi;
+namespace BlApi;
 public interface IBl
 {
     public IEngineer Engineer { get; }
