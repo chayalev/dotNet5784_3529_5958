@@ -131,9 +131,11 @@ public static class Initialization
     public static void Do()
     {
         //creates the entity lists
+
+        s_dal = DalApi.Factory.Get; //stage 4
+  
         createEngineer();
         createTask();
         createDependency();
-        s_dal = DalApi.Factory.Get; //stage 4
     }
 }

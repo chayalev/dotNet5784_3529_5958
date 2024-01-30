@@ -3,6 +3,7 @@ namespace BlImplementation;
 using BlApi;
 using BO;
 using DO;
+using System.Runtime.Intrinsics.Arm;
 
 internal class TaskImplementation : ITask
 {
@@ -19,9 +20,7 @@ internal class TaskImplementation : ITask
             var currentTask = _dal.Task.Read(task => task.Id == dep?.DependsOnTask);
             int newid = dep?.DependsOnTask ?? throw new DalDoesNotExistException("");
             //מחשב את הסטטוס 
-            Status status = _dal.Task.ReadAll(task => task.IsMilestone == true) == null
-                ? 0
-                : (Status)1;
+            var status = _dal.Task.ReadAll().FirstOrDefault(task => task?.IsMilestone == true) == null ? 0 : (Status)1;
             //מחזיר איבר חדש מסוג משימה ברשימה
             return new BO.TaskInList
             {
@@ -39,17 +38,42 @@ internal class TaskImplementation : ITask
         //בדיקות תקינות!!!
         if (item.Alias == null)
             throw new wrongInput("כינוי ריק");
-        DO.Task newTask = new DO.Task
-        (0, item.Description, null, item.Alias, false, item.CreateAtDate, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
-        int idEng = _dal.Task.Create(newTask);
-        var listDep = item.Dependencies;
-        if (listDep != null)
-            foreach (var taskDep in listDep)
+        //   var temp = item?.Dependencies?
+        //.Select(dep => _dal.Task.Read(dep.Id))
+        //.Select(taskInList => new TaskInList
+        //{
+        //    Id = taskInList!.Id,
+        //    Description = taskInList.Description,
+        //    Alias = taskInList.Alias,
+        //}).ToList();
+        item?.Dependencies?.ForEach(dep =>
+        {
+            var taskInList = _dal.Task.Read(dep.Id);
+            if (taskInList != null)
             {
-                var newDep = new DO.Dependency { DependentTask = idEng, DependsOnTask = taskDep.Id };
-                _dal.Dependency.Create(newDep);
+                dep.Id = taskInList.Id;
+                dep.Description = taskInList.Description;
+                dep.Alias = taskInList.Alias;
             }
-        return idEng;
+        });
+        //item?.Dependencies?.Select(dep => _dal.Dependency.Create(new Dependency { DependentTask = item.Id, DependsOnTask = dep.Id }));
+        DO.Task newTask = new DO.Task
+        (0, item!.Description, null, item.Alias, false, item.CreateAtDate, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+        int idTask = _dal.Task.Create(newTask);
+        //var listDep = item.Dependencies;
+        //if (listDep != null)
+        //    foreach (var taskDep in listDep)
+        //    {
+        //        var newDep = new DO.Dependency { DependentTask = idEng, DependsOnTask = taskDep.Id };
+        //        _dal.Dependency.Create(newDep);
+        //    }
+        item?.Dependencies?.ForEach(taskDep =>
+    {
+        var newDep = new DO.Dependency { DependentTask = idTask, DependsOnTask = taskDep.Id };
+        _dal.Dependency.Create(newDep);
+    });
+
+        return idTask;
     }
     public void Delete(int id)
     {
@@ -73,23 +97,30 @@ internal class TaskImplementation : ITask
     {
 
         DO.Task doTask = _dal.Task.Read(id) ?? throw new BO.BlDoesNotExistException($"task with ID={id} does Not exist");
+
         try
         {
+
+
+            var status = _dal.Task.ReadAll().FirstOrDefault(task => task?.IsMilestone == true) == null ? 0 : (Status)1;
+
             //לבדוק אם השורות הבאות מביאות לי את אותה תוצאה כמו השורות שאחר כך
+
             var milestoneInTask = _dal.Dependency.ReadAll()
-         .Where(dep => dep?.DependentTask == id)
-         .Select(dep => new MilestoneInTask
-         {
-             Id = dep?.DependsOnTask ?? throw new DalDoesNotExistException(""),
-             Alias = _dal.Task.Read(dep.DependsOnTask.Value)?.Alias
-         })
-         .FirstOrDefault();
+             .Where(dep => dep?.DependentTask == id)
+             .Select(dep => new MilestoneInTask
+             {
+                 Id = dep?.DependsOnTask ?? throw new DalDoesNotExistException(""),
+                 Alias = _dal.Task.Read(dep.DependsOnTask.Value)?.Alias
+             })
+             .FirstOrDefault();
+            
 
 
             //להחליף לשאילתת 
             //var listMilestone = _dal.Dependency.Read(dep => dep.DependentTask == id);
             //var milestoneInTask = new MilestoneInTask { Id = (int)listMilestone!.DependsOnTask!, Alias = _dal.Task.Read((int)listMilestone.DependsOnTask)?.Alias };
-            var status = _dal.Task.ReadAll(task => task.IsMilestone == true) == null ? 0 : (Status)1;
+
             return new BO.Task()
             {
                 Id = id,
@@ -118,11 +149,11 @@ internal class TaskImplementation : ITask
         }
 
     }
-    
+
     public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         //יצירת רשימת משימות חדשה מסוג BO 
-         //var allTasks = _dal.Task.ReadAll().Where(tsk=>tsk?.IsMilestone==false).Select(doTask => Read(doTask!.Id)==null?throw new Exception("as"):);
+        //var allTasks = _dal.Task.ReadAll().Where(tsk=>tsk?.IsMilestone==false).Select(doTask => Read(doTask!.Id)==null?throw new Exception("as"):);
         var allTasks = _dal.Task.ReadAll().Select(doTask => new BO.Task
         {
             Id = doTask!.Id,

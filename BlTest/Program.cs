@@ -1,6 +1,8 @@
 ﻿using BlApi;
 using DalApi;
 using BO;
+using System.Runtime.Intrinsics.Arm;
+
 namespace BlTest
 {
     internal class Program
@@ -42,13 +44,13 @@ namespace BlTest
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private static Engineer CreateEngineer(int id)
+        private static BO.Engineer CreateEngineer(int id)
         {
-            Engineer? _engineer = new Engineer();
+            BO.Engineer? _engineer = new Engineer();
             int _result;
             double _resultD;
             Console.WriteLine("Press the values: ");
-            Console.WriteLine("id,name,level,email,cost");
+            Console.WriteLine("id, name, level, email, cost, task - id and alias");
             //to get the engineer before update
             if (id != 0)
                 _engineer = s_bl.Engineer?.Read(id);
@@ -59,12 +61,26 @@ namespace BlTest
                 Name = StringParse(_engineer?.Name),
                 Level = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out _result) ? _result : (int?)_engineer?.Level),
                 Email = StringParse(_engineer?.Email),
-                Cost = double.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _engineer?.Cost
+                Cost = double.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _engineer?.Cost,
+                Task = null,
             };
             //return the values to create the entity
             return newEngineer;
         }
+        private static List<TaskInList> insertDependencies()
+        {
 
+            List<TaskInList> dependencies = new List<TaskInList>();
+            int _result;
+            Console.WriteLine("insert the list of dependencies till -1");
+            int dep = int.TryParse(Console.ReadLine(), out  _result) ? _result : -1;
+            while (dep != -1)
+            {
+                dependencies.Add(new TaskInList { Id = dep });
+                dep = int.TryParse(Console.ReadLine(), out  _result) ? _result : -1;
+            }
+            return dependencies;
+        }
         /// <summary>
         /// function to create the task
         /// </summary>
@@ -76,35 +92,27 @@ namespace BlTest
             int _result;
             bool _resultB;
             DateTime _resultD;
+          
             //if the user want to update the details
             if (id != 0)
                 _task = s_bl.Task?.Read(id);
             Console.WriteLine("Press the values: ");
-            Console.WriteLine("Description,Alias,IsMilestone,CreatedAtDate,RequiredEffortTime,StartDate,ScheduledDate,DeadlineDate,CompleteDate,Deliverables,Remarks,CopmlexityLevel,EngineerId");
+            Console.WriteLine("Description,Alias,Deliverables,Remarks,CopmlexityLevel,EngineerId,");
             //Get the valeus of task
             BO.Task newTask = new BO.Task()
             {
                 Id = id,
                 Description = StringParse(_task?.Description),
                 Alias = StringParse(_task?.Alias),
-                IsMilestone = bool.TryParse(Console.ReadLine(), out _resultB) ? _resultB : _task?.IsMilestone,
-                CreatedAtDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
-                RequiredEffortTime = TimeSpan.TryParse(Console.ReadLine(), out TimeSpan _resultT) ? _resultT : _task?.RequiredEffortTime,
-                StartDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
-                ScheduledDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
-                DeadlineDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
-                CompleteDate = DateTime.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _task?.CreatedAtDate,
                 Deliverables = StringParse(_task?.Deliverables),
                 Remarks = StringParse(_task?.Remarks),
-                CopmlexityLevel = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out int _result1) ? _result1 : (int?)_task?.CopmlexityLevel),
-                EngineerId = int.TryParse(Console.ReadLine(), out _result) ? _result : _task?.EngineerId,
+                ComplexityLevel = (BO.EngineerExperience?)(int.TryParse(Console.ReadLine(), out _result) ? _result : (int?)_task?.ComplexityLevel),
+                Engineer = _task?.Engineer,    
+                Dependencies = insertDependencies(),
             };
             //return the values to create the entity
             return newTask;
         }
-
-
-
         /// <summary>
         /// function to make actions of the entities and send them to the appropriate functions
         /// </summary>
@@ -135,7 +143,7 @@ namespace BlTest
                                 }
                                 //create Milestone
                                 else if (entity == "Milestone")
-                                    s_bl?.Dependency.Create(CreateDependency(0));
+                                    s_bl?.Milestone.Create();
                                 //create Task
                                 else
                                     s_bl?.Task.Create(CreateTask(0));
@@ -156,7 +164,7 @@ namespace BlTest
                                         Console.WriteLine(s_bl?.Engineer.Read(_id) ?? throw new BlDoesNotExistException($"Engineer with ID={_id} does not exists"));
                                     //read Milestone
                                     else if (entity == "Milestone")
-                                        Console.WriteLine(s_bl?.Dependency.Read(_id) ?? throw new BlDoesNotExistException($"Dependency with ID={_id} does not exists"));
+                                        Console.WriteLine(s_bl?.Milestone.Read(_id) ?? throw new BlDoesNotExistException($"Dependency with ID={_id} does not exists"));
                                     //read Task
                                     else
                                         Console.WriteLine(s_bl?.Task.Read(_id) ?? throw new BlDoesNotExistException($"Task with ID={_id} does not exists"));
@@ -177,13 +185,6 @@ namespace BlTest
                                         Console.WriteLine(_eng);
                                 }
 
-                                //read Dependency
-                                else if (entity == "Dependency")
-                                {
-                                    List<Dependency> allDep = s_bl?.Dependency.ReadAll().ToList() ?? throw new BlDoesNotExistException("Dependencies do not exists");
-                                    foreach (var _dep in allDep)
-                                        Console.WriteLine(_dep);
-                                }
                                 //read Task
                                 else
                                 {
@@ -209,17 +210,17 @@ namespace BlTest
                                         Console.WriteLine(s_bl?.Engineer.Read(_id) ?? throw new BlDoesNotExistException($"Engineer with ID= {_id} does not exists"));
                                         s_bl.Engineer.Update(CreateEngineer(_id));
                                     }
-                                    //update Dependency
-                                    else if (entity == "Dependency")
-                                    {
-                                        Console.WriteLine(s_bl?.Dependency.Read(_id) ?? throw new BlDoesNotExistException($"Dependency with ID= {_id} does not exists"));
-                                        s_bl.Dependency.Update(CreateDependency(_id));
-                                    }
+                                    ////update Milestone
+                                    //else if (entity == "Milestone")
+                                    //{
+                                    //    Console.WriteLine(s_bl?.Milestone.Read(_id) ?? throw new BlDoesNotExistException($"Dependency with ID= {_id} does not exists"));
+                                    //    s_bl.Milestone.Update(CreateMilestone(_id));
+                                    //}
                                     //update Task
                                     else
                                     {
                                         Console.WriteLine(s_bl?.Task.Read(_id) ?? throw new BlDoesNotExistException($"Task with ID= {_id} does not exists"));
-                                        s_bl.Task.Update(CreateTask(_id));
+                                        //s_bl.Task.Update(CreateTask(_id));
                                     }
                                 }
                             }
@@ -237,9 +238,7 @@ namespace BlTest
                                     //delete Engineer
                                     if (entity == "Engineer")
                                             s_bl?.Engineer.Delete(_id);
-                                    //delete Dependency
-                                    else if (entity == "Dependency")
-                                        s_bl?.Dependency.Delete(_id);
+                                 
                                     //delete Task
                                     else
                                         s_bl?.Task.Delete(_id);
