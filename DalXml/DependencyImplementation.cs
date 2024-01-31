@@ -75,7 +75,7 @@ internal class DependencyImplementation : IDependency
                 let d = createDependencyfromXElement(dep)
                 where d != null && filter(d)
                 select (Dependency?)d).FirstOrDefault()
-                ?? throw new DalDoesNotExistException($"Dependency does not exist");
+                ?? null;
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ internal class DependencyImplementation : IDependency
         return (from dep in dependencyRootElem.Elements()
                 where dep.ToIntNullable("Id") == id
                 select (createDependencyfromXElement(dep))).FirstOrDefault()
-                ?? throw new DalDoesNotExistException($"Dependency with ID= {id} does not exist");
+                ??null;
 
     }
 

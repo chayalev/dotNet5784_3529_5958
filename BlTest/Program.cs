@@ -50,14 +50,17 @@ namespace BlTest
             int _result;
             double _resultD;
             Console.WriteLine("Press the values: ");
-            Console.WriteLine("id, name, level, email, cost, task - id and alias");
             //to get the engineer before update
             if (id != 0)
                 _engineer = s_bl.Engineer?.Read(id);
+            else
+                Console.Write("id, ");
+            Console.WriteLine("name, level, email, cost, task - id and alias");
+
             //Get the valeus of engineer
             Engineer newEngineer = new Engineer()
             {
-                Id = int.TryParse(Console.ReadLine(), out _result) ? _result : _engineer!.Id,
+                Id = id==0 ? (int.TryParse(Console.ReadLine(), out _result) ? _result : _engineer!.Id) : id,
                 Name = StringParse(_engineer?.Name),
                 Level = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out _result) ? _result : (int?)_engineer?.Level),
                 Email = StringParse(_engineer?.Email),
@@ -73,11 +76,11 @@ namespace BlTest
             List<TaskInList> dependencies = new List<TaskInList>();
             int _result;
             Console.WriteLine("insert the list of dependencies till -1");
-            int dep = int.TryParse(Console.ReadLine(), out  _result) ? _result : -1;
+            int dep = int.TryParse(Console.ReadLine(), out _result) ? _result : -1;
             while (dep != -1)
             {
                 dependencies.Add(new TaskInList { Id = dep });
-                dep = int.TryParse(Console.ReadLine(), out  _result) ? _result : -1;
+                dep = int.TryParse(Console.ReadLine(), out _result) ? _result : -1;
             }
             return dependencies;
         }
@@ -90,9 +93,6 @@ namespace BlTest
         {
             BO.Task? _task = new BO.Task();
             int _result;
-            bool _resultB;
-            DateTime _resultD;
-          
             //if the user want to update the details
             if (id != 0)
                 _task = s_bl.Task?.Read(id);
@@ -107,7 +107,7 @@ namespace BlTest
                 Deliverables = StringParse(_task?.Deliverables),
                 Remarks = StringParse(_task?.Remarks),
                 ComplexityLevel = (BO.EngineerExperience?)(int.TryParse(Console.ReadLine(), out _result) ? _result : (int?)_task?.ComplexityLevel),
-                Engineer = _task?.Engineer,    
+                Engineer = _task?.Engineer,
                 Dependencies = insertDependencies(),
             };
             //return the values to create the entity
@@ -220,7 +220,7 @@ namespace BlTest
                                     else
                                     {
                                         Console.WriteLine(s_bl?.Task.Read(_id) ?? throw new BlDoesNotExistException($"Task with ID= {_id} does not exists"));
-                                        //s_bl.Task.Update(CreateTask(_id));
+                                        s_bl.Task.Update(CreateTask(_id));
                                     }
                                 }
                             }
@@ -237,8 +237,8 @@ namespace BlTest
                                     _id = _result;
                                     //delete Engineer
                                     if (entity == "Engineer")
-                                            s_bl?.Engineer.Delete(_id);
-                                 
+                                        s_bl?.Engineer.Delete(_id);
+
                                     //delete Task
                                     else
                                         s_bl?.Task.Delete(_id);
@@ -271,6 +271,8 @@ namespace BlTest
                 string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
                 if (ans == "Y")
                     DalTest.Initialization.Do();
+                else if (ans != "N")
+                    throw new BlWrongInput("wrong input only Y / N accepted");
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;

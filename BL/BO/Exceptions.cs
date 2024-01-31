@@ -1,6 +1,8 @@
 ﻿
 namespace BO;
-
+/// <summary>
+/// Bl Does Not Exist Exception
+/// </summary>
 [Serializable]
 public class BlDoesNotExistException : Exception
 {
@@ -8,7 +10,9 @@ public class BlDoesNotExistException : Exception
     public BlDoesNotExistException(string message, Exception innerException)
                 : base(message, innerException) { }
 }
-
+/// <summary>
+/// Bl Already Exists Exception
+/// </summary>
 [Serializable]
 public class BlAlreadyExistsException : Exception
 {
@@ -16,7 +20,9 @@ public class BlAlreadyExistsException : Exception
     public BlAlreadyExistsException(string message, Exception innerException)
                 : base(message, innerException) { }
 }
-
+/// <summary>
+/// Bl Null Property Exception
+/// </summary>
 [Serializable]
 public class BlNullPropertyException : Exception
 {
@@ -26,9 +32,16 @@ public class BlNullPropertyException : Exception
 /// BL Deletion Impossible
 /// </summary>
 [Serializable]
-public class BLDeletionImpossible : Exception
+public class BlDeletionImpossible : Exception
 {
-    public BLDeletionImpossible(string? message) : base(message) { }
+    public BlDeletionImpossible(string? message) : base(message) { }
 }
-
+/// <summary>
+/// BL Wrong Input
+/// </summary>
+[Serializable]
+public class BlWrongInput : Exception
+{
+    public BlWrongInput(string? message) : base(message) { }
+}
 

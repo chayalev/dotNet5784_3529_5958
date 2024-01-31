@@ -28,7 +28,7 @@ internal class EngineerImplementation : IEngineer
     {
         BO.Engineer? boEng = this.Read(id);
         if (boEng?.Task != null)
-            throw new BO.BLDeletionImpossible("Engineer in the middle of task");
+            throw new BO.BlDeletionImpossible("Engineer in the middle of task");
         if (_dal.Engineer.Read(id) == null)
             throw new BO.BlDoesNotExistException($"Engineer ID = {id} does not exist");
         else

@@ -93,7 +93,11 @@ internal class EngineerImplementation : IEngineer
     /// <param name="item">Engineerה on change</param>
     public void Update(Engineer item)
     {
-        Delete(item.Id);
-        Create(item);
+        List<Engineer>? listEngineer = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers);
+        Engineer? engineerDelete = listEngineer.FirstOrDefault(Enginner => Enginner.Id == item.Id);
+        if (engineerDelete == null)
+            throw new DalDoesNotExistException($"Engineer with ID={item.Id} does not exists");
+        listEngineer.Remove(engineerDelete);
+        listEngineer.Add(item);
     }
 }

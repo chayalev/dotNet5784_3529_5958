@@ -94,7 +94,11 @@ internal class TaskImplementation : ITask
     /// <param name="item">Task on change</param>
     public void Update(DO.Task item)
     {
-        Delete(item.Id);
-        Create(item);
+        List<DO.Task>? listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_task);
+        DO.Task? taskDelete = listTask.FirstOrDefault(Task => Task.Id == item.Id);
+        if (taskDelete == null)
+            throw new DalDoesNotExistException($"Task with ID={item.Id} does not exists");
+        listTask.Remove(taskDelete);
+        listTask.Add(item);
     }
 }

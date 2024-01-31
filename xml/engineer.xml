@@ -84,4 +84,46 @@
     <Email>Shira@gmail.com</Email>
     <Cost>432.3900915878389</Cost>
   </Engineer>
+  <Engineer>
+    <Id>211740573</Id>
+    <Name>Dani Levi</Name>
+    <Level>AdvancedBeginner</Level>
+    <Email>Dani@gmail.com</Email>
+    <Cost>482.8743588005695</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>341067916</Id>
+    <Name>Eli Amar</Name>
+    <Level>Expert</Level>
+    <Email>Eli@gmail.com</Email>
+    <Cost>339.00610259365203</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>367709404</Id>
+    <Name>Yair Cohen</Name>
+    <Level>Competent</Level>
+    <Email>Yair@gmail.com</Email>
+    <Cost>331.0950843038084</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>245688206</Id>
+    <Name>Ariela Levin</Name>
+    <Level>Expert</Level>
+    <Email>Ariela@gmail.com</Email>
+    <Cost>165.86269994771317</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>280097787</Id>
+    <Name>Dina Klein</Name>
+    <Level>AdvancedBeginner</Level>
+    <Email>Dina@gmail.com</Email>
+    <Cost>137.8553249190345</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>253013372</Id>
+    <Name>Shira Israelof</Name>
+    <Level>Novice</Level>
+    <Email>Shira@gmail.com</Email>
+    <Cost>232.87337573629662</Cost>
+  </Engineer>
 </ArrayOfEngineer>

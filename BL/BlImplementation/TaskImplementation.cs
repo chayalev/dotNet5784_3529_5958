@@ -78,11 +78,11 @@ internal class TaskImplementation : ITask
     public void Delete(int id)
     {
         //בדיקה שהמשימה לא  קודמת למשימות אחרות
-        if (_dal.Dependency.ReadAll(dep => dep.DependsOnTask == id) != null)
-            throw new BLDeletionImpossible($"Task with ID={id} is in depended");
+        if (_dal.Dependency.Read(dep => dep.DependsOnTask == id) != null)
+            throw new BlDeletionImpossible($"Task with ID={id} is in depended");
         //בדיקה -אי אפשר למחוק משימות לאחר לוז יצירת פרויקט
-        if (_dal.Task.ReadAll(task => task.IsMilestone == true) != null)
-            throw new BLDeletionImpossible($"Cannot delete a task after a Creating a schedule");
+        if (_dal.Task.ReadA(task => task.IsMilestone == true) != null)
+            throw new BlDeletionImpossible($"Cannot delete a task after a Creating a schedule");
         try
         {
             _dal.Task.Delete(id);
