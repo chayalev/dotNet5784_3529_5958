@@ -43,5 +43,6 @@ public class Task
     public string? Remarks { get; set; }
     public EngineerInTask? Engineer { get; set; }
     public EngineerExperience? ComplexityLevel { get; set; }
+    public TimeSpan? RequiredEffortTime { get; set; }
     public override string ToString() => Tools.ToStringProperty(this);
 }

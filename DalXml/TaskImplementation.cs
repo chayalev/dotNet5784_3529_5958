@@ -100,5 +100,6 @@ internal class TaskImplementation : ITask
             throw new DalDoesNotExistException($"Task with ID={item.Id} does not exists");
         listTask.Remove(taskDelete);
         listTask.Add(item);
+        XMLTools.SaveListToXMLSerializer(listTask, s_task);
     }
 }

@@ -39,6 +39,12 @@ namespace BlTest
 
         }
 
+        private static TaskInEngineer insertTaskInEngineer()
+        {
+            int _result;
+            int taskId = int.TryParse(Console.ReadLine(), out _result) ? _result : -1;
+            return new TaskInEngineer { Id = taskId };
+        }
         /// <summary>
         /// function to create the engineer
         /// </summary>
@@ -55,7 +61,7 @@ namespace BlTest
                 _engineer = s_bl.Engineer?.Read(id);
             else
                 Console.Write("id, ");
-            Console.WriteLine("name, level, email, cost, task - id and alias");
+            Console.WriteLine("name, level, email, cost");
 
             //Get the valeus of engineer
             Engineer newEngineer = new Engineer()
@@ -65,11 +71,15 @@ namespace BlTest
                 Level = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out _result) ? _result : (int?)_engineer?.Level),
                 Email = StringParse(_engineer?.Email),
                 Cost = double.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _engineer?.Cost,
-                Task = null,
+                Task = id!=0 ? insertTaskInEngineer():null
             };
             //return the values to create the entity
             return newEngineer;
         }
+        /// <summary>
+        /// function to insert the tasks before the current task
+        /// </summary>
+        /// <returns>list of dependency</returns>
         private static List<TaskInList> insertDependencies()
         {
 
@@ -97,7 +107,7 @@ namespace BlTest
             if (id != 0)
                 _task = s_bl.Task?.Read(id);
             Console.WriteLine("Press the values: ");
-            Console.WriteLine("Description,Alias,Deliverables,Remarks,CopmlexityLevel,EngineerId,");
+            Console.WriteLine("Description,Alias,Deliverables,Remarks,CopmlexityLevel,requiredEffortTime");
             //Get the valeus of task
             BO.Task newTask = new BO.Task()
             {
@@ -108,7 +118,9 @@ namespace BlTest
                 Remarks = StringParse(_task?.Remarks),
                 ComplexityLevel = (BO.EngineerExperience?)(int.TryParse(Console.ReadLine(), out _result) ? _result : (int?)_task?.ComplexityLevel),
                 Engineer = _task?.Engineer,
+                RequiredEffortTime = TimeSpan.TryParse(Console.ReadLine(), out TimeSpan result) ? result : null,
                 Dependencies = insertDependencies(),
+
             };
             //return the values to create the entity
             return newTask;
@@ -268,11 +280,14 @@ namespace BlTest
             {
                 //Initialization the lists of entity
                 Console.Write("Would you like to create Initial data? (Y/N)");
-                string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+                string? ans = Console.ReadLine() ?? throw new BlWrongInput("Wrong input");
                 if (ans == "Y")
+                {
+                    s_bl.Reset();
                     DalTest.Initialization.Do();
+                }
                 else if (ans != "N")
-                    throw new BlWrongInput("wrong input only Y / N accepted");
+                    throw new BO.BlWrongInput("wrong input only Y / N accepted");
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;
@@ -310,8 +325,6 @@ namespace BlTest
                 Console.WriteLine(ex.Message);
             }
         }
-
-
 
     }
 }

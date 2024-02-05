@@ -35,6 +35,9 @@ internal class TaskImplementation : ITask
     }
     public int Create(BO.Task item)
     {
+        //להוסיף חריגה מתאימה
+        if (Factory.Get().IsCreate)
+            throw new Exception("f");
         //בדיקות תקינות!!!
         if (item.Alias == null)
             throw new wrongInput("כינוי ריק");
@@ -58,7 +61,7 @@ internal class TaskImplementation : ITask
         });
         //item?.Dependencies?.Select(dep => _dal.Dependency.Create(new Dependency { DependentTask = item.Id, DependsOnTask = dep.Id }));
         DO.Task newTask = new DO.Task
-        (0, item!.Description, null, item.Alias, false, item.CreateAtDate, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+        (0, item!.Description, item.RequiredEffortTime, item.Alias, false, item.CreateAtDate, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
         int idTask = _dal.Task.Create(newTask);
         //var listDep = item.Dependencies;
         //if (listDep != null)
@@ -68,20 +71,20 @@ internal class TaskImplementation : ITask
         //        _dal.Dependency.Create(newDep);
         //    }
         item?.Dependencies?.ForEach(taskDep =>
-    {
-        var newDep = new DO.Dependency { DependentTask = idTask, DependsOnTask = taskDep.Id };
-        _dal.Dependency.Create(newDep);
-    });
+                        {
+                            var newDep = new DO.Dependency { DependentTask = idTask, DependsOnTask = taskDep.Id };
+                            _dal.Dependency.Create(newDep);
+                        });
 
         return idTask;
     }
     public void Delete(int id)
     {
         //בדיקה שהמשימה לא  קודמת למשימות אחרות
-        if (_dal.Dependency.Read(dep => dep.DependsOnTask == id) != null)
+        if (_dal.Dependency.ReadAll(dep => dep.DependsOnTask == id).Any())
             throw new BlDeletionImpossible($"Task with ID={id} is in depended");
         //בדיקה -אי אפשר למחוק משימות לאחר לוז יצירת פרויקט
-        if (_dal.Task.ReadA(task => task.IsMilestone == true) != null)
+        if (_dal.Task.ReadAll(task => task.IsMilestone == true).Any())
             throw new BlDeletionImpossible($"Cannot delete a task after a Creating a schedule");
         try
         {
@@ -114,7 +117,7 @@ internal class TaskImplementation : ITask
                  Alias = _dal.Task.Read(dep.DependsOnTask.Value)?.Alias
              })
              .FirstOrDefault();
-            
+
 
 
             //להחליף לשאילתת 
@@ -179,19 +182,66 @@ internal class TaskImplementation : ITask
             return allTasks.Where(filter);
     }
 
-
     public void Update(BO.Task item)
     {
+        DO.Task taskUpdate;
+        //לפני יצירת לוז
+        if (!Factory.Get().IsCreate)
+        {
+            taskUpdate = new DO.Task
+            (item.Id, item.Description, item.RequiredEffortTime, item.Alias, false, null, null, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+            if (item.Dependencies != null)
+            {
+                var depToDelete = _dal.Dependency.ReadAll(dep => dep?.DependentTask == item.Id);
+                depToDelete.ToList().ForEach(dep =>
+                    {
+                        _dal.Dependency.Delete(dep!.Id);
+                    });
+                item?.Dependencies?.ForEach(taskDep =>
+                {
+                    var newDep = new DO.Dependency { DependentTask = item.Id, DependsOnTask = taskDep.Id };
+                    _dal.Dependency.Create(newDep);
+                });
+            }
+        }
+        //אחרי יצירת פרויקט
+        else
+        {
+            //כשרוצה לשנות תאריך התחלה של משימה
+            if (item.StartDate != null)
+            {
+                //אם התאריך התחלה קטן מתאריך הסיום של המשימות שתלוי בהן
+                if (!_dal.Dependency.ReadAll(dep => dep.DependentTask == item.Id).All(dep => _dal.Task.Read((int)dep?.DependsOnTask)?.DeadlineDate <= item.StartDate))
+                    //-אין אפשרות לשנות תאריך התחלה בכזה מצב.לעשות חריגה נורמלית
+                    throw new Exception("dd");
+            }
+           //אם תאריך הההתחלה קטן מתאריך ההתחלה של כל הפרויקט
+            if (!_dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >= Factory.Get().startDate)
+            {
+                throw new Exception("dd");
+            }
+            //אם תאריך ההתחלה גדול מתאריך הסיום
+            if (item.StartDate > item.DeadlineDate)
+                throw new Exception("yg");
+            //כשרוצה לעדכן מהנדס שכבר קיים מהנדס אחר למשימה זו
+            if (_dal.Task.Read(item.Id)?.EngineerId != null && _dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
+                throw new Exception("j");
+            //מחשב תאריך סיום
+            var deadLineDate = item.StartDate + item.RequiredEffortTime;
+            //מחשב משך זמן
+            var requiredEffortTime = item.DeadlineDate - item.StartDate;
+            taskUpdate = new DO.Task
+           (item.Id, item.Description, requiredEffortTime, item.Alias, false, null, null, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+        }
         //בדיקת נתונים
         try
         {
-            DO.Task taskUpdate = new DO.Task
-           (item.Id, item.Description, null, item.Alias, false, item.CreateAtDate, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
             _dal.Task.Update(taskUpdate);
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Task with ID={item.Id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"Task with ID={item!.Id} already exists", ex);
         }
     }
 }
+
