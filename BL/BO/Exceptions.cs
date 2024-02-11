@@ -44,4 +44,20 @@ public class BlWrongInput : Exception
 {
     public BlWrongInput(string? message) : base(message) { }
 }
+/// <summary>
+/// BL Bl Cant Change After Scheduled
+/// </summary>
+[Serializable]
+public class BlCantChangeAfterScheduled : Exception
+{
+    public BlCantChangeAfterScheduled(string? message) : base(message) { }
+}
+/// <summary>
+/// bl wrong date
+/// </summary>
+[Serializable]
+public class BlWrongDate : Exception
+{
+    public BlWrongDate(string? message) : base(message) { }
+}
 

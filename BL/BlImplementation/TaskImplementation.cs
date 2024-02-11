@@ -35,20 +35,12 @@ internal class TaskImplementation : ITask
     }
     public int Create(BO.Task item)
     {
-        //להוסיף חריגה מתאימה
+        //אין אפשרות להוסיף משימה אחרי יצירת פרויקט
         if (Factory.Get().IsCreate)
-            throw new Exception("f");
+            throw new BlCantChangeAfterScheduled("you cant add a task after a create a schedule");
         //בדיקות תקינות!!!
         if (item.Alias == null)
             throw new wrongInput("כינוי ריק");
-        //   var temp = item?.Dependencies?
-        //.Select(dep => _dal.Task.Read(dep.Id))
-        //.Select(taskInList => new TaskInList
-        //{
-        //    Id = taskInList!.Id,
-        //    Description = taskInList.Description,
-        //    Alias = taskInList.Alias,
-        //}).ToList();
         item?.Dependencies?.ForEach(dep =>
         {
             var taskInList = _dal.Task.Read(dep.Id);
@@ -59,17 +51,9 @@ internal class TaskImplementation : ITask
                 dep.Alias = taskInList.Alias;
             }
         });
-        //item?.Dependencies?.Select(dep => _dal.Dependency.Create(new Dependency { DependentTask = item.Id, DependsOnTask = dep.Id }));
         DO.Task newTask = new DO.Task
         (0, item!.Description, item.RequiredEffortTime, item.Alias, false, item.CreateAtDate, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
         int idTask = _dal.Task.Create(newTask);
-        //var listDep = item.Dependencies;
-        //if (listDep != null)
-        //    foreach (var taskDep in listDep)
-        //    {
-        //        var newDep = new DO.Dependency { DependentTask = idEng, DependsOnTask = taskDep.Id };
-        //        _dal.Dependency.Create(newDep);
-        //    }
         item?.Dependencies?.ForEach(taskDep =>
                         {
                             var newDep = new DO.Dependency { DependentTask = idTask, DependsOnTask = taskDep.Id };
@@ -104,8 +88,8 @@ internal class TaskImplementation : ITask
         try
         {
 
-
-            var status = _dal.Task.ReadAll().FirstOrDefault(task => task?.IsMilestone == true) == null ? 0 : (Status)1;
+            //מחשב את הסטטוס
+            var status = _dal.startDate == null ? 0 : (Status)1;
 
             //לבדוק אם השורות הבאות מביאות לי את אותה תוצאה כמו השורות שאחר כך
 
@@ -117,13 +101,6 @@ internal class TaskImplementation : ITask
                  Alias = _dal.Task.Read(dep.DependsOnTask.Value)?.Alias
              })
              .FirstOrDefault();
-
-
-
-            //להחליף לשאילתת 
-            //var listMilestone = _dal.Dependency.Read(dep => dep.DependentTask == id);
-            //var milestoneInTask = new MilestoneInTask { Id = (int)listMilestone!.DependsOnTask!, Alias = _dal.Task.Read((int)listMilestone.DependsOnTask)?.Alias };
-
             return new BO.Task()
             {
                 Id = id,
@@ -156,26 +133,26 @@ internal class TaskImplementation : ITask
     public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         //יצירת רשימת משימות חדשה מסוג BO 
-        //var allTasks = _dal.Task.ReadAll().Where(tsk=>tsk?.IsMilestone==false).Select(doTask => Read(doTask!.Id)==null?throw new Exception("as"):);
-        var allTasks = _dal.Task.ReadAll().Select(doTask => new BO.Task
-        {
-            Id = doTask!.Id,
-            Alias = doTask.Alias,
-            Description = doTask.Description,
-            Dependencies = GetDependencies(doTask.Id),
-            StatusTask = _dal.Task.ReadAll(task => task.IsMilestone == true) == null ? 0 : (Status)1,
-            CreateAtDate = doTask.CreatedAtDate,
-            StartDate = doTask.StartDate,
-            ForecastDate = doTask.ScheduledDate,
-            DeadlineDate = doTask.DeadlineDate,
-            ComleteDate = doTask.CompleteDate,
-            Deliverables = doTask.Deliverables,
-            Remarks = doTask.Remarks,
-            Engineer = doTask.EngineerId != null
-                    ? new EngineerInTask { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read(doTask.EngineerId.Value)?.Name }
-                    : null,
-            ComplexityLevel = (BO.EngineerExperience?)doTask.CopmlexityLevel,
-        });
+        var allTasks = _dal.Task.ReadAll().Select(doTask => Read(doTask!.Id) ?? throw new BlDoesNotExistException("the tasks dont exist"));
+        //var allTasks = _dal.Task.ReadAll().Select(doTask => new BO.Task
+        //{
+        //    Id = doTask!.Id,
+        //    Alias = doTask.Alias,
+        //    Description = doTask.Description,
+        //    Dependencies = GetDependencies(doTask.Id),
+        //    StatusTask = _dal.Task.ReadAll(task => task.IsMilestone == true) == null ? 0 : (Status)1,
+        //    CreateAtDate = doTask.CreatedAtDate,
+        //    StartDate = doTask.StartDate,
+        //    ForecastDate = doTask.ScheduledDate,
+        //    DeadlineDate = doTask.DeadlineDate,
+        //    ComleteDate = doTask.CompleteDate,
+        //    Deliverables = doTask.Deliverables,
+        //    Remarks = doTask.Remarks,
+        //    Engineer = doTask.EngineerId != null
+        //            ? new EngineerInTask { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read(doTask.EngineerId.Value)?.Name }
+        //            : null,
+        //    ComplexityLevel = (BO.EngineerExperience?)doTask.CopmlexityLevel,
+        //});
         if (filter == null)
             return allTasks;
         else
@@ -213,19 +190,19 @@ internal class TaskImplementation : ITask
                 //אם התאריך התחלה קטן מתאריך הסיום של המשימות שתלוי בהן
                 if (!_dal.Dependency.ReadAll(dep => dep.DependentTask == item.Id).All(dep => _dal.Task.Read((int)dep?.DependsOnTask)?.DeadlineDate <= item.StartDate))
                     //-אין אפשרות לשנות תאריך התחלה בכזה מצב.לעשות חריגה נורמלית
-                    throw new Exception("dd");
+                    throw new BlWrongDate($"A start date is less than the end date of the tasks that task {item.Id} depends on");
             }
            //אם תאריך הההתחלה קטן מתאריך ההתחלה של כל הפרויקט
-            if (!_dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >= Factory.Get().startDate)
+            if (!_dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >= Factory.Get().StartDate)
             {
-                throw new Exception("dd");
+                throw new BlWrongDate($" The task: {item.Id}- start date is earlier than the project start date");
             }
             //אם תאריך ההתחלה גדול מתאריך הסיום
             if (item.StartDate > item.DeadlineDate)
-                throw new Exception("yg");
+                throw new BlWrongDate($"The task:{item.Id}  start date is later than the end date");
             //כשרוצה לעדכן מהנדס שכבר קיים מהנדס אחר למשימה זו
             if (_dal.Task.Read(item.Id)?.EngineerId != null && _dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
-                throw new Exception("j");
+                throw new wrongInput($"The task:{item.Id} was taken by another engineer");
             //מחשב תאריך סיום
             var deadLineDate = item.StartDate + item.RequiredEffortTime;
             //מחשב משך זמן

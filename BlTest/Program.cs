@@ -284,10 +284,11 @@ namespace BlTest
                 if (ans == "Y")
                 {
                     s_bl.Reset();
-                    DalTest.Initialization.Do();
+                   DalTest.Initialization.Do();
                 }
                 else if (ans != "N")
                     throw new BO.BlWrongInput("wrong input only Y / N accepted");
+               // s_bl.CreateProject();
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;
