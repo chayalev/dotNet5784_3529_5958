@@ -74,7 +74,7 @@ internal class EngineerImplementation : IEngineer
     public void Update(BO.Engineer eng)
     {
         var dependencies=_dal.Dependency.ReadAll(dep => dep.DependentTask == eng.Task?.Id);
-        bool isAllDone = dependencies.All(dep => Factory.Get().Task.Read((int)dep.DependsOnTask)?.StatusTask == Status.Done);
+        bool isAllDone = dependencies.All(dep => Factory.Get().Task.Read((int)dep!.DependsOnTask!)?.StatusTask == Status.Done);
         if (isAllDone)
         {
 

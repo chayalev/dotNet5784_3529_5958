@@ -30,11 +30,11 @@ internal class Bl : IBl
         if (dependencies.Any())
         {
 
-            earliestDate = _dal.Task.Read((int)dependencies.First()!.DependsOnTask)?.DeadlineDate;
+            earliestDate = _dal.Task.Read((int)dependencies.First()!.DependsOnTask!)?.DeadlineDate;
             foreach (var item in dependencies)
             {
                 //לסדר חריגה
-                DateTime endDate = _dal.Task.Read((int)item!.DependsOnTask)?.DeadlineDate ?? throw new BO.BlWrongInput($"You dont have a deadline date to task with id:{item.Id}");
+                DateTime endDate = _dal.Task.Read((int)item!.DependsOnTask!)?.DeadlineDate ?? throw new BO.BlWrongInput($"You dont have a deadline date to task with id:{item.Id}");
                 earliestDate = endDate > earliestDate ? endDate : earliestDate;
             }
         }
@@ -66,7 +66,7 @@ internal class Bl : IBl
                 .ReadAll(dep => dep.DependsOnTask == currentTask?.Id)
                 .Select(dep =>
                 {
-                    var dependentTask = _dal.Task.Read((int)dep.DependentTask);
+                    var dependentTask = _dal.Task.Read((int)dep!.DependentTask!);
                     if (dependentTask != null)
                         taskQueue.Enqueue(dependentTask); // הוסף לתור
                     return dependentTask;

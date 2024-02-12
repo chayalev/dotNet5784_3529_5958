@@ -129,7 +129,6 @@ internal class TaskImplementation : ITask
         }
 
     }
-
     public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         //יצירת רשימת משימות חדשה מסוג BO 
@@ -158,7 +157,6 @@ internal class TaskImplementation : ITask
         else
             return allTasks.Where(filter);
     }
-
     public void Update(BO.Task item)
     {
         DO.Task taskUpdate;
@@ -188,7 +186,7 @@ internal class TaskImplementation : ITask
             if (item.StartDate != null)
             {
                 //אם התאריך התחלה קטן מתאריך הסיום של המשימות שתלוי בהן
-                if (!_dal.Dependency.ReadAll(dep => dep.DependentTask == item.Id).All(dep => _dal.Task.Read((int)dep?.DependsOnTask)?.DeadlineDate <= item.StartDate))
+                if (!_dal.Dependency.ReadAll(dep => dep.DependentTask == item.Id).All(dep => _dal.Task.Read((int)dep?.DependsOnTask!)?.DeadlineDate <= item.StartDate))
                     //-אין אפשרות לשנות תאריך התחלה בכזה מצב.לעשות חריגה נורמלית
                     throw new BlWrongDate($"A start date is less than the end date of the tasks that task {item.Id} depends on");
             }
