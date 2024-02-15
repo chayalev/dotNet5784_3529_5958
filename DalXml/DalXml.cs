@@ -26,6 +26,7 @@ sealed internal class DalXml : IDal
         get => XMLTools.GetDate("data-config", "EndDate");
         set => XMLTools.ChangeDate("data-config", "EndDate", value);
     }
+
     public void Reset()
     {
         Dependency.Reset();
