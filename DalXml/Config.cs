@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,17 +12,6 @@ internal static class Config
     static string s_data_config_xml = "data-config";
     internal static int NextDependencyId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextDependencyId"); }
     internal static int NextTaskId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }
-
-    /// <summary>
-    /// start date of project
-    /// </summary>
-
-    internal static DateTime? StartDate { get; set; }
-
-    ///// <summary>
-    ///// end date of project
-    ///// </summary>
-    internal static DateTime? EndDate { get; set; }
 
 
 }

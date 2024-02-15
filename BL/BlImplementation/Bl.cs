@@ -34,7 +34,6 @@ internal class Bl : IBl
     {
         DalApi.Factory.Get.Reset();
     }
-    //לבדוק אם אפשר להחליף את הFOREACH!!!!!
 
     /// <summary>
     /// Finding the earliest time to start the task
@@ -53,7 +52,7 @@ internal class Bl : IBl
             earliestDate = _dal.Task.Read((int)dependencies.First()!.DependsOnTask!)?.DeadlineDate;
             foreach (var item in dependencies)
             {
-                DateTime endDate = _dal.Task.Read((int)item!.DependsOnTask!)?.DeadlineDate ?? throw new BO.BlWrongInputException($"You dont have a deadline date to task with id:{item.Id}");
+                DateTime endDate = _dal.Task.Read((int)item!.DependsOnTask!)?.DeadlineDate ?? throw new BO.BlWrongDateException($"You dont have a deadline date to task with id:{item.Id}");
                 earliestDate = endDate > earliestDate ? endDate : earliestDate;
             }
         }
@@ -69,7 +68,7 @@ internal class Bl : IBl
     {
         Console.WriteLine("insert the start date:");
         ///Saving in a temporary variable the start time entered by the manager
-        var startDate = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : throw new BO.BlWrongInputException("must insert value!");
+        var startDate = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : throw new BO.BlWrongDateException("must insert value!");
         return startDate;
     }
 
@@ -136,6 +135,8 @@ internal class Bl : IBl
         foreach (var task in allTask)
             lastEndDate = task?.DeadlineDate > lastEndDate ? task.DeadlineDate : lastEndDate;
         EndDate = lastEndDate;
+        _dal.EndDate = EndDate;
+        _dal.startDate = startDate;
         IsCreate = true;
     }
 }
