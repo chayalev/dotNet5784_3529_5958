@@ -15,11 +15,13 @@ internal static class Config
     /// <summary>
     /// start date of project
     /// </summary>
-    internal static DateTime? startProject = null;
 
-    /// <summary>
-    /// end date of project
-    /// </summary>
-    internal static DateTime? endProject = null;
+    internal static DateTime? StartDate { get; set; }
+
+    ///// <summary>
+    ///// end date of project
+    ///// </summary>
+    internal static DateTime? EndDate { get; set; }
+
 
 }

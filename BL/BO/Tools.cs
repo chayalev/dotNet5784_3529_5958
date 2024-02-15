@@ -12,10 +12,6 @@ internal static class Tools
 {
     public static string ToStringProperty<T>(T t)
     {
-        //string str = "";
-        //foreach (PropertyInfo item in t!.GetType().GetProperties())
-        //    str += "\n" + item.Name + ": " + item.GetValue(t, null);
-        //return str;
         if (t == null)
         {
             return string.Empty;
@@ -42,6 +38,7 @@ internal static class Tools
         }
     }
 
+    private static readonly Comparer s_comparer = new();
 
     internal class Comparer : IEqualityComparer<IEnumerable<int>>
     {
@@ -50,6 +47,7 @@ internal static class Tools
             obj.OrderBy(x => x)
               .Aggregate(17, (current, val) => current * 23 + val.GetHashCode());
     }
+
 
 }
 

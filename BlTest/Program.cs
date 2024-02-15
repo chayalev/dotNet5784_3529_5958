@@ -45,6 +45,7 @@ namespace BlTest
             int taskId = int.TryParse(Console.ReadLine(), out _result) ? _result : -1;
             return new TaskInEngineer { Id = taskId };
         }
+
         /// <summary>
         /// function to create the engineer
         /// </summary>
@@ -76,6 +77,7 @@ namespace BlTest
             //return the values to create the entity
             return newEngineer;
         }
+
         /// <summary>
         /// function to insert the tasks before the current task
         /// </summary>
@@ -94,6 +96,7 @@ namespace BlTest
             }
             return dependencies;
         }
+
         /// <summary>
         /// function to create the task
         /// </summary>
@@ -125,6 +128,7 @@ namespace BlTest
             //return the values to create the entity
             return newTask;
         }
+
         /// <summary>
         /// function to make actions of the entities and send them to the appropriate functions
         /// </summary>
@@ -280,15 +284,15 @@ namespace BlTest
             {
                 //Initialization the lists of entity
                 Console.Write("Would you like to create Initial data? (Y/N)");
-                string? ans = Console.ReadLine() ?? throw new BlWrongInput("Wrong input");
+                string? ans = Console.ReadLine() ?? throw new BlWrongInputException("Wrong input");
                 if (ans == "Y")
                 {
                     s_bl.Reset();
                    DalTest.Initialization.Do();
                 }
                 else if (ans != "N")
-                    throw new BO.BlWrongInput("wrong input only Y / N accepted");
-               // s_bl.CreateProject();
+                    throw new BO.BlWrongInputException("wrong input only Y / N accepted");
+               s_bl.CreateProject();
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;

@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfDependency>
-  <Dependency>
-    <Id>1664</Id>
-    <DependentTask>586</DependentTask>
-    <DependsOnTask>585</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>1665</Id>
-    <DependentTask>588</DependentTask>
-    <DependsOnTask>585</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>1666</Id>
-    <DependentTask>588</DependentTask>
-    <DependsOnTask>587</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>1667</Id>
-    <DependentTask>589</DependentTask>
-    <DependsOnTask>588</DependsOnTask>
-  </Dependency>
+	<Dependency>
+		<Id>1664</Id>
+		<DependentTask>586</DependentTask>
+		<DependsOnTask>585</DependsOnTask>
+	</Dependency>
+	<Dependency>
+		<Id>1665</Id>
+		<DependentTask>588</DependentTask>
+		<DependsOnTask>585</DependsOnTask>
+	</Dependency>
+	<Dependency>
+		<Id>1666</Id>
+		<DependentTask>588</DependentTask>
+		<DependsOnTask>587</DependsOnTask>
+	</Dependency>
+	<Dependency>
+		<Id>1667</Id>
+		<DependentTask>589</DependentTask>
+		<DependsOnTask>588</DependsOnTask>
+	</Dependency>
 </ArrayOfDependency>

@@ -32,32 +32,32 @@ public class BlNullPropertyException : Exception
 /// BL Deletion Impossible
 /// </summary>
 [Serializable]
-public class BlDeletionImpossible : Exception
+public class BlDeletionImpossibleException : Exception
 {
-    public BlDeletionImpossible(string? message) : base(message) { }
+    public BlDeletionImpossibleException(string? message) : base(message) { }
 }
 /// <summary>
 /// BL Wrong Input
 /// </summary>
 [Serializable]
-public class BlWrongInput : Exception
+public class BlWrongInputException : Exception
 {
-    public BlWrongInput(string? message) : base(message) { }
+    public BlWrongInputException(string? message) : base(message) { }
 }
 /// <summary>
 /// BL Bl Cant Change After Scheduled
 /// </summary>
 [Serializable]
-public class BlCantChangeAfterScheduled : Exception
+public class BlCantChangeAfterScheduledException : Exception
 {
-    public BlCantChangeAfterScheduled(string? message) : base(message) { }
+    public BlCantChangeAfterScheduledException(string? message) : base(message) { }
 }
 /// <summary>
 /// bl wrong date
 /// </summary>
 [Serializable]
-public class BlWrongDate : Exception
+public class BlWrongDateException : Exception
 {
-    public BlWrongDate(string? message) : base(message) { }
+    public BlWrongDateException(string? message) : base(message) { }
 }
 

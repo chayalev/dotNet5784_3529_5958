@@ -16,8 +16,8 @@ sealed internal class DalXml : IDal
 
     public ITask Task => new TaskImplementation();
 
-    public DateTime? startDate { get ; set ; }
-    public DateTime? EndDate { get; set; }
+    public DateTime? startDate { get; set; } = null;
+    public DateTime? EndDate { get; set; } = null;
 
     public void Reset()
     {

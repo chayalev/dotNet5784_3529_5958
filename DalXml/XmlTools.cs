@@ -41,6 +41,17 @@ static class XMLTools
 
     #endregion
 
+    #region XmlConfig
+    public static DateTime? ChangeDate(string data_config_xml, string elemName,DateTime? dateT)
+    {
+        XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
+        root.Element(elemName)?.SetValue((dateT).ToString());
+        XMLTools.SaveListToXMLElement(root, data_config_xml);
+        return dateT;
+    }
+
+    #endregion
+
     #region SaveLoadWithXElement
     public static void SaveListToXMLElement(XElement rootElem, string entity)
     {
