@@ -16,8 +16,16 @@ sealed internal class DalXml : IDal
 
     public ITask Task => new TaskImplementation();
 
-    public DateTime? startDate { get; set; } = null;
-    public DateTime? EndDate { get; set; } = null;
+    public DateTime? startDate
+    {
+        get => XMLTools.GetDate("data-config", "StartDate");
+        set => XMLTools.ChangeDate("data-config", "StartDate", value);
+    }
+    public DateTime? EndDate
+    {
+        get => XMLTools.GetDate("data-config", "EndDate");
+        set => XMLTools.ChangeDate("data-config", "EndDate", value);
+    }
 
     public void Reset()
     {

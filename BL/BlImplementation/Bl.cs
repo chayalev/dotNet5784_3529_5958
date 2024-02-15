@@ -136,6 +136,8 @@ internal class Bl : IBl
         foreach (var task in allTask)
             lastEndDate = task?.DeadlineDate > lastEndDate ? task.DeadlineDate : lastEndDate;
         EndDate = lastEndDate;
+        _dal.EndDate = EndDate;
+        _dal.startDate = startDate;
         IsCreate = true;
     }
 }
