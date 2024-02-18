@@ -38,6 +38,12 @@ static class XMLTools
         XMLTools.SaveListToXMLElement(root, data_config_xml);
         return nextId;
     }
+    public static void ResetId(string data_config_xml, string elemName)
+    {
+        XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
+        root.Element(elemName)?.SetValue((100));
+        XMLTools.SaveListToXMLElement(root, data_config_xml);
+    }
 
     public static void ChangeDate(string data_config_xml, string elemName,DateTime? dateT)
     {

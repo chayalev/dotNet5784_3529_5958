@@ -138,4 +138,8 @@ public static class Initialization
         createTask();
         createDependency();
     }
+    public static void Reset()
+    {
+        s_dal?.Reset();
+    }
 }

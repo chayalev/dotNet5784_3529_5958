@@ -7,6 +7,7 @@ namespace Dal;
 //stage 3
 sealed internal class DalXml : IDal
 {
+    static string s_data_config_xml = "data-config";
     public static IDal Instance { get; } = new DalXml();
     private DalXml() { }
 
@@ -16,19 +17,23 @@ sealed internal class DalXml : IDal
 
     public ITask Task => new TaskImplementation();
 
-    public DateTime? startDate
+    public DateTime? StartDate
     {
-        get => XMLTools.GetDate("data-config", "StartDate");
-        set => XMLTools.ChangeDate("data-config", "StartDate", value);
+        get => XMLTools.GetDate(s_data_config_xml, "StartDate");
+        set => XMLTools.ChangeDate(s_data_config_xml, "StartDate", value);
     }
     public DateTime? EndDate
     {
-        get => XMLTools.GetDate("data-config", "EndDate");
-        set => XMLTools.ChangeDate("data-config", "EndDate", value);
+        get => XMLTools.GetDate(s_data_config_xml, "EndDate");
+        set => XMLTools.ChangeDate(s_data_config_xml, "EndDate", value);
     }
 
     public void Reset()
     {
+        XMLTools.ChangeDate(s_data_config_xml, "EndDate", null);
+        XMLTools.ChangeDate(s_data_config_xml, "StartDate", null);
+        XMLTools.ResetId(s_data_config_xml, "NextDependencyId");
+        XMLTools.ResetId(s_data_config_xml, "NextTaskId");
         Dependency.Reset();
         Engineer.Reset();
         Task.Reset();   

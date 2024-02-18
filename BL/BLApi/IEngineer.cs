@@ -36,6 +36,6 @@ public interface IEngineer
     /// Function to get collection of engineers by selection
     /// </summary>
     /// <returns>collection of engineers</returns>
-    public IEnumerable<BO.Engineer> ReadAll();
+    public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null);
 }
 

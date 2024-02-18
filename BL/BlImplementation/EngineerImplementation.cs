@@ -83,10 +83,14 @@ internal class EngineerImplementation : IEngineer
     /// get the all engineers
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.Engineer> ReadAll()
+    public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter)
     {
-        return _dal.Engineer.ReadAll().Select(eng => Read(eng!.Id)!);
-    
+        var allEngineers = _dal.Engineer.ReadAll().Select(eng => Read(eng!.Id) ?? throw new BlDoesNotExistException("the tasks dont exist"));
+        if (filter == null)
+            return allEngineers;
+        else
+            return allEngineers.Where(filter);
+
     }
 
     /// <summary>
@@ -130,5 +134,10 @@ internal class EngineerImplementation : IEngineer
             throw new BO.BlAlreadyExistsException($"Engineer with ID={eng.Id} already exists", ex);
         }
     }
+
+   
+
+
+   
 }
 

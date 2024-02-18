@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Engineer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,25 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        private void btnEngineer_Click(object sender, RoutedEventArgs e)
+        {
+            new EngineerListWindow().Show();
+        }
+
+        private void btnInitialize_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.InitializeDB();
+        }
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.ResetDB();
+        }
+
     }
 }

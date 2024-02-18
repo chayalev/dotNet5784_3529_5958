@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <!--כפתור שלחיצה עליו תוביל לאתחול בסיס הנתונים (יצירת נתונים התחלתיים)-->
+        <Button Content="intialize" HorizontalAlignment="Left" Margin="154,92,0,0" VerticalAlignment="Top" Click="btnInitialize_Click"/>
+        <!--כפתור שלחיצה עליו תוביל לחלון תצוגת הרשימה-->
+        <Button Content="AllEngineer" HorizontalAlignment="Left" Margin="273,92,0,0" VerticalAlignment="Top" Click="btnEngineer_Click"/>
+        <!--כפתור שלחיצה עליו תוביל לניקוי (reset) בסיס נתוניםה-->
+        <Button Content="reset" HorizontalAlignment="Left" Margin="360,92,0,0" VerticalAlignment="Top" Click="btnReset_Click"/>
+   
 
+     
     </Grid>
 </Window>

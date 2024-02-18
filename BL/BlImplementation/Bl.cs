@@ -28,14 +28,6 @@ internal class Bl : IBl
     public bool IsCreate { get; set; } = false;
 
     /// <summary>
-    /// Deleting the database
-    /// </summary>
-    public void Reset()
-    {
-        DalApi.Factory.Get.Reset();
-    }
-
-    /// <summary>
     /// Finding the earliest time to start the task
     /// </summary>
     /// <param name="task"></param>
@@ -136,9 +128,15 @@ internal class Bl : IBl
             lastEndDate = task?.DeadlineDate > lastEndDate ? task.DeadlineDate : lastEndDate;
         EndDate = lastEndDate;
         _dal.EndDate = EndDate;
-        _dal.startDate = startDate;
+        _dal.StartDate = startDate;
         IsCreate = true;
     }
+
+    public void InitializeDB() => DalTest.Initialization.Do();
+    /// <summary>
+    /// Deleting the database
+    /// </summary>
+    public void ResetDB() => DalTest.Initialization.Reset();
 }
 
 

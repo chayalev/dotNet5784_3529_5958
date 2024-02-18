@@ -287,13 +287,12 @@ namespace BlTest
                 string? ans = Console.ReadLine() ?? throw new BlWrongInputException("Wrong input");
                 if (ans == "Y")
                 {
-                    s_bl.Reset();
+                    s_bl.ResetDB();
                    DalTest.Initialization.Do();
                 }
                 else if (ans != "N")
                     throw new BO.BlWrongInputException("wrong input only Y / N accepted");
-               s_bl.CreateProject();
-                Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
+                Console.WriteLine("Please press a number:\n 1-Engineer,2-Task \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;
                 //The first menu to choose the entity
@@ -309,10 +308,6 @@ namespace BlTest
                             //send to the menu of the Task
                             SubMenu("Task");
                             break;
-                        case 3:
-                            //send to the menu of the Dependency
-                            SubMenu("Dependency");
-                            break;
                         default:
                             throw new Exception("wrong input");
                     }
@@ -321,6 +316,12 @@ namespace BlTest
                     Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
                     if (int.TryParse(Console.ReadLine(), out result))
                         entity = result;
+                }
+                Console.WriteLine("do you want to create a schedule");
+                ans = Console.ReadLine() ?? throw new BlWrongInputException("Wrong input");
+                if (ans == "Y")
+                {
+                    s_bl.CreateProject();
                 }
 
             }

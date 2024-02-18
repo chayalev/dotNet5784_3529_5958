@@ -24,7 +24,7 @@ internal class TaskImplementation : ITask
             var currentTask = _dal.Task.Read(task => task.Id == dep?.DependsOnTask);
             int newid = dep?.DependsOnTask ?? throw new DalDoesNotExistException("");
             ///Calculates the status
-            var status = _dal.startDate == null ? 0 : (Status)1;
+            var status = _dal.StartDate == null ? 0 : (Status)1;
             ///Returns a new member of type task in the list
             return new BO.TaskInList
             {
@@ -116,7 +116,7 @@ internal class TaskImplementation : ITask
         try
         {
             ///Calculates the status
-            var status = _dal.startDate == null ? 0 : (Status)1;
+            var status = _dal.StartDate == null ? 0 : (Status)1;
 
             var milestoneInTask = _dal.Dependency.ReadAll()
              .Where(dep => dep?.DependentTask == id)
