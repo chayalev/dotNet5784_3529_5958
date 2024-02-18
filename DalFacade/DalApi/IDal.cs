@@ -10,7 +10,7 @@ namespace DalApi
         IEngineer Engineer { get; }
         ITask Task { get; }
         void Reset();
-        public DateTime? startDate { get; set; } 
+        public DateTime? StartDate { get; set; } 
         public DateTime? EndDate { get; set; }
 
 

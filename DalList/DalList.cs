@@ -5,19 +5,6 @@ using System;
 sealed internal class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();
-    //private static readonly Lazy<IDal> lazyInstance = new Lazy<IDal>(() => new DalList());
-    //private static readonly object lockObject = new object();
-
-    //public static IDal Instance
-    //{
-    //    get
-    //    {
-    //        lock (lockObject)
-    //        {
-    //            return lazyInstance.Value;
-    //        }
-    //    }
-    //}
 
     private DalList() { }
 
@@ -27,8 +14,8 @@ sealed internal class DalList : IDal
 
     public ITask Task => new TaskImplementation();
 
-    public DateTime? startDate { get; set; } = null;
-    public DateTime? EndDate { get; set; } = null;
+    public DateTime? StartDate { get => DataSource.Config.StartDate; set => DataSource.Config.StartDate = value; }
+    public DateTime? EndDate { get => DataSource.Config.EndDate; set => DataSource.Config.EndDate = value; }
 
     public void Reset()
     {
