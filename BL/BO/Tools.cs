@@ -10,6 +10,35 @@ using System.Threading.Tasks;
 namespace BO;
 internal static class Tools
 {
+    //public static string ToStringProperty<T>(T t)
+    //{
+    //    if (t == null)
+    //    {
+    //        return string.Empty;
+    //    }
+
+    //    Type type = t.GetType();
+    //    PropertyInfo[] properties = type.GetProperties();
+
+    //    string result = "{ " + string.Join(", ", properties
+    //        .Select(property => $"{property.Name}: {GetValueAsString(property.GetValue(t)!)}")) + " }";
+
+    //    return result;
+    //}
+
+    //private static string GetValueAsString(object value)
+    //{
+    //    if (value is IEnumerable enumerableValue && !(value is string))
+    //    {
+    //        return $"[{string.Join(", ", enumerableValue.Cast<object>())}]";
+    //    }
+    //    else
+    //    {
+    //        return value?.ToString() ?? "null";
+    //    }
+    //}
+
+
     public static string ToStringProperty<T>(T t)
     {
         if (t == null)
@@ -20,8 +49,8 @@ internal static class Tools
         Type type = t.GetType();
         PropertyInfo[] properties = type.GetProperties();
 
-        string result = "{ " + string.Join(", ", properties
-            .Select(property => $"{property.Name}: {GetValueAsString(property.GetValue(t)!)}")) + " }";
+        string result = string.Join(Environment.NewLine, properties
+            .Select(property => $"{property.Name}: {GetValueAsString(property.GetValue(t)!)}"));
 
         return result;
     }
@@ -30,13 +59,15 @@ internal static class Tools
     {
         if (value is IEnumerable enumerableValue && !(value is string))
         {
-            return $"[{string.Join(", ", enumerableValue.Cast<object>())}]";
+            string arrayValues = string.Join(", ", enumerableValue.Cast<object>());
+            return $"[{Environment.NewLine}{arrayValues}{Environment.NewLine}]";
         }
         else
         {
             return value?.ToString() ?? "null";
         }
     }
+
 
     private static readonly Comparer s_comparer = new();
 

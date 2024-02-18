@@ -2,6 +2,7 @@
 using DalApi;
 using BO;
 using System.Runtime.Intrinsics.Arm;
+using System.Text.RegularExpressions;
 
 namespace BlTest
 {
@@ -47,6 +48,60 @@ namespace BlTest
         }
 
         /// <summary>
+        /// Check the id of Engineer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>valid id</returns>
+        private static int GetValidId(int id)
+        {
+            string idString = id.ToString();
+
+            // Id length check
+            if (idString.Length != 9 || !int.TryParse(idString, out _))
+            {
+                throw new BlWrongDateException($"Id {id} is not valid");
+            }
+
+            // Id sum digits check
+            int sum = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                int digit = int.Parse(idString[i].ToString()) * (i % 2 + 1);
+                sum += digit > 9 ? digit - 9 : digit;
+            }
+
+            if ((sum + int.Parse(idString[8].ToString())) % 10 == 0)
+            {
+                return id;
+            }
+            else
+            {
+                throw new BlWrongDateException($"Id {id} is not valid");
+            }
+        }
+
+        /// <summary>
+        /// Check the email of engineer
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>valid email</returns>
+        /// <exception cref="BlWrongDateException"></exception>
+        private static string GetValidEmail(string? email)
+        {
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            Regex regex = new Regex(pattern);
+
+            if (email != null && regex.IsMatch(email))
+            {
+                return email;
+            }
+            else
+            {
+                throw new BlWrongDateException($"Email {email} is not valid");
+            }
+        }
+
+        /// <summary>
         /// function to create the engineer
         /// </summary>
         /// <param name="id"></param>
@@ -67,12 +122,12 @@ namespace BlTest
             //Get the valeus of engineer
             Engineer newEngineer = new Engineer()
             {
-                Id = id==0 ? (int.TryParse(Console.ReadLine(), out _result) ? _result : _engineer!.Id) : id,
+                Id = id == 0 ? (int.TryParse(Console.ReadLine(), out _result) ? GetValidId(_result) : _engineer!.Id) : id,
                 Name = StringParse(_engineer?.Name),
                 Level = (EngineerExperience?)(int.TryParse(Console.ReadLine(), out _result) ? _result : (int?)_engineer?.Level),
-                Email = StringParse(_engineer?.Email),
+                Email = GetValidEmail(StringParse(_engineer?.Email)),
                 Cost = double.TryParse(Console.ReadLine(), out _resultD) ? _resultD : _engineer?.Cost,
-                Task = id!=0 ? insertTaskInEngineer():null
+                Task = id != 0 ? insertTaskInEngineer() : null
             };
             //return the values to create the entity
             return newEngineer;
@@ -157,9 +212,6 @@ namespace BlTest
                                 {
                                     s_bl?.Engineer.Create(CreateEngineer(0));
                                 }
-                                //create Milestone
-                                else if (entity == "Milestone")
-                                    s_bl?.Milestone.Create();
                                 //create Task
                                 else
                                     s_bl?.Task.Create(CreateTask(0));
@@ -178,9 +230,6 @@ namespace BlTest
                                     //read Engineer
                                     if (entity == "Engineer")
                                         Console.WriteLine(s_bl?.Engineer.Read(_id) ?? throw new BlDoesNotExistException($"Engineer with ID={_id} does not exists"));
-                                    //read Milestone
-                                    else if (entity == "Milestone")
-                                        Console.WriteLine(s_bl?.Milestone.Read(_id) ?? throw new BlDoesNotExistException($"Dependency with ID={_id} does not exists"));
                                     //read Task
                                     else
                                         Console.WriteLine(s_bl?.Task.Read(_id) ?? throw new BlDoesNotExistException($"Task with ID={_id} does not exists"));
@@ -226,12 +275,6 @@ namespace BlTest
                                         Console.WriteLine(s_bl?.Engineer.Read(_id) ?? throw new BlDoesNotExistException($"Engineer with ID= {_id} does not exists"));
                                         s_bl.Engineer.Update(CreateEngineer(_id));
                                     }
-                                    ////update Milestone
-                                    //else if (entity == "Milestone")
-                                    //{
-                                    //    Console.WriteLine(s_bl?.Milestone.Read(_id) ?? throw new BlDoesNotExistException($"Dependency with ID= {_id} does not exists"));
-                                    //    s_bl.Milestone.Update(CreateMilestone(_id));
-                                    //}
                                     //update Task
                                     else
                                     {
@@ -292,6 +335,12 @@ namespace BlTest
                 }
                 else if (ans != "N")
                     throw new BO.BlWrongInputException("wrong input only Y / N accepted");
+                Console.WriteLine("do you want to create a schedule");
+                ans = Console.ReadLine() ?? throw new BlWrongInputException("Wrong input");
+                if (ans == "Y")
+                {
+                    s_bl.CreateProject();
+                }
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))
                     entity = result;
@@ -313,15 +362,9 @@ namespace BlTest
                     }
 
                     //Reprint all the entities options
-                    Console.WriteLine("Please press a number:\n 1-Engineer,2-Task,3-Dependency. \n 0 to exit");
+                    Console.WriteLine("Please press a number:\n 1-Engineer,2-Task \n 0 to exit");
                     if (int.TryParse(Console.ReadLine(), out result))
                         entity = result;
-                }
-                Console.WriteLine("do you want to create a schedule");
-                ans = Console.ReadLine() ?? throw new BlWrongInputException("Wrong input");
-                if (ans == "Y")
-                {
-                    s_bl.CreateProject();
                 }
 
             }
