@@ -9,8 +9,9 @@ public interface IBl
     public DateTime? EndDate { get; set; }
 
     public bool IsCreate { get; set; }
-    public void Reset();
     public void CreateProject();
+   public void InitializeDB();
+    public void ResetDB();
 
 }
 
