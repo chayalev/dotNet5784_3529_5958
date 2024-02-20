@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerListWindow" Height="640" Width="800"
+        Title="EngineerListWindow" Height="640" Width="800" GotFocus="Reload_Page" 
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <!--Extrnal Grid-->
-    <Grid>
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="47*"/>
             <ColumnDefinition Width="3*"/>
@@ -25,11 +25,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Label" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Column="0" />
-            <ComboBox ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}" SelectedValue="{Binding Path=Levels, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbLevelSelector_SelectionChanged"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}" SelectedValue="{Binding Path=Level, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbLevelSelector_SelectionChanged"/>
 
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}"/>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}" MouseDoubleClick="Engineer_dounleClick" />
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="Add_Engineer"/>
     </Grid>
 
 </Window>

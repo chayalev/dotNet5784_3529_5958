@@ -26,7 +26,23 @@ namespace PL.Engineer
             InitializeComponent();
             EngineerList = s_bl.Engineer.ReadAll();
         }
+        /// <summary>
+        /// open the page to update the engineer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Engineer_dounleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListView listView && listView.SelectedItems.Count > 0)
+            {
+                BO.Engineer selectedEngineer = listView.SelectedItem as BO.Engineer;
 
+                if (selectedEngineer != null)
+                {
+                    new EngineerWindow(selectedEngineer.Id).ShowDialog();
+                }
+            }
+        }
 
         public IEnumerable<BO.Engineer> EngineerList
         {
@@ -37,17 +53,29 @@ namespace PL.Engineer
         public static readonly DependencyProperty EngineerListProperty =
             DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
-        public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.All;
+        public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.None;
 
         private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //EngineerList = (Level == BO.EngineerExperience.All) ?
             //                s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
-            if (Level == BO.EngineerExperience.All)
+            if (Level == BO.EngineerExperience.None)
                 EngineerList = s_bl?.Engineer.ReadAll()!;
             else
-                EngineerList= s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
+                EngineerList = s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
 
         }
+
+        private void Add_Engineer(object sender, RoutedEventArgs e)
+        {
+            new EngineerWindow().ShowDialog();
+        }
+
+        public void RefreshEngineerList()
+        {
+            EngineerList = (Level == BO.EngineerExperience.None) ?
+                s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
+        }
+
     }
 }

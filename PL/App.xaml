@@ -5,5 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:LevelsCollection x:Key="LevelsCollectionKey" />
+        <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
+        <local:NotBooleanToVisibilityConverter x:Key="NotBooleanToVisibilityConverterKey"/>
     </Application.Resources>
 </Application>
