@@ -15,43 +15,48 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Id" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" 
-               Visibility="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource NotBooleanToVisibilityConverterKey}}"/>
-        <TextBox Grid.Row="0" Grid.Column="1" 
-                 Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
-                  Visibility="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource NotBooleanToVisibilityConverterKey}}"
-                 HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+        <Label Content="Id"  Grid.Row="0" Grid.Column="0" IsEnabled="{Binding Path=Id, Mode=OneTime, Converter={StaticResource IsEnableConverterKey}}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" IsEnabled="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource IsEnableConverterKey}}"
+        Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
+        HorizontalAlignment="Left" Height="NaN"   VerticalAlignment="Top" Width="120"/>
 
-        <Label Content="Name" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" />
+        <Label Content="Name"  Grid.Row="1" Grid.Column="0" />
         <TextBox Grid.Row="1" Grid.Column="1" 
-                 Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true }"  
-                 HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+        Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true }"  
+        HorizontalAlignment="Left" Height="NaN" VerticalAlignment="Top" Width="120"/>
 
-        <Label Content="Email" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" />
+        <Label Content="Email" Grid.Row="2"  />
         <TextBox Grid.Row="2" Grid.Column="1" 
-                 Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  
-                 HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+        Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  
+        HorizontalAlignment="Left" Height="NaN" VerticalAlignment="Top" Width="120"/>
 
-        <Label Content="Cost" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" />
+        <Label Content="Cost" Grid.Row="3" Grid.Column="0" />
         <TextBox Grid.Row="3" Grid.Column="1" 
-         Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  
-         HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
-
-        <Label Content="Level" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="4" Grid.Column="0" />
-        <ComboBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="left"  Height="NaN" Margin="3"
+                Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  
+                HorizontalAlignment="Left" Height="NaN"   VerticalAlignment="Top" Width="120"/>
+        <Label Content="Level"  Grid.Row="4" />
+        <ComboBox Grid.Row="4" HorizontalAlignment="Left"  Height="NaN"
                   ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}"
-                  SelectedValue="{Binding Path=Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-                   VerticalAlignment="center"  Width="120"/>
+                  SelectedValue="{Binding Path=Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.ColumnSpan="2" Margin="114,22,0,19" />
         <!--SelectionChanged="cbLevelSelector_SelectionChanged"-->
+        <Label Content="Task"  Grid.Row="5" />
+        <ComboBox Grid.Row="5" Grid.Column="1" IsEditable="True" IsTextSearchEnabled="True" HorizontalAlignment="Left" Height="NaN"
+           ItemsSource="{Binding TaskToChoose}"  
+           DisplayMemberPath="Alias" 
+           SelectedValue="{Binding Path=Task, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+           VerticalAlignment="Center"/>
 
-        <Button Grid.Row="5" Content="{Binding Path=Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
-            HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Top" 
-            Padding="5" Click="btnAddUpdate_Click"/>
+
+
+        <Button Grid.Row="6" Grid.Column="1" Content="{Binding Path=Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+            HorizontalAlignment="Left" Margin="348,19,0,0"  VerticalAlignment="Top" 
+            Padding="5" Click="btnAddUpdate_Click" RenderTransformOrigin="28.22,2.25"/>
 
         <!--<TextBlock Margin="5" Grid.Row="1" Text="{Binding Path=Engineer}" />-->
     </Grid>

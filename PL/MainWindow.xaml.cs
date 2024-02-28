@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using PL.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,5 +42,9 @@ namespace PL
             s_bl.ResetDB();
         }
 
+        private void btnTask_Click(object sender, RoutedEventArgs e)
+        {
+            new TaskListWindow().ShowDialog();
+        }
     }
 }

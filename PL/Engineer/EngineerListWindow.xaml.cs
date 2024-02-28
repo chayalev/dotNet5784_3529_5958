@@ -20,7 +20,6 @@ namespace PL.Engineer
     public partial class EngineerListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
         public EngineerListWindow()
         {
             InitializeComponent();
@@ -31,7 +30,7 @@ namespace PL.Engineer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Engineer_dounleClick(object sender, MouseButtonEventArgs e)
+        private void Engineer_doubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender is ListView listView && listView.SelectedItems.Count > 0)
             {
@@ -57,12 +56,8 @@ namespace PL.Engineer
 
         private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //EngineerList = (Level == BO.EngineerExperience.All) ?
-            //                s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
-            if (Level == BO.EngineerExperience.None)
-                EngineerList = s_bl?.Engineer.ReadAll()!;
-            else
-                EngineerList = s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
+            EngineerList = (Level == BO.EngineerExperience.None) ?
+                            s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
 
         }
 

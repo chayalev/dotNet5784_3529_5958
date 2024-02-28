@@ -6,6 +6,32 @@
     <Application.Resources>
         <local:LevelsCollection x:Key="LevelsCollectionKey" />
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
-        <local:NotBooleanToVisibilityConverter x:Key="NotBooleanToVisibilityConverterKey"/>
+        <local:IsEnableConverter x:Key="IsEnableConverterKey"/>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="LightBlue" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="FontFamily" Value="Georgia" />
+            <Setter Property="FontWeight" Value="bold" />
+            <Setter Property="Margin" Value="21,10,0,0" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="FontFamily" Value="Georgia" />
+            <Setter Property="Margin" Value="0,22,0,0" />
+            <Setter Property="Width" Value="190" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="Georgia" />
+            <Setter Property="FontWeight" Value="bold" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Georgia" />
+            <Setter Property="FontWeight" Value="bold" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Margin" Value="0,22,0,0" />
+            <Setter Property="Width" Value="190" />
+        </Style>
     </Application.Resources>
 </Application>

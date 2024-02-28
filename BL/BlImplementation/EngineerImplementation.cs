@@ -5,12 +5,61 @@ using BlApi;
 using BO;
 using DO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 internal class EngineerImplementation : IEngineer
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
 
 
+    /// <summary>
+    /// Check the id of Engineer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>valid id</returns>
+    private static int GetValidId(int id)
+    {
+        string idString = id.ToString("D9"); // Ensure a fixed length of 9 digits
+
+        int sum = 0;
+        for (int i = 0; i < idString.Length; i++)
+        {
+            int digit = int.Parse(idString[i].ToString()) * ((i % 2) + 1);
+            sum += digit > 9 ? digit - 9 : digit;
+        }
+
+        if (sum % 10 == 0)
+        {
+            return id;
+        }
+        else
+        {
+            throw new BlWrongDateException($"Id {id} is not valid");
+        }
+    }
+
+
+
+    /// <summary>
+    /// Check the email of engineer
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns>valid email</returns>
+    /// <exception cref="BlWrongDateException"></exception>
+    private static string GetValidEmail(string? email)
+    {
+        string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+        Regex regex = new Regex(pattern);
+
+        if (email != null && regex.IsMatch(email))
+        {
+            return email;
+        }
+        else
+        {
+            throw new BlWrongDateException($"Email {email} is not valid");
+        }
+    }
     /// <summary>
     /// creat a new engineer
     /// </summary>
@@ -20,7 +69,7 @@ internal class EngineerImplementation : IEngineer
     public int Create(BO.Engineer eng)
     {
         DO.Engineer doEngineer = new DO.Engineer
-          (eng.Id, eng.Name, (DO.EngineerExperience?)eng.Level, eng.Email, eng.Cost);
+          (GetValidId(eng.Id), eng.Name, (DO.EngineerExperience?)eng.Level,GetValidEmail( eng.Email), eng.Cost);
         try
         {
             int idStud = _dal.Engineer.Create(doEngineer);

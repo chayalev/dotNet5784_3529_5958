@@ -3,6 +3,8 @@ namespace BlImplementation;
 using BlApi;
 using BO;
 using DO;
+using System.ComponentModel.Design;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Intrinsics.Arm;
 
 internal class TaskImplementation : ITask
@@ -24,7 +26,7 @@ internal class TaskImplementation : ITask
             var currentTask = _dal.Task.Read(task => task.Id == dep?.DependsOnTask);
             int newid = dep?.DependsOnTask ?? throw new DalDoesNotExistException("");
             ///Calculates the status
-            var status = _dal.StartDate == null ? 0 : (Status)1;
+            var status = Factory.Get().IsCreate ? 0 : (Status)1;
             ///Returns a new member of type task in the list
             return new BO.TaskInList
             {
@@ -37,7 +39,19 @@ internal class TaskImplementation : ITask
         return dependencies;
 
     }
+    private bool ImpossibleDependency(BO.Task task)
+    {
+        Queue<BO.TaskInList> taskQueue = new Queue<BO.TaskInList>(task.Dependencies!);
+        while (taskQueue.Count() != 0)
+        {
+            var currentTask = taskQueue.Dequeue();
+            if (currentTask.Id == task.Id)
+                return false;
+            Read(currentTask.Id)!.Dependencies?.ForEach(tsk => taskQueue.Enqueue(tsk));
+        }
+        return true;
 
+    }
     /// <summary>
     /// create a new task
     /// </summary>
@@ -116,7 +130,7 @@ internal class TaskImplementation : ITask
         try
         {
             ///Calculates the status
-            var status = _dal.StartDate == null ? 0 : (Status)1;
+            var status = Factory.Get().IsCreate ? 0 : (Status)1;
 
             var milestoneInTask = _dal.Dependency.ReadAll()
              .Where(dep => dep?.DependentTask == id)
@@ -171,7 +185,7 @@ internal class TaskImplementation : ITask
         else
             return allTasks.Where(filter);
     }
-    
+
     /// <summary>
     /// update a task
     /// </summary>
@@ -185,6 +199,9 @@ internal class TaskImplementation : ITask
         ///Before creating a hazel
         if (!Factory.Get().IsCreate)
         {
+            ///Check if there is a circle dependencies
+            if (item!.Dependencies?.Count() > 0 && !ImpossibleDependency(item!))
+                throw new BlWrongInputException("You cant insert a circle dependencies");
             taskUpdate = new DO.Task
             (item.Id, item.Description, item.RequiredEffortTime, item.Alias, false, null, null, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
             ///If this task has dependent tasks
@@ -241,6 +258,35 @@ internal class TaskImplementation : ITask
         {
             throw new BO.BlAlreadyExistsException($"Task with ID={item!.Id} already exists", ex);
         }
+    }
+    public IEnumerable<TaskInList> AllTaskInList()
+    {
+        // Assuming ReadAll() returns a collection of tasks
+        return ReadAll().Select(task => new TaskInList
+        {
+            Id = task.Id,
+            Alias = task.Alias,
+            Description = task.Description,
+            Status = task.StatusTask
+        });
+    }
+    public IEnumerable<TaskInEngineer> AllTaskInEngineer()
+    {
+        return ReadAll(task => task.Engineer == null).Select(task => new TaskInEngineer
+        {
+            Id = task.Id,
+            Alias = task.Alias
+        });
+    }
+    public IEnumerable<TaskInList> TaskInListByLevel(BO.EngineerExperience engineerExperience)
+    {
+        return ReadAll(task => task.ComplexityLevel == engineerExperience).Select(task => new TaskInList
+        {
+            Id = task.Id,
+            Alias = task.Alias,
+            Description = task.Description,
+            Status = task.StatusTask
+        });
     }
 }
 

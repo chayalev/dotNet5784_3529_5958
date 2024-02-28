@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -22,18 +23,18 @@ internal class ConvertIdToContent : IValueConverter
     }
 }
 
-internal class NotBooleanToVisibilityConverter : IValueConverter
+internal class IsEnableConverter : IValueConverter
 {
     //convert from source property type to target property type
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if ((int)value != 0)
         {
-            return Visibility.Hidden; //Visibility.Collapsed;
+            return false; //Visibility.Collapsed;
         }
         else
         {
-            return Visibility.Visible;
+            return true;
         }
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -41,3 +42,5 @@ internal class NotBooleanToVisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+

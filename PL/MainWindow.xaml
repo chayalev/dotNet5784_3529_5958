@@ -8,13 +8,13 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <!--כפתור שלחיצה עליו תוביל לאתחול בסיס הנתונים (יצירת נתונים התחלתיים)-->
-        <Button Content="intialize" HorizontalAlignment="Left" Margin="154,92,0,0" VerticalAlignment="Top" Click="btnInitialize_Click"/>
+        <Button Content="intialize⚡" HorizontalAlignment="Left" Margin="114,256,0,0" VerticalAlignment="Top" Click="btnInitialize_Click" Height="66" Width="152"/>
         <!--כפתור שלחיצה עליו תוביל לחלון תצוגת הרשימה-->
-        <Button Content="AllEngineer" HorizontalAlignment="Left" Margin="273,92,0,0" VerticalAlignment="Top" Click="btnEngineer_Click"/>
+        <Button Content="AllEngineer" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Click="btnEngineer_Click" Height="125" Width="138"/>
         <!--כפתור שלחיצה עליו תוביל לניקוי (reset) בסיס נתוניםה-->
-        <Button Content="reset" HorizontalAlignment="Left" Margin="360,92,0,0" VerticalAlignment="Top" Click="btnReset_Click"/>
-   
+        <Button Content="reset🗑️" HorizontalAlignment="Left" Margin="539,256,0,0" VerticalAlignment="Top" Click="btnReset_Click" Height="67" Width="159"/>
 
-     
+        <Button Content="allTask" HorizontalAlignment="Center" Margin="0,243,0,0" VerticalAlignment="Top" Click="btnTask_Click"/>
+
     </Grid>
 </Window>
