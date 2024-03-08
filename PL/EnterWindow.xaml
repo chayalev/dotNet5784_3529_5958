@@ -1,0 +1,14 @@
+﻿<Window x:Class="PL.EnterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="EnterWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Manager" HorizontalAlignment="Left" Height="92" Margin="59,322,0,0" VerticalAlignment="Top" Width="249" Click="EnterManager_Click"/>
+        <Button Content="Enginner" HorizontalAlignment="Left" Height="92" Margin="357,322,0,0" VerticalAlignment="Top" Width="272" Click="EnterEngineer_Click"/>
+        <TextBox x:Name="EngId_box" HorizontalAlignment="Left"  Height="27" Margin="409,273,0,0" TextWrapping="Wrap" Text="Enet your id" VerticalAlignment="Top" Width="195" Visibility="Hidden"/>
+    </Grid>
+</Window>

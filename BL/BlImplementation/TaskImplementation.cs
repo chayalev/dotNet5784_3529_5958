@@ -270,15 +270,15 @@ internal class TaskImplementation : ITask
             Status = task.StatusTask
         });
     }
-    public IEnumerable<TaskInEngineer> AllTaskInEngineer()
+    public IEnumerable<TaskInEngineer> AllTaskInEngineer(BO.EngineerExperience? engineerExperience=BO.EngineerExperience.None)
     {
-        return ReadAll(task => task.Engineer == null).Select(task => new TaskInEngineer
+        return ReadAll(task => task.Engineer == null && task.ComplexityLevel <= engineerExperience).Select(task => new TaskInEngineer
         {
             Id = task.Id,
             Alias = task.Alias
         });
     }
-    public IEnumerable<TaskInList> TaskInListByLevel(BO.EngineerExperience engineerExperience)
+    public IEnumerable<TaskInList> TaskInListByLevel(BO.EngineerExperience? engineerExperience)
     {
         return ReadAll(task => task.ComplexityLevel == engineerExperience).Select(task => new TaskInList
         {

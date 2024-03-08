@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <Id>278813319</Id>
-    <Name>Dani Levi</Name>
+    <Id>385582349</Id>
+    <Name>Eli Amar</Name>
     <Level>Competent</Level>
-    <Email>Dani@gmail.com</Email>
-    <Cost>187.8622344137117</Cost>
+    <Email>Eli@gmail.com</Email>
+    <Cost>260.33870876854616</Cost>
   </Engineer>
   <Engineer>
-    <Id>385249176</Id>
+    <Id>258868867</Id>
     <Name>Yair Cohen</Name>
     <Level>Novice</Level>
     <Email>Yair@gmail.com</Email>
-    <Cost>192.93518597001872</Cost>
+    <Cost>188.3228160294104</Cost>
   </Engineer>
   <Engineer>
-    <Id>222213893</Id>
-    <Name>Dina Klein</Name>
+    <Id>237432101</Id>
+    <Name>Dani Levi</Name>
     <Level>AdvancedBeginner</Level>
-    <Email>Dina@gmail.com</Email>
-    <Cost>264.40738598905125</Cost>
+    <Email>Dani@gmail.com</Email>
+    <Cost>174.30577262310317</Cost>
   </Engineer>
   <Engineer>
-    <Id>335174998</Id>
+    <Id>374646190</Id>
+    <Name>Dina Klein</Name>
+    <Level>Novice</Level>
+    <Email>Dina@gmail.com</Email>
+    <Cost>313.8148193479612</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>324635287</Id>
+    <Name>Ariela Levin</Name>
+    <Level>Novice</Level>
+    <Email>Ariela@gmail.com</Email>
+    <Cost>470.4649716913107</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>276657965</Id>
     <Name>Shira Israelof</Name>
     <Level>Proficient</Level>
     <Email>Shira@gmail.com</Email>
-    <Cost>276.81132991881447</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>232169137</Id>
-    <Name>El</Name>
-    <Level>Competent</Level>
-    <Email>Eli@gmail.com</Email>
-    <Cost>307.74047150933467</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>230901182</Id>
-    <Name>Ariela Levi</Name>
-    <Level>Proficient</Level>
-    <Email>Ariela@gmail.com</Email>
-    <Cost>468.9707620261863</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>325383529</Id>
-    <Name>s</Name>
-    <Level>Proficient</Level>
-    <Email>s@gmail.com</Email>
-    <Cost>1</Cost>
+    <Cost>242.22162168217704</Cost>
   </Engineer>
 </ArrayOfEngineer>

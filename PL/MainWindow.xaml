@@ -14,7 +14,7 @@
         <!--כפתור שלחיצה עליו תוביל לניקוי (reset) בסיס נתוניםה-->
         <Button Content="reset🗑️" HorizontalAlignment="Left" Margin="539,256,0,0" VerticalAlignment="Top" Click="btnReset_Click" Height="67" Width="159"/>
 
-        <Button Content="allTask" HorizontalAlignment="Center" Margin="0,243,0,0" VerticalAlignment="Top" Click="btnTask_Click"/>
+        <!--<Button Content="allTask" HorizontalAlignment="Center" Margin="0,243,0,0" VerticalAlignment="Top" Click="btnTask_Click"/>-->
 
     </Grid>
 </Window>

@@ -23,6 +23,14 @@ namespace PL
     public partial class MainWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public static readonly DependencyProperty StatusMessageProperty =
+          DependencyProperty.Register("StatusMessage", typeof(string), typeof(MainWindow));
+
+        public string StatusMessage
+        {
+            get { return (string)GetValue(StatusMessageProperty); }
+            set { SetValue(StatusMessageProperty, value); }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -36,15 +44,19 @@ namespace PL
         private void btnInitialize_Click(object sender, RoutedEventArgs e)
         {
             s_bl.InitializeDB();
+            MessageBox.Show($"The details were initialized successfully");
         }
+
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             s_bl.ResetDB();
+            MessageBox.Show($"The details were reseted successfully");
         }
 
         private void btnTask_Click(object sender, RoutedEventArgs e)
         {
             new TaskListWindow().ShowDialog();
         }
+
     }
 }

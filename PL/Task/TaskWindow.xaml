@@ -24,10 +24,10 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Id" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" 
-             Visibility="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource NotBooleanToVisibilityConverterKey}}"/>
+             Visibility="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource VisibilityConverterKey}}"/>
         <TextBox Grid.Row="0" Grid.Column="1" 
                Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
-                Visibility="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource NotBooleanToVisibilityConverterKey}}"
+                Visibility="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource VisibilityConverterKey}}"
                HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
 
         <Label Content="Description" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" />

@@ -172,6 +172,8 @@ internal class EngineerImplementation : IEngineer
                     _dal.Task.Update(newTask with { EngineerId = eng.Id });
             }
         }
+        else
+            throw new BlWrongInputException($"you cant take task : {eng.Task!.Alias} because all the tasks that depended on it werent taken");
         ///Creating the engineer with the new data
         DO.Engineer doEngineer = new DO.Engineer
           (eng.Id, eng.Name, (DO.EngineerExperience?)eng.Level, eng.Email, eng.Cost);

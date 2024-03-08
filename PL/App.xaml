@@ -7,6 +7,8 @@
         <local:LevelsCollection x:Key="LevelsCollectionKey" />
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:IsEnableConverter x:Key="IsEnableConverterKey"/>
+        <local:VisibilityConverter x:Key="VisibilityConverterKey"/>
+        <local:TaskToChoose x:Key="TaskToChooseKey"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="LightBlue" />
             <Setter Property="BorderBrush" Value="Black" />

@@ -20,6 +20,7 @@ namespace PL.Engineer
     public partial class EngineerWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
         public EngineerWindow(int id = 0)
         {
 
@@ -28,7 +29,6 @@ namespace PL.Engineer
                 Engineer = s_bl.Engineer.Read(id)!;
             else
                 Engineer = new BO.Engineer();
-            TaskToChoose = s_bl.Task.AllTaskInEngineer();
 
         }
 
@@ -41,24 +41,23 @@ namespace PL.Engineer
         public static readonly DependencyProperty EngineerProperty =
             DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
 
-        public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.None;
-        public IEnumerable<BO.TaskInEngineer> TaskToChoose
-        {
-            get { return (IEnumerable<BO.TaskInEngineer>)GetValue(TaskToChooseProperty); }
-            set { SetValue(TaskToChooseProperty, value); }
-        }
-
-        public static readonly DependencyProperty TaskToChooseProperty =
-            DependencyProperty.Register("TaskToChoose", typeof(IEnumerable<BO.TaskInEngineer>), typeof(EngineerWindow), new PropertyMetadata(null));
-
+        public static BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.None;
         public void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if ((string)(sender as Button)!.Content == "Update")
+                {
                     s_bl.Engineer.Update(Engineer);
+                    MessageBox.Show($"The engineer: {Engineer.Name} update successfully");
+                }
                 else
+                {
                     s_bl.Engineer.Create(Engineer);
+                    MessageBox.Show($"The engineer: {Engineer.Name} was added successfully");
+
+
+                }
             }
             catch (Exception ex)
             {
@@ -71,7 +70,7 @@ namespace PL.Engineer
                 Close();
             }
 
-           
+
 
         }
         private void EngineerWindow_Closed(object sender, EventArgs e)
