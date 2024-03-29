@@ -17,7 +17,7 @@ internal class Bl : IBl
 
     public IMilestone Milestone => new MilestoneImplementation();
 
-    public ITask Task => new TaskImplementation();
+    public ITask Task => new TaskImplementation(this);
 
     public DateTime? StartDate { get; set; } = null;
     public DateTime? EndDate { get; set; } = null;
@@ -137,6 +137,34 @@ internal class Bl : IBl
     /// Deleting the database
     /// </summary>
     public void ResetDB() => DalTest.Initialization.Reset();
+    #region Clock
+    private static DateTime s_Clock = DateTime.Now.Date;
+    public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
+    public void ResetClock()
+    {
+        Clock=DateTime.Now.Date;
+    }
+
+    public void AddYear()
+    {
+      Clock= Clock.AddYears(1);
+    }
+    public void AddMonth()
+    {
+       Clock= Clock.AddMonths(1);
+    }
+
+    public void AddDay()
+    {
+       Clock= Clock.AddDays(1);
+    }
+
+    public void AddHour()
+    {
+       Clock= Clock.AddHours(1);
+    }
+
+    #endregion
 }
 
 

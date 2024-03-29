@@ -20,20 +20,54 @@ namespace PL
     /// </summary>
     public partial class EnterWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
         public EnterWindow()
         {
             InitializeComponent();
+            CurrentTime = s_bl.Clock;
         }
+
+
+
+        public DateTime CurrentTime
+        {
+            get { return (DateTime)GetValue(CurrentTimeProperty); }
+            set { SetValue(CurrentTimeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentTimeProperty =
+            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(EnterWindow), new PropertyMetadata(null));
+
 
         private void EnterManager_Click(object sender, RoutedEventArgs e)
         {
-            Close();
             new MainWindow().ShowDialog();
+        }
+        private void btnAddYear_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddYear();
+            CurrentTime = CurrentTime.AddYears(1);
+        }
+        private void btnAddMonth_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddMonth();
+            CurrentTime=CurrentTime.AddMonths(1);
+        }
+        private void btnAddDay_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddDay();
+            CurrentTime=CurrentTime.AddDays(1);
+        }
+        private void btnAddHour_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.AddHour();
+            CurrentTime=CurrentTime.AddHours(1);
         }
 
         private void EnterEngineer_Click(object sender, RoutedEventArgs e)
         {
-            EngId_box.Visibility = Visibility.Visible;
         }
     }
 }

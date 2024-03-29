@@ -57,6 +57,16 @@ namespace PL
         {
             new TaskListWindow().ShowDialog();
         }
-
+       
+        private void btnCreateSAuto_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.CreateProject();
+            }
+            catch(Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

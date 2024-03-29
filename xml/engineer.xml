@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <Id>385582349</Id>
-    <Name>Eli Amar</Name>
-    <Level>Competent</Level>
-    <Email>Eli@gmail.com</Email>
-    <Cost>260.33870876854616</Cost>
-  </Engineer>
-  <Engineer>
     <Id>258868867</Id>
     <Name>Yair Cohen</Name>
     <Level>Novice</Level>
@@ -41,5 +34,12 @@
     <Level>Proficient</Level>
     <Email>Shira@gmail.com</Email>
     <Cost>242.22162168217704</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>385582349</Id>
+    <Name>Eli Amar</Name>
+    <Level>Competent</Level>
+    <Email>Eli@gmail.com</Email>
+    <Cost>260.33870876854616</Cost>
   </Engineer>
 </ArrayOfEngineer>

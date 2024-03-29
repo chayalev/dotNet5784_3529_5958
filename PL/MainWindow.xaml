@@ -13,8 +13,10 @@
         <Button Content="AllEngineer" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Click="btnEngineer_Click" Height="125" Width="138"/>
         <!--כפתור שלחיצה עליו תוביל לניקוי (reset) בסיס נתוניםה-->
         <Button Content="reset🗑️" HorizontalAlignment="Left" Margin="539,256,0,0" VerticalAlignment="Top" Click="btnReset_Click" Height="67" Width="159"/>
+        <!--כפתור ליצירת לוז אוטומטי-->
+        <Button Content="create scheduel automatic"  VerticalAlignment="Top" Click="btnCreateSAuto_Click" Height="67" Width="159" Margin="310,256,331,0"/>
 
-        <!--<Button Content="allTask" HorizontalAlignment="Center" Margin="0,243,0,0" VerticalAlignment="Top" Click="btnTask_Click"/>-->
+        <Button Content="allTask" HorizontalAlignment="Left" Margin="505,204,0,0" VerticalAlignment="Top" Click="btnTask_Click"/>
 
     </Grid>
 </Window>

@@ -38,6 +38,7 @@ namespace PL.Engineer
 
                 if (selectedEngineer != null)
                 {
+                    //TaskToChoose.LevelOfEng = s_bl.Engineer.Read(selectedEngineer.Id)!.Level;
                     new EngineerWindow(selectedEngineer.Id).ShowDialog();
                 }
             }

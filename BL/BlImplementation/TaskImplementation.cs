@@ -10,6 +10,9 @@ using System.Runtime.Intrinsics.Arm;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    private readonly IBl _bl;
+    internal TaskImplementation(IBl bl) => _bl = bl;
+
     /// <summary>
     /// The GetDependencies function to get the dependencies for a particular task
     /// </summary>
@@ -80,7 +83,7 @@ internal class TaskImplementation : ITask
         });
         ///Creating the new task
         DO.Task newTask = new DO.Task
-        (0, item!.Description, item.RequiredEffortTime, item.Alias, false, item.CreateAtDate, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+        (0, item!.Description, item.RequiredEffortTime, item.Alias, false, _bl.Clock, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
         int idTask = _dal.Task.Create(newTask);
         ///Creating appropriate dependencies for the task
         item?.Dependencies?.ForEach(taskDep =>
@@ -130,7 +133,24 @@ internal class TaskImplementation : ITask
         try
         {
             ///Calculates the status
-            var status = Factory.Get().IsCreate ? 0 : (Status)1;
+            //before createing project
+            var status = BO.Status.Unscheduled;
+            //after the creation
+            if (Factory.Get().IsCreate)
+                //When start date is over
+                if (_bl.Clock > doTask.StartDate)
+                    //if the task was complitied
+                    if (doTask.CompleteDate != null)
+                        status = BO.Status.Done;
+                    //if the deadline of the task is over
+                    else if (_bl.Clock > doTask.DeadlineDate)
+                        status = BO.Status.InJeopardy;
+                    //while the task on track
+                    else
+                        status = BO.Status.OnTrack;
+                //before the start date
+                else
+                    status = BO.Status.Scheduled;
 
             var milestoneInTask = _dal.Dependency.ReadAll()
              .Where(dep => dep?.DependentTask == id)
@@ -270,7 +290,7 @@ internal class TaskImplementation : ITask
             Status = task.StatusTask
         });
     }
-    public IEnumerable<TaskInEngineer> AllTaskInEngineer(BO.EngineerExperience? engineerExperience=BO.EngineerExperience.None)
+    public IEnumerable<TaskInEngineer> AllTaskInEngineer(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
     {
         return ReadAll(task => task.Engineer == null && task.ComplexityLevel <= engineerExperience).Select(task => new TaskInEngineer
         {

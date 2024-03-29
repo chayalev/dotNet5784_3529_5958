@@ -23,13 +23,12 @@ namespace PL.Engineer
 
         public EngineerWindow(int id = 0)
         {
-
+           
             InitializeComponent();
             if (id != 0)
                 Engineer = s_bl.Engineer.Read(id)!;
             else
                 Engineer = new BO.Engineer();
-
         }
 
         public BO.Engineer Engineer
@@ -49,19 +48,19 @@ namespace PL.Engineer
                 if ((string)(sender as Button)!.Content == "Update")
                 {
                     s_bl.Engineer.Update(Engineer);
-                    MessageBox.Show($"The engineer: {Engineer.Name} update successfully");
+                    MessageBox.Show($"The engineer: {Engineer.Name} update successfully", "Update successfully");
                 }
                 else
                 {
                     s_bl.Engineer.Create(Engineer);
-                    MessageBox.Show($"The engineer: {Engineer.Name} was added successfully");
+                    MessageBox.Show($"The engineer: {Engineer.Name} was added successfully", "Add successfully");
 
 
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             finally

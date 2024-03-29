@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="EnterWindow" Height="450" Width="800">
+        Title="EnterWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        <Button Content="Manager" HorizontalAlignment="Left" Height="92" Margin="59,322,0,0" VerticalAlignment="Top" Width="249" Click="EnterManager_Click"/>
-        <Button Content="Enginner" HorizontalAlignment="Left" Height="92" Margin="357,322,0,0" VerticalAlignment="Top" Width="272" Click="EnterEngineer_Click"/>
-        <TextBox x:Name="EngId_box" HorizontalAlignment="Left"  Height="27" Margin="409,273,0,0" TextWrapping="Wrap" Text="Enet your id" VerticalAlignment="Top" Width="195" Visibility="Hidden"/>
+        <Button Content="Manager" HorizontalAlignment="Left" Height="92" Margin="62,276,0,0" VerticalAlignment="Top" Width="249" Click="EnterManager_Click"/>
+        <Button Content="Enginner" HorizontalAlignment="Left" Height="92" Margin="349,276,0,0" VerticalAlignment="Top" Width="272" Click="EnterEngineer_Click"/>
+        <Label Content="{Binding CurrentTime}" FontSize="40px" HorizontalAlignment="Left" Height="76" Margin="207,51,0,0" VerticalAlignment="Top" Width="368"/>
+        <Button Content="+ Year" HorizontalAlignment="Left" Height="20" Margin="207,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddYear_Click"/>
+        <Button Content="+ Month" HorizontalAlignment="Left" Height="20" Margin="278,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddMonth_Click" RenderTransformOrigin="-2.485,3.852"/>
+        <Button Content="+ Day" HorizontalAlignment="Left" Height="20" Margin="349,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddDay_Click"/>
+        <Button Content="+ Hour" HorizontalAlignment="Left" Height="20" Margin="420,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddHour_Click"/>
     </Grid>
 </Window>
