@@ -10,8 +10,15 @@ public interface IBl
 
     public bool IsCreate { get; set; }
     public void CreateProject();
-   public void InitializeDB();
+    public void InitializeDB();
     public void ResetDB();
-
+    #region Clock
+    public DateTime Clock { get; }
+    public void ResetClock();
+    public void AddYear();
+    public void AddMonth();
+    public void AddDay();
+    public void AddHour();
+    #endregion
 }
 
