@@ -5,7 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="GantWindow" Height="450" Width="800">
+        Title="GantWindow" Height="450" Width="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Setter Property="Background" Value="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}, Converter= {StaticResource ConvertTaskStatusToBackgroundColorKey} }"/>
+                <Setter Property="Foreground" Value="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}, Converter= {StaticResource ConvertTaskStatusToForegroundColorKey}}"/>
+            </Style>
+        </Grid.Resources>
+
+        <DataGrid ItemsSource="{Binding dataTable}" IsReadOnly="True" InkCanvas.Left="42" InkCanvas.Top="42"/>
+
     </Grid>
 </Window>

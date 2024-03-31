@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <Id>258868867</Id>
-    <Name>Yair Cohen</Name>
-    <Level>Novice</Level>
-    <Email>Yair@gmail.com</Email>
-    <Cost>188.3228160294104</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>237432101</Id>
+    <Id>221701560</Id>
     <Name>Dani Levi</Name>
-    <Level>AdvancedBeginner</Level>
-    <Email>Dani@gmail.com</Email>
-    <Cost>174.30577262310317</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>374646190</Id>
-    <Name>Dina Klein</Name>
-    <Level>Novice</Level>
-    <Email>Dina@gmail.com</Email>
-    <Cost>313.8148193479612</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>324635287</Id>
-    <Name>Ariela Levin</Name>
-    <Level>Novice</Level>
-    <Email>Ariela@gmail.com</Email>
-    <Cost>470.4649716913107</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>276657965</Id>
-    <Name>Shira Israelof</Name>
-    <Level>Proficient</Level>
-    <Email>Shira@gmail.com</Email>
-    <Cost>242.22162168217704</Cost>
-  </Engineer>
-  <Engineer>
-    <Id>385582349</Id>
-    <Name>Eli Amar</Name>
     <Level>Competent</Level>
+    <Email>Dani@gmail.com</Email>
+    <Cost>299.86469449430786</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>212052353</Id>
+    <Name>Eli Amar</Name>
+    <Level>Proficient</Level>
     <Email>Eli@gmail.com</Email>
-    <Cost>260.33870876854616</Cost>
+    <Cost>301.6997412653067</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>216044924</Id>
+    <Name>Yair Cohen</Name>
+    <Level>Competent</Level>
+    <Email>Yair@gmail.com</Email>
+    <Cost>444.14157066657134</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>364902921</Id>
+    <Name>Ariela Levin</Name>
+    <Level>Competent</Level>
+    <Email>Ariela@gmail.com</Email>
+    <Cost>118.34111973912269</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>307407418</Id>
+    <Name>Dina Klein</Name>
+    <Level>AdvancedBeginner</Level>
+    <Email>Dina@gmail.com</Email>
+    <Cost>498.68850797152214</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>396661561</Id>
+    <Name>Shira Israelof</Name>
+    <Level>Novice</Level>
+    <Email>Shira@gmail.com</Email>
+    <Cost>149.08968763939913</Cost>
   </Engineer>
 </ArrayOfEngineer>

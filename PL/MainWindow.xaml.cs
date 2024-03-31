@@ -63,10 +63,17 @@ namespace PL
             try
             {
                 s_bl.CreateProject();
+                MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch(Exception ex) {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+
+        private void btnGant_Click(object sender, RoutedEventArgs e)
+        {
+            new GantWindow().ShowDialog();
         }
     }
 }

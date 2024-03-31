@@ -52,17 +52,17 @@ internal class Bl : IBl
     }
 
     /// <summary>
-    /// Receiving the initial bid from the manager
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="BO.BlWrongInput"></exception>
-    private DateTime GetStartDate()
-    {
-        Console.WriteLine("insert the start date:");
-        ///Saving in a temporary variable the start time entered by the manager
-        var startDate = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : throw new BO.BlWrongDateException("must insert value!");
-        return startDate;
-    }
+    ///// Receiving the initial bid from the manager
+    ///// </summary>
+    ///// <returns></returns>
+    ///// <exception cref="BO.BlWrongInput"></exception>
+    //private DateTime GetStartDate()
+    //{
+    //    Console.WriteLine("insert the start date:");
+    //    ///Saving in a temporary variable the start time entered by the manager
+    //    var startDate = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : throw new BO.BlWrongDateException("must insert value!");
+    //    return startDate;
+    //}
 
     /// <summary>
     /// Sending the task to update the times in dal
@@ -114,7 +114,7 @@ internal class Bl : IBl
     /// </summary>
     public void CreateProject()
     {
-        var startDate = GetStartDate();
+        var startDate = _dal.Task.ReadAll().Min(x => x!.StartDate);
         var tasks = _dal.Task.ReadAll();
         ///Updates the first tasks
         var firstTasks = tasks.Where(task => !_dal.Dependency.ReadAll(dep => dep.DependentTask == task?.Id).Any()).ToList();
@@ -123,10 +123,7 @@ internal class Bl : IBl
         //update the start and end days of the project
         StartDate = startDate;
         var allTask = _dal.Task.ReadAll();
-        var lastEndDate = allTask.First()?.DeadlineDate;
-        foreach (var task in allTask)
-            lastEndDate = task?.DeadlineDate > lastEndDate ? task.DeadlineDate : lastEndDate;
-        EndDate = lastEndDate;
+        EndDate = allTask.Max(task => task?.DeadlineDate);
         _dal.EndDate = EndDate;
         _dal.StartDate = startDate;
         IsCreate = true;
@@ -137,6 +134,7 @@ internal class Bl : IBl
     /// Deleting the database
     /// </summary>
     public void ResetDB() => DalTest.Initialization.Reset();
+
     #region Clock
     private static DateTime s_Clock = DateTime.Now.Date;
     public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
@@ -165,6 +163,18 @@ internal class Bl : IBl
     }
 
     #endregion
+
+    /// <summary>
+    /// Allows the user to choose a start date for a task, based on its dependencies.
+    /// </summary>
+    public void StartDateForTask(BO.Task tsk,DateTime startForTsk)
+    {
+        DateTime? canStartDate = EarliestStartDate(_dal.Task.Read(tsk.Id)!);
+        if (startForTsk < canStartDate)
+            throw new BO.BlWrongDateException("Invalid start date for the task");
+        tsk.StartDate = startForTsk;
+        Task.Update(tsk);
+    }
 }
 
 

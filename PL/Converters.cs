@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PL;
 
@@ -48,6 +49,63 @@ public class VisibilityConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
+class ConvertTaskStatusToBackgroundColor : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string status = (string)value;
+        switch (status)
+        {
+            case "None":
+                return Brushes.White;
+            case "Scheduled":
+                return Brushes.Black;
+            case "OnTrack":
+                return Brushes.Black;
+            case "Done":
+                return Brushes.Black;
+            case "InJeopardy":
+                return Brushes.Black;
+            default:
+                return Brushes.White;
+        }
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertTaskStatusToForegroundColor : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string status = (string)value;
+        switch (status)
+        {
+            case "None":
+                return Brushes.White;
+            case "Scheduled":
+                return Brushes.Black;
+            case "OnTrack":
+                return Brushes.Black;
+            case "Done":
+                return Brushes.Black;
+            case "InJeopardy":
+                return Brushes.Black;
+            default:
+                return Brushes.White;
+        }
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

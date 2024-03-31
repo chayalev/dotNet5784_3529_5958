@@ -8,6 +8,8 @@
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:IsEnableConverter x:Key="IsEnableConverterKey"/>
         <local:VisibilityConverter x:Key="VisibilityConverterKey"/>
+        <local:ConvertTaskStatusToBackgroundColor x:Key="ConvertTaskStatusToBackgroundColorKey"/>
+        <local:ConvertTaskStatusToForegroundColor x:Key="ConvertTaskStatusToForegroundColorKey"/>
         <local:TaskToChoose x:Key="TaskToChooseKey"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="LightBlue" />

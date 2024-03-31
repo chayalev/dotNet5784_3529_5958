@@ -52,7 +52,7 @@
           HorizontalAlignment="Left" Height="NaN" Margin="3,18,0,0"  VerticalAlignment="Top" Width="120"/>
         <Label Content="Startdate" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="6" Grid.Column="0" />
 
-        <DatePicker VerticalAlignment="Top" Grid.Row="6" Margin="3,10,566,0" Grid.Column="1" />
+        <DatePicker VerticalAlignment="Top" Grid.Row="6" Margin="3,10,566,0" Grid.Column="1" SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
 
         <Label Content="Level" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="5" Grid.Column="0" />
         <ComboBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="left"  Height="NaN" Margin="3"
@@ -61,7 +61,7 @@
                VerticalAlignment="center"  Width="120"/>
         <!--SelectionChanged="cbLevelSelector_SelectionChanged"-->
         <Label Content="RequiredEffortTime" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="7" Grid.Column="0" />
-        <TextBox InputScope="Number" Grid.Row="7" Grid.Column="1" Margin="10,10,591,13"/>
+        <TextBox    Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" InputScope="Number" Grid.Row="7" Grid.Column="1" Margin="10,10,591,13"/>
 
         <ListBox ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}" Grid.Row="8" Grid.Column="1">
             <ListBox.ItemTemplate>

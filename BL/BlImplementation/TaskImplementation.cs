@@ -83,7 +83,7 @@ internal class TaskImplementation : ITask
         });
         ///Creating the new task
         DO.Task newTask = new DO.Task
-        (0, item!.Description, item.RequiredEffortTime, item.Alias, false, _bl.Clock, item.StartDate, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+        (0, item!.Description, item.RequiredEffortTime, item.Alias, false, _bl.Clock, item.StartDate, item.ForecastDate, item.StartDate+item.RequiredEffortTime, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
         int idTask = _dal.Task.Create(newTask);
         ///Creating appropriate dependencies for the task
         item?.Dependencies?.ForEach(taskDep =>
