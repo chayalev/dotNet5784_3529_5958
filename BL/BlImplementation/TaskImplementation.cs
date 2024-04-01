@@ -9,7 +9,6 @@ using System.Runtime.Intrinsics.Arm;
 
 internal class TaskImplementation : ITask
 {
-    private DalApi.IDal _dal = DalApi.Factory.Get;
     private readonly IBl _bl;
     internal TaskImplementation(IBl bl) => _bl = bl;
 
@@ -22,11 +21,11 @@ internal class TaskImplementation : ITask
     private List<BO.TaskInList> GetDependencies(int taskId)
     {
         ///Goes through the list of dependencies and takes all the tasks that the task depends on
-        List<BO.TaskInList> dependencies = _dal.Dependency.ReadAll(dep => dep.DependentTask == taskId)
+        List<BO.TaskInList> dependencies = Bl._dal.Dependency.ReadAll(dep => dep.DependentTask == taskId)
         .Select(dep =>
         {
             ///Creating a task-type member in the list according to the values found in the task
-            var currentTask = _dal.Task.Read(task => task.Id == dep?.DependsOnTask);
+            var currentTask = Bl._dal.Task.Read(task => task.Id == dep?.DependsOnTask);
             int newid = dep?.DependsOnTask ?? throw new DalDoesNotExistException("");
             ///Calculates the status
             var status = Factory.Get().IsCreate ? 0 : (Status)1;
@@ -73,7 +72,7 @@ internal class TaskImplementation : ITask
         ///Creating the task's dependencies
         item?.Dependencies?.ForEach(dep =>
         {
-            var taskInList = _dal.Task.Read(dep.Id);
+            var taskInList = Bl._dal.Task.Read(dep.Id);
             if (taskInList != null)
             {
                 dep.Id = taskInList.Id;
@@ -83,13 +82,13 @@ internal class TaskImplementation : ITask
         });
         ///Creating the new task
         DO.Task newTask = new DO.Task
-        (0, item!.Description, item.RequiredEffortTime, item.Alias, false, _bl.Clock, item.StartDate, item.ForecastDate, item.StartDate+item.RequiredEffortTime, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
-        int idTask = _dal.Task.Create(newTask);
+        (0, item!.Description, item.RequiredEffortTime, item.Alias, false, _bl.Clock, item.StartDate, item.ForecastDate, item.StartDate + item.RequiredEffortTime, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+        int idTask = Bl._dal.Task.Create(newTask);
         ///Creating appropriate dependencies for the task
         item?.Dependencies?.ForEach(taskDep =>
                         {
                             var newDep = new DO.Dependency { DependentTask = idTask, DependsOnTask = taskDep.Id };
-                            _dal.Dependency.Create(newDep);
+                            Bl._dal.Dependency.Create(newDep);
                         });
 
         return idTask;
@@ -104,14 +103,14 @@ internal class TaskImplementation : ITask
     public void Delete(int id)
     {
         ///Checking that the task does not precede other tasks
-        if (_dal.Dependency.ReadAll(dep => dep.DependsOnTask == id).Any())
+        if (Bl._dal.Dependency.ReadAll(dep => dep.DependsOnTask == id).Any())
             throw new BlDeletionImpossibleException($"Task with ID={id} is in depended");
         ///Tasks cannot be deleted after the project schedule has been created
-        if (_dal.Task.ReadAll(task => task.IsMilestone == true).Any())
+        if (Bl._dal.Task.ReadAll(task => task.IsMilestone == true).Any())
             throw new BlDeletionImpossibleException($"Cannot delete a task after a Creating a schedule");
         try
         {
-            _dal.Task.Delete(id);
+            Bl._dal.Task.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -129,7 +128,7 @@ internal class TaskImplementation : ITask
     public BO.Task? Read(int id)
     {
         ///Bringing the task from the dal
-        DO.Task doTask = _dal.Task.Read(id) ?? throw new BO.BlDoesNotExistException($"task with ID={id} does Not exist");
+        DO.Task doTask = Bl._dal.Task.Read(id) ?? throw new BO.BlDoesNotExistException($"task with ID={id} does Not exist");
         try
         {
             ///Calculates the status
@@ -152,12 +151,12 @@ internal class TaskImplementation : ITask
                 else
                     status = BO.Status.Scheduled;
 
-            var milestoneInTask = _dal.Dependency.ReadAll()
+            var milestoneInTask = Bl._dal.Dependency.ReadAll()
              .Where(dep => dep?.DependentTask == id)
              .Select(dep => new MilestoneInTask
              {
                  Id = dep?.DependsOnTask ?? throw new DalDoesNotExistException(""),
-                 Alias = _dal.Task.Read(dep.DependsOnTask.Value)?.Alias
+                 Alias = Bl._dal.Task.Read(dep.DependsOnTask.Value)?.Alias
              })
              .FirstOrDefault();
             ///Conversion from a database to the logic layer
@@ -178,7 +177,7 @@ internal class TaskImplementation : ITask
                 Deliverables = doTask.Deliverables,
                 Remarks = doTask.Remarks,
                 Engineer = doTask.EngineerId != null
-                ? new EngineerInTask { Id = (int)doTask.EngineerId, Name = _dal.Engineer.Read(id)?.Name }
+                ? new EngineerInTask { Id = (int)doTask.EngineerId, Name = Bl._dal.Engineer.Read(id)?.Name }
                 : null,
                 ComplexityLevel = (BO.EngineerExperience?)doTask.CopmlexityLevel,
             };
@@ -199,7 +198,7 @@ internal class TaskImplementation : ITask
     public IEnumerable<BO.Task> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         ///Creating a new BO task list
-        var allTasks = _dal.Task.ReadAll().Select(doTask => Read(doTask!.Id) ?? throw new BlDoesNotExistException("the tasks dont exist"));
+        var allTasks = Bl._dal.Task.ReadAll().Select(doTask => Read(doTask!.Id) ?? throw new BlDoesNotExistException("the tasks dont exist"));
         if (filter == null)
             return allTasks;
         else
@@ -227,17 +226,17 @@ internal class TaskImplementation : ITask
             ///If this task has dependent tasks
             if (item.Dependencies != null)
             {
-                var depToDelete = _dal.Dependency.ReadAll(dep => dep?.DependentTask == item.Id);
+                var depToDelete = Bl._dal.Dependency.ReadAll(dep => dep?.DependentTask == item.Id);
                 ///Deleting all dependencies that the task shares
                 depToDelete.ToList().ForEach(dep =>
                     {
-                        _dal.Dependency.Delete(dep!.Id);
+                        Bl._dal.Dependency.Delete(dep!.Id);
                     });
                 ///Changing the dependencies of the task
                 item?.Dependencies?.ForEach(taskDep =>
                 {
                     var newDep = new DO.Dependency { DependentTask = item.Id, DependsOnTask = taskDep.Id };
-                    _dal.Dependency.Create(newDep);
+                    Bl._dal.Dependency.Create(newDep);
                 });
             }
         }
@@ -248,11 +247,11 @@ internal class TaskImplementation : ITask
             if (item.StartDate != null)
             {
                 ///If the start date is less than the end date of the tasks that depend on them
-                if (!_dal.Dependency.ReadAll(dep => dep.DependentTask == item.Id).All(dep => _dal.Task.Read((int)dep?.DependsOnTask!)?.DeadlineDate <= item.StartDate))
+                if (!Bl._dal.Dependency.ReadAll(dep => dep.DependentTask == item.Id).All(dep => Bl._dal.Task.Read((int)dep?.DependsOnTask!)?.DeadlineDate <= item.StartDate))
                     throw new BlWrongDateException($"A start date is less than the end date of the tasks that task {item.Id} depends on");
             }
             ///If the start date is less than the start date of the entire project
-            if (!_dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >= Factory.Get().StartDate)
+            if (!Bl._dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >= Factory.Get().StartDate)
             {
                 throw new BlWrongDateException($" The task: {item.Id}- start date is earlier than the project start date");
             }
@@ -260,7 +259,7 @@ internal class TaskImplementation : ITask
             if (item.StartDate > item.DeadlineDate)
                 throw new BlWrongDateException($"The task:{item.Id}  start date is later than the end date");
             ///When you want to update an engineer who already has another engineer for this task
-            if (_dal.Task.Read(item.Id)?.EngineerId != null && _dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
+            if (Bl._dal.Task.Read(item.Id)?.EngineerId != null && Bl._dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
                 throw new wrongInput($"The task:{item.Id} was taken by another engineer");
             ///End date calculator
             var deadLineDate = item.StartDate + item.RequiredEffortTime;
@@ -272,7 +271,7 @@ internal class TaskImplementation : ITask
         ///Test Data
         try
         {
-            _dal.Task.Update(taskUpdate);
+            Bl._dal.Task.Update(taskUpdate);
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -292,11 +291,25 @@ internal class TaskImplementation : ITask
     }
     public IEnumerable<TaskInEngineer> AllTaskInEngineer(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
     {
-        return ReadAll(task => task.Engineer == null && task.ComplexityLevel <= engineerExperience).Select(task => new TaskInEngineer
+        /////Checking if all the tasks that this task depends on have already been done
+        //bool isAllDone = dependencies.All(dep => Factory.Get().Task.Read((int)dep!.DependsOnTask!)?.StatusTask == Status.Done);
+        //return ReadAll(task => task.Engineer == null && task.ComplexityLevel <= engineerExperience).Select(task => new TaskInEngineer
+        //{
+        //    Id = task.Id,
+        //    Alias = task.Alias
+        //});
+        return ReadAll(task =>
+            task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר
+            task.StatusTask != BO.Status.Done &&                         // משימה לא הסתיימה
+            task.ComplexityLevel <= engineerExperience && // רמת המורכבות תואמת את ניסיון המהנדס
+            (task.Dependencies != null ? task.Dependencies.All(subtask => subtask.Status == BO.Status.Done) :true) // כל המשימות המשניות סגורות
+        )
+        .Select(task => new TaskInEngineer
         {
             Id = task.Id,
             Alias = task.Alias
         });
+
     }
     public IEnumerable<TaskInList> TaskInListByLevel(BO.EngineerExperience? engineerExperience)
     {

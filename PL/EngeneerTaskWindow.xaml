@@ -1,0 +1,12 @@
+﻿<Window x:Class="PL.EngeneerTaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="EngeneerTaskWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="get a task" Click="TaskForEngineer_Click" Margin="333,171,155,106"/>
+    </Grid>
+</Window>

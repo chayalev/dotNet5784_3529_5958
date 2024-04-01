@@ -17,20 +17,22 @@ using System.Windows.Shapes;
 
 namespace PL
 {
+
+
     /// <summary>
     /// Interaction logic for GantWindow.xaml
     /// </summary>
     public partial class GantWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+      //  static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public DataTable dataTable
         {
             get { return (DataTable)GetValue(dataTableProperty); }
             set { SetValue(dataTableProperty, value); }
         }
 
-        public static readonly DependencyProperty dataTableProperty = 
+        public static readonly DependencyProperty dataTableProperty =
             DependencyProperty.Register("dataTable", typeof(DataTable), typeof(GantWindow), new PropertyMetadata(null));
 
 
@@ -52,28 +54,28 @@ namespace PL
 
             int col = 4;
 
-            for(DateTime day = s_bl.StartDate ?? s_bl.Clock; day <= s_bl.EndDate; day = day.AddDays(1))
+            for (DateTime day = App.s_bl.StartDate ?? App.s_bl.Clock; day <= App.s_bl.EndDate; day = day.AddDays(1))
             {
                 string strDay = $"{day.Day}-{day.Month}-{day.Year}";
                 dataTable.Columns.Add(strDay, typeof(string));
                 col++;
             }
 
-            IEnumerable<BO.Task> orderedTasks = s_bl.Task.ReadAll().OrderBy(x => x.StartDate);
-            foreach(BO.Task task in orderedTasks)
+            IEnumerable<BO.Task> orderedTasks = App.s_bl.Task.ReadAll().OrderBy(x => x.StartDate);
+            foreach (BO.Task task in orderedTasks)
             {
-               
+
                 DataRow row = dataTable.NewRow();
                 row[0] = task.Id;
                 row[1] = task.Alias;
                 row[2] = 0;
                 row[3] = "name";
 
-                for (DateTime day = s_bl.StartDate ?? s_bl.Clock; day <=s_bl.EndDate; day = day.AddDays(1))
+                for (DateTime day = App.s_bl.StartDate ?? App.s_bl.Clock; day <= App.s_bl.EndDate; day = day.AddDays(1))
                 {
                     string strDay = $"{day.Day}-{day.Month}-{day.Year}";
 
-                    if (day < s_bl.StartDate || day > s_bl.EndDate)
+                    if (day < App.s_bl.StartDate || day > App.s_bl.EndDate)
                         row[strDay] = BO.Status.Unscheduled;
                     else
                         row[strDay] = task.StatusTask;
@@ -81,7 +83,7 @@ namespace PL
                 dataTable.Rows.Add(row);
 
             }
-            
+
 
         }
     }

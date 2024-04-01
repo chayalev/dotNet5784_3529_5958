@@ -20,5 +20,6 @@ public interface IBl
     public void AddDay();
     public void AddHour();
     #endregion
+    public void StartDateForTask(BO.Task tsk, DateTime startForTsk);
 }
 

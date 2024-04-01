@@ -15,9 +15,12 @@
         <Button Content="reset🗑️" HorizontalAlignment="Left" Margin="539,256,0,0" VerticalAlignment="Top" Click="btnReset_Click" Height="67" Width="159"/>
         <!--כפתור ליצירת לוז אוטומטי-->
         <Button Content="create scheduel automatic"  VerticalAlignment="Top" Click="btnCreateSAuto_Click" Height="67" Width="159" Margin="310,256,331,0"/>
+        <!---כפתור ליצירת לוז  ידני-->
+        <Button Content="create scheduel manualy"  VerticalAlignment="Top" Click="btnCreateSManual_Click" Height="67" Width="159" Margin="134,163,507,0"/>
+
 
         <Button Content="allTask" HorizontalAlignment="Left" Margin="505,204,0,0" VerticalAlignment="Top" Click="btnTask_Click"/>
-        
+
         <Button Content="Gannt" HorizontalAlignment="Left" Height="20" Margin="293,217,0,0" VerticalAlignment="Top" Width="66" Click="btnGant_Click"/>
 
     </Grid>

@@ -9,9 +9,8 @@ using System.Text.RegularExpressions;
 
 internal class EngineerImplementation : IEngineer
 {
-    private DalApi.IDal _dal = DalApi.Factory.Get;
-
-
+   
+   
     /// <summary>
     /// Check the id of Engineer
     /// </summary>
@@ -72,7 +71,7 @@ internal class EngineerImplementation : IEngineer
           (GetValidId(eng.Id), eng.Name, (DO.EngineerExperience?)eng.Level,GetValidEmail( eng.Email), eng.Cost);
         try
         {
-            int idStud = _dal.Engineer.Create(doEngineer);
+            int idStud = Bl._dal.Engineer.Create(doEngineer);
             return idStud;
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -94,10 +93,10 @@ internal class EngineerImplementation : IEngineer
         if (boEng?.Task != null)
             throw new BO.BlWrongInputException("Engineer in the middle of task");
         ///integrity - there is an engineer with this ID number
-        if (_dal.Engineer.Read(id) == null)
+        if (Bl._dal.Engineer.Read(id) == null)
             throw new BO.BlDoesNotExistException($"Engineer ID = {id} does not exist");
         else
-            _dal.Engineer.Delete(id);
+            Bl._dal.Engineer.Delete(id);
     }
 
     /// <summary>
@@ -108,13 +107,13 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="BO.BlDoesNotExistException"></exception>
     public BO.Engineer? Read(int id)
     {
-        DO.Engineer? doEngineer = _dal.Engineer.Read(id);
+        DO.Engineer? doEngineer = Bl._dal.Engineer.Read(id);
         BO.TaskInEngineer? taskInEngineer = null;
         ///integrity - there is an engineer with this ID number
         if (doEngineer == null)
             throw new BO.BlDoesNotExistException($"Engineer with ID={id} does Not exist");
         ///Accepting the engineer's assignment
-        var task = _dal.Task.Read(task => task.EngineerId == id);
+        var task = Bl._dal.Task.Read(task => task.EngineerId == id);
         if (task != null)
             taskInEngineer = new TaskInEngineer { Id = task!.Id, Alias = task.Alias };
         ///Creating and returning the engineer
@@ -135,7 +134,7 @@ internal class EngineerImplementation : IEngineer
     /// <returns></returns>
     public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter)
     {
-        var allEngineers = _dal.Engineer.ReadAll().Select(eng => Read(eng!.Id) ?? throw new BlDoesNotExistException("the tasks dont exist"));
+        var allEngineers = Bl._dal.Engineer.ReadAll().Select(eng => Read(eng!.Id) ?? throw new BlDoesNotExistException("the tasks dont exist"));
         if (filter == null)
             return allEngineers;
         else
@@ -151,25 +150,25 @@ internal class EngineerImplementation : IEngineer
     public void Update(BO.Engineer eng)
     {
         ///Checking if this engineer's task is dependent on another task
-        var dependencies = _dal.Dependency.ReadAll(dep => dep.DependentTask == eng.Task?.Id);
+        var dependencies = Bl._dal.Dependency.ReadAll(dep => dep.DependentTask == eng.Task?.Id);
         ///Checking if all the tasks that this task depends on have already been done
         bool isAllDone = dependencies.All(dep => Factory.Get().Task.Read((int)dep!.DependsOnTask!)?.StatusTask == Status.Done);
         if (isAllDone)
         {
             ///Finding the task that belonged to this engineer
-            var deleteTaskInEng = _dal.Task.Read(task => task.EngineerId == eng.Id);
+            var deleteTaskInEng = Bl._dal.Task.Read(task => task.EngineerId == eng.Id);
             if (deleteTaskInEng != null)
             {
                 ///Update of the task that the engineer was deleted
-                _dal.Task.Update(deleteTaskInEng with { EngineerId = null });
+                Bl._dal.Task.Update(deleteTaskInEng with { EngineerId = null });
             }
             if (eng.Task != null)
             {
-                var newTask = _dal.Task.Read(task => task.Id == eng.Task?.Id);
-                var prevEng = _dal.Engineer.Read(eng.Id);
+                var newTask = Bl._dal.Task.Read(task => task.Id == eng.Task?.Id);
+                var prevEng = Bl._dal.Engineer.Read(eng.Id);
                 ///Checking that the new task is without a registered engineer and that it matches the level of the engineer
                 if (newTask != null && newTask.EngineerId == null && (int?)newTask.CopmlexityLevel <= (int?)eng.Level && (int?)eng.Level >= (int?)prevEng?.Level)
-                    _dal.Task.Update(newTask with { EngineerId = eng.Id });
+                    Bl._dal.Task.Update(newTask with { EngineerId = eng.Id });
             }
         }
         else
@@ -179,7 +178,7 @@ internal class EngineerImplementation : IEngineer
           (eng.Id, eng.Name, (DO.EngineerExperience?)eng.Level, eng.Email, eng.Cost);
         try
         {
-            _dal.Engineer.Update(doEngineer);
+            Bl._dal.Engineer.Update(doEngineer);
         }
         catch (DO.DalAlreadyExistsException ex)
         {

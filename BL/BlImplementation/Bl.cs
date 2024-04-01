@@ -11,7 +11,7 @@ internal class Bl : IBl
     /// <summary>
     /// A data link variable
     /// </summary>
-    private DalApi.IDal _dal = DalApi.Factory.Get;
+    public static DalApi.IDal _dal = DalApi.Factory.Get;
 
     public IEngineer Engineer => new EngineerImplementation();
 
@@ -19,8 +19,8 @@ internal class Bl : IBl
 
     public ITask Task => new TaskImplementation(this);
 
-    public DateTime? StartDate { get; set; } = null;
-    public DateTime? EndDate { get; set; } = null;
+    public DateTime? StartDate { get; set; } 
+    public DateTime? EndDate {get; set; } 
 
     /// <summary>
     /// Checking whether the project status is after or before creating the schedule
@@ -123,7 +123,7 @@ internal class Bl : IBl
         //update the start and end days of the project
         StartDate = startDate;
         var allTask = _dal.Task.ReadAll();
-        EndDate = allTask.Max(task => task?.DeadlineDate);
+        EndDate = allTask.Max(tsk => tsk?.DeadlineDate);
         _dal.EndDate = EndDate;
         _dal.StartDate = startDate;
         IsCreate = true;

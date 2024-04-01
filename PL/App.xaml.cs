@@ -13,5 +13,6 @@ namespace PL
     /// </summary>
     public partial class App : Application
     {
+        public static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     }
 }

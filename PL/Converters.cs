@@ -76,7 +76,7 @@ class ConvertTaskStatusToBackgroundColor : IValueConverter
             case "InJeopardy":
                 return Brushes.Black;
             default:
-                return Brushes.White;
+                return Brushes.DarkRed;
         }
     }
 
@@ -104,7 +104,7 @@ class ConvertTaskStatusToForegroundColor : IValueConverter
             case "InJeopardy":
                 return Brushes.Black;
             default:
-                return Brushes.White;
+                return Brushes.AliceBlue;
         }
     }
 

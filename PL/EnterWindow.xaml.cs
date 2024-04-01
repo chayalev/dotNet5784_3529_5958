@@ -20,12 +20,12 @@ namespace PL
     /// </summary>
     public partial class EnterWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        //static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
         public EnterWindow()
         {
             InitializeComponent();
-            CurrentTime = s_bl.Clock;
+            CurrentTime = App.s_bl.Clock;
         }
 
 
@@ -47,22 +47,22 @@ namespace PL
         }
         private void btnAddYear_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.AddYear();
+            App.s_bl.AddYear();
             CurrentTime = CurrentTime.AddYears(1);
         }
         private void btnAddMonth_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.AddMonth();
+            App.s_bl.AddMonth();
             CurrentTime=CurrentTime.AddMonths(1);
         }
         private void btnAddDay_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.AddDay();
+            App.s_bl.AddDay();
             CurrentTime=CurrentTime.AddDays(1);
         }
         private void btnAddHour_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.AddHour();
+            App.s_bl.AddHour();
             CurrentTime=CurrentTime.AddHours(1);
         }
 

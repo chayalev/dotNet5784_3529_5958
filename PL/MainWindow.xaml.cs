@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        //static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public static readonly DependencyProperty StatusMessageProperty =
           DependencyProperty.Register("StatusMessage", typeof(string), typeof(MainWindow));
 
@@ -43,13 +43,13 @@ namespace PL
 
         private void btnInitialize_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.InitializeDB();
+            App.s_bl.InitializeDB();
             MessageBox.Show($"The details were initialized successfully");
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.ResetDB();
+            App.s_bl.ResetDB();
             MessageBox.Show($"The details were reseted successfully");
         }
 
@@ -62,10 +62,22 @@ namespace PL
         {
             try
             {
-                s_bl.CreateProject();
+                App.s_bl.CreateProject();
                 MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch(Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btnCreateSManual_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+               // App.s_bl.s();
+                MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message);
             }
         }
@@ -75,5 +87,6 @@ namespace PL
         {
             new GantWindow().ShowDialog();
         }
+
     }
 }
