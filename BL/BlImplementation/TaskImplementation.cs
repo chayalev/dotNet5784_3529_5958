@@ -28,7 +28,7 @@ internal class TaskImplementation : ITask
             var currentTask = Bl._dal.Task.Read(task => task.Id == dep?.DependsOnTask);
             int newid = dep?.DependsOnTask ?? throw new DalDoesNotExistException("");
             ///Calculates the status
-            var status = Factory.Get().IsCreate ? 0 : (Status)1;
+            var status = _bl.IsCreate ? 0 : (Status)1;
             ///Returns a new member of type task in the list
             return new BO.TaskInList
             {
@@ -64,7 +64,7 @@ internal class TaskImplementation : ITask
     public int Create(BO.Task item)
     {
         ///It is not possible to add a task after creating a project
-        if (Factory.Get().IsCreate)
+        if (_bl.IsCreate)
             throw new BlCantChangeAfterScheduledException("you cant add a task after a create a schedule");
         ///Checking that there is a description for the task
         if (item.Alias == null)
@@ -117,7 +117,6 @@ internal class TaskImplementation : ITask
             throw new BO.BlDoesNotExistException($"Task with ID={id} doesnt exists", ex);
         }
     }
-
     /// <summary>
     /// get a task by id
     /// </summary>
@@ -135,7 +134,7 @@ internal class TaskImplementation : ITask
             //before createing project
             var status = BO.Status.Unscheduled;
             //after the creation
-            if (Factory.Get().IsCreate)
+            if (_bl.IsCreate)
                 //When start date is over
                 if (_bl.Clock > doTask.StartDate)
                     //if the task was complitied
@@ -177,7 +176,7 @@ internal class TaskImplementation : ITask
                 Deliverables = doTask.Deliverables,
                 Remarks = doTask.Remarks,
                 Engineer = doTask.EngineerId != null
-                ? new EngineerInTask { Id = (int)doTask.EngineerId, Name = Bl._dal.Engineer.Read(id)?.Name }
+                ? new EngineerInTask { Id = (int)doTask.EngineerId, Name = Bl._dal.Engineer.Read((int)doTask.EngineerId)?.Name }
                 : null,
                 ComplexityLevel = (BO.EngineerExperience?)doTask.CopmlexityLevel,
             };
@@ -216,7 +215,7 @@ internal class TaskImplementation : ITask
     {
         DO.Task taskUpdate;
         ///Before creating a hazel
-        if (!Factory.Get().IsCreate)
+        if (_bl.IsCreate)
         {
             ///Check if there is a circle dependencies
             if (item!.Dependencies?.Count() > 0 && !ImpossibleDependency(item!))
@@ -251,7 +250,7 @@ internal class TaskImplementation : ITask
                     throw new BlWrongDateException($"A start date is less than the end date of the tasks that task {item.Id} depends on");
             }
             ///If the start date is less than the start date of the entire project
-            if (!Bl._dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >= Factory.Get().StartDate)
+            if (!Bl._dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >=_bl.StartDate)
             {
                 throw new BlWrongDateException($" The task: {item.Id}- start date is earlier than the project start date");
             }
@@ -259,7 +258,7 @@ internal class TaskImplementation : ITask
             if (item.StartDate > item.DeadlineDate)
                 throw new BlWrongDateException($"The task:{item.Id}  start date is later than the end date");
             ///When you want to update an engineer who already has another engineer for this task
-            if (Bl._dal.Task.Read(item.Id)?.EngineerId != null && Bl._dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
+            if (Bl._dal.Task.Read(item.Id)?.EngineerId != null &&item.Engineer!=null&& Bl._dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
                 throw new wrongInput($"The task:{item.Id} was taken by another engineer");
             ///End date calculator
             var deadLineDate = item.StartDate + item.RequiredEffortTime;

@@ -20,13 +20,11 @@ namespace PL.Task
     /// </summary>
     public partial class TaskWindow : Window
     {
-
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public TaskWindow(int id = 0)
         {
             InitializeComponent();
             if (id != 0)
-                Task = s_bl.Task.Read(id)!;
+                Task = App.s_bl.Task.Read(id)!;
             else
                 Task = new BO.Task();
         }
@@ -47,9 +45,9 @@ namespace PL.Task
             try
             {
                 if ((string)(sender as Button)!.Content == "Update")
-                    s_bl.Task.Update(Task);
+                    App.s_bl.Task.Update(Task);
                 else
-                    s_bl.Task.Create(Task);
+                    App.s_bl.Task.Create(Task);
             }
             catch (Exception ex)
             {

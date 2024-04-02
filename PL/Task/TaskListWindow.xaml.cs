@@ -21,11 +21,10 @@ namespace PL.Task
     /// </summary>
     public partial class TaskListWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public TaskListWindow()
         {
             InitializeComponent();
-            TaskList = s_bl?.Task.AllTaskInList()!;
+            TaskList = App.s_bl?.Task.AllTaskInList()!;
 
         }
         public IEnumerable<BO.TaskInList> TaskList
@@ -61,7 +60,7 @@ namespace PL.Task
         private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TaskList = (Level == BO.EngineerExperience.None) ?
-                          s_bl?.Task.AllTaskInList()! : s_bl?.Task.TaskInListByLevel(Level)!;
+                            App.s_bl?.Task.AllTaskInList()! : App.s_bl?.Task.TaskInListByLevel(Level)!;
 
         }
 
@@ -70,6 +69,9 @@ namespace PL.Task
             new TaskWindow().ShowDialog();
         }
 
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
     }
 }

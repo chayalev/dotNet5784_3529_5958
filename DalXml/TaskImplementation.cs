@@ -22,7 +22,7 @@ internal class TaskImplementation : ITask
         List<DO.Task>? listTask = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_task);
         if(item.Id == 0)
             newID = Config.NextTaskId;
-        DO.Task newTask = item with { Id = newID, CreatedAtDate = (DateTime.Today).AddYears(-1) };
+        DO.Task newTask = item with { Id = newID, CreatedAtDate = (DateTime.Today).AddYears(-1) ,DeadlineDate=item.StartDate+item.RequiredEffortTime};
         listTask.Add(newTask);
         XMLTools.SaveListToXMLSerializer(listTask, s_task);
         return newID;

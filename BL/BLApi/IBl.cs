@@ -9,7 +9,7 @@ public interface IBl
     public DateTime? EndDate { get; set; }
 
     public bool IsCreate { get; set; }
-    public void CreateProject();
+    public void CreateProject(DateTime startDate);
     public void InitializeDB();
     public void ResetDB();
     #region Clock

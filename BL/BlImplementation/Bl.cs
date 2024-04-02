@@ -1,10 +1,7 @@
 ﻿namespace BlImplementation;
 using BlApi;
-using BO;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 internal class Bl : IBl
 {
@@ -19,8 +16,8 @@ internal class Bl : IBl
 
     public ITask Task => new TaskImplementation(this);
 
-    public DateTime? StartDate { get; set; } 
-    public DateTime? EndDate {get; set; } 
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
 
     /// <summary>
     /// Checking whether the project status is after or before creating the schedule
@@ -37,18 +34,20 @@ internal class Bl : IBl
     {
         ///Finding all the dependencies the task dependent
         var dependencies = _dal.Dependency.ReadAll(dep => dep.DependentTask == task.Id);
-        DateTime? earliestDate = null;
         if (dependencies.Any())
         {
             ///Set start time to the latest time a task that the current task depends on ends
-            earliestDate = _dal.Task.Read((int)dependencies.First()!.DependsOnTask!)?.DeadlineDate;
-            foreach (var item in dependencies)
-            {
-                DateTime endDate = _dal.Task.Read((int)item!.DependsOnTask!)?.DeadlineDate ?? throw new BO.BlWrongDateException($"You dont have a deadline date to task with id:{item.Id}");
-                earliestDate = endDate > earliestDate ? endDate : earliestDate;
-            }
+            //earliestDate = _dal.Task.Read((int)dependencies.First()!.DependsOnTask!)?.DeadlineDate;
+            //foreach (var item in dependencies)
+            //{
+            //    DateTime endDate = _dal.Task.Read((int)item!.DependsOnTask!)?.DeadlineDate ?? throw new BO.BlWrongDateException($"You dont have a deadline date to task with id:{item.Id}");
+            //    earliestDate = endDate > earliestDate ? endDate : earliestDate;
+            //}
+            return dependencies.Max(dep => _dal.Task.Read((int)dep!.DependsOnTask!)?.DeadlineDate)!.Value.AddHours(1);
+
         }
-        return earliestDate;
+        else
+            return StartDate;
     }
 
     /// <summary>
@@ -87,12 +86,11 @@ internal class Bl : IBl
         while (taskQueue.Count > 0)
         {
             var currentTask = taskQueue.Dequeue();
-            if (currentTask.StartDate == null)
-            {
+           
                 ///Sending to a function that finds the earliest time to start the task
                 DateTime? earliestDate = EarliestStartDate(currentTask);
                 updateTask(currentTask, earliestDate);
-            }
+            
             ///Finding all the following tasks and putting them into the queue
             var dependedInPrevTask = _dal.Dependency
                 .ReadAll(dep => dep.DependsOnTask == currentTask?.Id)
@@ -112,16 +110,16 @@ internal class Bl : IBl
     /// <summary>
     /// Creating a schedule for the project
     /// </summary>
-    public void CreateProject()
+    public void CreateProject(DateTime startDate)
     {
-        var startDate = _dal.Task.ReadAll().Min(x => x!.StartDate);
+        // var startDate = _dal.Task.ReadAll().Min(x => x!.StartDate);
+        StartDate = startDate;
         var tasks = _dal.Task.ReadAll();
         ///Updates the first tasks
         var firstTasks = tasks.Where(task => !_dal.Dependency.ReadAll(dep => dep.DependentTask == task?.Id).Any()).ToList();
-        firstTasks.ForEach(task => updateTask(task!, startDate));
+       // firstTasks.ForEach(task => updateTask(task!, startDate));
         UpdateNextTask(firstTasks!).ToList();
         //update the start and end days of the project
-        StartDate = startDate;
         var allTask = _dal.Task.ReadAll();
         EndDate = allTask.Max(tsk => tsk?.DeadlineDate);
         _dal.EndDate = EndDate;
@@ -140,26 +138,26 @@ internal class Bl : IBl
     public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
     public void ResetClock()
     {
-        Clock=DateTime.Now.Date;
+        Clock = DateTime.Now.Date;
     }
 
     public void AddYear()
     {
-      Clock= Clock.AddYears(1);
+        Clock = Clock.AddYears(1);
     }
     public void AddMonth()
     {
-       Clock= Clock.AddMonths(1);
+        Clock = Clock.AddMonths(1);
     }
 
     public void AddDay()
     {
-       Clock= Clock.AddDays(1);
+        Clock = Clock.AddDays(1);
     }
 
     public void AddHour()
     {
-       Clock= Clock.AddHours(1);
+        Clock = Clock.AddHours(1);
     }
 
     #endregion
@@ -167,7 +165,7 @@ internal class Bl : IBl
     /// <summary>
     /// Allows the user to choose a start date for a task, based on its dependencies.
     /// </summary>
-    public void StartDateForTask(BO.Task tsk,DateTime startForTsk)
+    public void StartDateForTask(BO.Task tsk, DateTime startForTsk)
     {
         DateTime? canStartDate = EarliestStartDate(_dal.Task.Read(tsk.Id)!);
         if (startForTsk < canStartDate)

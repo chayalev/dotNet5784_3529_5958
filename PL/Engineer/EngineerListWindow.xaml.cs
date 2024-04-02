@@ -19,11 +19,10 @@ namespace PL.Engineer
     /// </summary>
     public partial class EngineerListWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public EngineerListWindow()
         {
             InitializeComponent();
-            EngineerList = s_bl.Engineer.ReadAll();
+            EngineerList = App.s_bl.Engineer.ReadAll();
         }
         /// <summary>
         /// open the page to update the engineer
@@ -58,7 +57,7 @@ namespace PL.Engineer
         private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             EngineerList = (Level == BO.EngineerExperience.None) ?
-                            s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
+                            App.s_bl?.Engineer.ReadAll()! : App.s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
 
         }
 
@@ -70,7 +69,7 @@ namespace PL.Engineer
         public void RefreshEngineerList()
         {
             EngineerList = (Level == BO.EngineerExperience.None) ?
-                s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
+                App.s_bl?.Engineer.ReadAll()! : App.s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
         }
 
     }

@@ -5,23 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
     <Grid>
         <!--כפתור שלחיצה עליו תוביל לאתחול בסיס הנתונים (יצירת נתונים התחלתיים)-->
-        <Button Content="intialize⚡" HorizontalAlignment="Left" Margin="114,256,0,0" VerticalAlignment="Top" Click="btnInitialize_Click" Height="66" Width="152"/>
+        <Button Content="intialize⚡" HorizontalAlignment="Left" Margin="539,63,0,0" VerticalAlignment="Top" Click="btnInitialize_Click" Height="66" Width="152"/>
         <!--כפתור שלחיצה עליו תוביל לחלון תצוגת הרשימה-->
-        <Button Content="AllEngineer" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Click="btnEngineer_Click" Height="125" Width="138"/>
+        <Button Content="AllEngineer" HorizontalAlignment="Left" Margin="84,61,0,0" VerticalAlignment="Top" Click="btnEngineer_Click" Height="79" Width="138"/>
         <!--כפתור שלחיצה עליו תוביל לניקוי (reset) בסיס נתוניםה-->
-        <Button Content="reset🗑️" HorizontalAlignment="Left" Margin="539,256,0,0" VerticalAlignment="Top" Click="btnReset_Click" Height="67" Width="159"/>
+        <Button Content="reset🗑️" HorizontalAlignment="Left" Margin="536,156,0,0" VerticalAlignment="Top" Click="btnReset_Click" Height="67" Width="158"/>
         <!--כפתור ליצירת לוז אוטומטי-->
-        <Button Content="create scheduel automatic"  VerticalAlignment="Top" Click="btnCreateSAuto_Click" Height="67" Width="159" Margin="310,256,331,0"/>
+        <Button Content="create scheduel automatic"  VerticalAlignment="Top" Click="btnCreateSAuto_Click" Height="67" Margin="289,61,310,0"/>
         <!---כפתור ליצירת לוז  ידני-->
-        <Button Content="create scheduel manualy"  VerticalAlignment="Top" Click="btnCreateSManual_Click" Height="67" Width="159" Margin="134,163,507,0"/>
+        <DatePicker  SelectedDate="{Binding StartDate, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="339,133,0,0" RenderTransformOrigin="1.899,2.96"/>
+        <Button Content="create scheduel manualy"  VerticalAlignment="Top" Click="btnCreateSManual_Click" Height="67" Margin="289,162,322,0"/>
 
 
-        <Button Content="allTask" HorizontalAlignment="Left" Margin="505,204,0,0" VerticalAlignment="Top" Click="btnTask_Click"/>
+        <Button Content="allTask" HorizontalAlignment="Left" Margin="84,158,0,0" VerticalAlignment="Top" Click="btnTask_Click" Height="79" Width="138"/>
 
-        <Button Content="Gannt" HorizontalAlignment="Left" Height="20" Margin="293,217,0,0" VerticalAlignment="Top" Width="66" Click="btnGant_Click"/>
+        <Button Content="Gannt" HorizontalAlignment="Left" Height="20" Margin="569,267,0,0" VerticalAlignment="Top" Width="66" Click="btnGant_Click"/>
 
     </Grid>
 </Window>

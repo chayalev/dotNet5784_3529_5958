@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using BO;
+using PL.Engineer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,21 +54,48 @@ namespace PL
         private void btnAddMonth_Click(object sender, RoutedEventArgs e)
         {
             App.s_bl.AddMonth();
-            CurrentTime=CurrentTime.AddMonths(1);
+            CurrentTime = CurrentTime.AddMonths(1);
         }
         private void btnAddDay_Click(object sender, RoutedEventArgs e)
         {
             App.s_bl.AddDay();
-            CurrentTime=CurrentTime.AddDays(1);
+            CurrentTime = CurrentTime.AddDays(1);
         }
         private void btnAddHour_Click(object sender, RoutedEventArgs e)
         {
             App.s_bl.AddHour();
-            CurrentTime=CurrentTime.AddHours(1);
+            CurrentTime = CurrentTime.AddHours(1);
         }
 
         private void EnterEngineer_Click(object sender, RoutedEventArgs e)
         {
+            {
+                int id;
+                string input = Microsoft.VisualBasic.Interaction.InputBox("please enter your ID:", "Enginner Enter");
+
+
+                if (int.TryParse(input, out id))
+                {
+                    try
+                    {
+                        App.s_bl.Engineer.Read(id);
+                        new EngeneerTaskWindow(id).ShowDialog();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+
+                    }
+                }
+            }
+        }
+
+
+
+        private void btnRestClock_Click(object sender, RoutedEventArgs e)
+        {
+            App.s_bl.ResetClock();
+            CurrentTime = App.s_bl.Clock;
         }
     }
 }

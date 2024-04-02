@@ -5,8 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="EngeneerTaskWindow" Height="450" Width="800">
+        Title="EngeneerTaskWindow" Height="450" Width="800"
+        DataContext="{Binding Task, RelativeSource={RelativeSource Self}}">
     <Grid>
-        <Button Content="get a task" Click="TaskForEngineer_Click" Margin="333,171,155,106"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Id" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" />
+        <TextBlock Grid.Row="0" Grid.Column="1" 
+           Text="{Binding Id}" 
+           HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+
+        <Label Content="Description" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" />
+        <TextBlock Grid.Row="1" Grid.Column="1" 
+           Text="{Binding Description}"  
+           HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+
+        <Label Content="Alias" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" />
+        <TextBlock Grid.Row="2" Grid.Column="1" 
+           Text="{Binding Alias}"  
+           HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+
+        <Label Content="Deliverables" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" />
+        <TextBlock Grid.Row="3" Grid.Column="1" 
+   Text="{Binding Deliverables}"  
+   HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+        <Label Content="Remarks" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="4" Grid.Column="0" />
+        <TextBlock Grid.Row="4" Grid.Column="1" 
+    Text="{Binding Remarks}"  
+      HorizontalAlignment="Left" Height="NaN" Margin="3,18,0,0"  VerticalAlignment="Top" Width="120"/>
+        <Label Content="Startdate" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="6" Grid.Column="0" />
+
+        <TextBlock VerticalAlignment="Top" Grid.Row="6" Margin="3,10,566,0" Grid.Column="1" Text="{Binding StartDate}" />
+        <Label Content="DeadLineDate" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0" />
+
+        <TextBlock VerticalAlignment="Top" Grid.Row="8" Margin="3,10,566,0" Grid.Column="1" Text="{Binding DeadlineDate}" />
+
+        <Label Content="Level" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="5" Grid.Column="0" />
+        <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="left"  Height="NaN" Margin="3"
+         Text="{Binding ComplexityLevel}"
+           VerticalAlignment="center"  Width="120"/>
+        <!--SelectionChanged="cbLevelSelector_SelectionChanged"-->
+        <Label Content="RequiredEffortTime" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="7" Grid.Column="0" />
+        <TextBlock Text="{Binding RequiredEffortTime}" InputScope="Number" 
+             Grid.Row="7" Grid.Column="1" Margin="10,10,591,13"/>
+        <Button Content="Finish!" HorizontalAlignment="Left" Height="23" Margin="33,0,0,0" Grid.Row="9" VerticalAlignment="Center" Width="75" Click="FinishTask_Click"/>
+
+
+        <!--<Label Content="Task" RenderTransformOrigin="-16.187,-2.469" Margin="0,138,662,0" VerticalAlignment="Top" />
+        <ComboBox HorizontalAlignment="Left" Height="NaN"
+    ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}"  
+    SelectedValue="{Binding Path=Task, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+    VerticalAlignment="Top" Margin="143,138,0,0"/>
+        <Button Content="get a task" Click="TaskForEngineer_Click" Margin="333,171,155,106"/>-->
     </Grid>
 </Window>

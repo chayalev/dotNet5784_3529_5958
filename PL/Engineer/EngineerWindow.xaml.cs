@@ -19,14 +19,14 @@ namespace PL.Engineer
     /// </summary>
     public partial class EngineerWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+       
 
         public EngineerWindow(int id = 0)
         {
            
             InitializeComponent();
             if (id != 0)
-                Engineer = s_bl.Engineer.Read(id)!;
+                Engineer = App.s_bl.Engineer.Read(id)!;
             else
                 Engineer = new BO.Engineer();
         }
@@ -47,12 +47,12 @@ namespace PL.Engineer
             {
                 if ((string)(sender as Button)!.Content == "Update")
                 {
-                    s_bl.Engineer.Update(Engineer);
+                    App.s_bl.Engineer.Update(Engineer);
                     MessageBox.Show($"The engineer: {Engineer.Name} update successfully", "Update successfully");
                 }
                 else
                 {
-                    s_bl.Engineer.Create(Engineer);
+                    App.s_bl.Engineer.Create(Engineer);
                     MessageBox.Show($"The engineer: {Engineer.Name} was added successfully", "Add successfully");
 
 
@@ -82,7 +82,7 @@ namespace PL.Engineer
             {
                 // Updating the list of engineers in the main window by calling the BL
                 // function that returns the list of engineers
-                mainWindow.EngineerList = s_bl.Engineer.ReadAll()!;
+                mainWindow.EngineerList = App.s_bl.Engineer.ReadAll()!;
             }
         }
     }

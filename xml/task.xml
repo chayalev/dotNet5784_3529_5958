@@ -1,278 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>105</Id>
-    <Description>D19DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>D19</Alias>
+    <Id>100</Id>
+    <Description>Planning the appearance of the web page</Description>
+    <RequiredEffortTime>P3D</RequiredEffortTime>
+    <Alias>first Planing</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2014-11-07T00:00:00</StartDate>
+    <CreatedAtDate xsi:nil="true" />
+    <StartDate>2024-04-01T00:00:00</StartDate>
     <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
+    <DeadlineDate>2024-04-04T00:00:00</DeadlineDate>
+    <CompleteDate>2024-04-02T20:08:36.7962165+03:00</CompleteDate>
     <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>AdvancedBeginner</CopmlexityLevel>
+    <CopmlexityLevel>Competent</CopmlexityLevel>
   </Task>
   <Task>
-    <Id>108</Id>
-    <Description>E5DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>E5</Alias>
+    <Id>101</Id>
+    <Description>Building a database with appropriate values</Description>
+    <RequiredEffortTime>P5D</RequiredEffortTime>
+    <Alias>build database</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2002-02-24T00:00:00</StartDate>
+    <CreatedAtDate>2023-04-02T00:00:00+03:00</CreatedAtDate>
+    <StartDate>2024-04-04T01:00:00</StartDate>
     <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
+    <DeadlineDate>2024-04-09T01:00:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>Proficient</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>109</Id>
-    <Description>E7DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>E7</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>Proficient</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>102</Id>
-    <Description>D21DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>D21</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
     <EngineerId xsi:nil="true" />
     <CopmlexityLevel>Proficient</CopmlexityLevel>
   </Task>
   <Task>
     <Id>103</Id>
-    <Description>D2DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>D2</Alias>
+    <Description>User page display design and code usage</Description>
+    <RequiredEffortTime>P7D</RequiredEffortTime>
+    <Alias>design</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
+    <CreatedAtDate>2023-04-02T00:00:00+03:00</CreatedAtDate>
+    <StartDate>2024-04-04T01:00:00</StartDate>
     <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
+    <DeadlineDate>2024-04-11T01:00:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>Expert</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>106</Id>
-    <Description>D4DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>D4</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>AdvancedBeginner</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>107</Id>
-    <Description>E3DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>E3</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
     <EngineerId xsi:nil="true" />
     <CopmlexityLevel>Competent</CopmlexityLevel>
   </Task>
   <Task>
-    <Id>110</Id>
-    <Description>T8DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>T8</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>Competent</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>111</Id>
-    <Description>T11DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>T11</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>Proficient</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>113</Id>
-    <Description>A10DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>A10</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>Competent</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>114</Id>
-    <Description>A1DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>A1</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>AdvancedBeginner</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>115</Id>
-    <Description>A15DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>A15</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>Competent</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>116</Id>
-    <Description>A2DESCRIPTION</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>A2</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2001-08-23T00:00:00</StartDate>
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>Algorithmic data compression</Deliverables>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel>AdvancedBeginner</CopmlexityLevel>
-  </Task>
-  <Task>
-    <Id>124</Id>
-    <Description>nk</Description>
-    <RequiredEffortTime xsi:nil="true" />
-    <Alias>rfjr</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate xsi:nil="true" />
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>hgfj</Deliverables>
-    <Remarks>thtrdtg</Remarks>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>126</Id>
-    <Description>rge</Description>
-    <RequiredEffortTime>P5D</RequiredEffortTime>
-    <Alias>rsdq</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-03-31T00:00:00+03:00</CreatedAtDate>
-    <StartDate xsi:nil="true" />
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>tr</Deliverables>
-    <Remarks>res</Remarks>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>127</Id>
-    <Description>a</Description>
-    <RequiredEffortTime>P6D</RequiredEffortTime>
-    <Alias>a</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate xsi:nil="true" />
-    <StartDate xsi:nil="true" />
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate>2001-08-28T00:00:00</DeadlineDate>
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>a</Deliverables>
-    <Remarks>a</Remarks>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>125</Id>
-    <Description>htre4r</Description>
-    <RequiredEffortTime>P5D</RequiredEffortTime>
-    <Alias>7</Alias>
-    <IsMilestone>false</IsMilestone>
-    <CreatedAtDate xsi:nil="true" />
-    <StartDate xsi:nil="true" />
-    <ScheduledDate xsi:nil="true" />
-    <DeadlineDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Deliverables>ytdtnd</Deliverables>
-    <Remarks>trfdjnh</Remarks>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel xsi:nil="true" />
-  </Task>
-  <Task>
-    <Id>128</Id>
-    <Description>אביטל</Description>
+    <Id>102</Id>
+    <Description>Writing server and client code</Description>
     <RequiredEffortTime>P2D</RequiredEffortTime>
-    <Alias>ד</Alias>
+    <Alias>code</Alias>
     <IsMilestone>false</IsMilestone>
-    <CreatedAtDate>2023-04-01T00:00:00+03:00</CreatedAtDate>
-    <StartDate>2024-04-30T00:00:00</StartDate>
+    <CreatedAtDate>2023-04-02T00:00:00+03:00</CreatedAtDate>
+    <StartDate>2024-04-09T02:00:00</StartDate>
     <ScheduledDate xsi:nil="true" />
-    <DeadlineDate>2024-05-02T00:00:00</DeadlineDate>
+    <DeadlineDate>2024-04-11T02:00:00</DeadlineDate>
     <CompleteDate xsi:nil="true" />
-    <Deliverables>ד</Deliverables>
-    <Remarks>ד</Remarks>
-    <EngineerId xsi:nil="true" />
-    <CopmlexityLevel xsi:nil="true" />
+    <EngineerId>270726538</EngineerId>
+    <CopmlexityLevel>AdvancedBeginner</CopmlexityLevel>
   </Task>
 </ArrayOfTask>

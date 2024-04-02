@@ -48,7 +48,15 @@ public class VisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
+
+        if ((int)value != 0)
+        {
+            return Visibility.Visible;
+        }
+        else
+        {
+            return Visibility.Collapsed;
+        }
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -65,18 +73,18 @@ class ConvertTaskStatusToBackgroundColor : IValueConverter
         string status = (string)value;
         switch (status)
         {
-            case "None":
+            case "Unscheduled":
                 return Brushes.White;
             case "Scheduled":
-                return Brushes.Black;
+                return Brushes.Pink;
             case "OnTrack":
-                return Brushes.Black;
+                return Brushes.Orange;
             case "Done":
-                return Brushes.Black;
+                return Brushes.Green;
             case "InJeopardy":
-                return Brushes.Black;
+                return Brushes.Red;
             default:
-                return Brushes.DarkRed;
+                return Brushes.White;
         }
     }
 
@@ -93,18 +101,18 @@ class ConvertTaskStatusToForegroundColor : IValueConverter
         string status = (string)value;
         switch (status)
         {
-            case "None":
+            case "Unscheduled":
                 return Brushes.White;
             case "Scheduled":
-                return Brushes.Black;
+                return Brushes.Pink;
             case "OnTrack":
-                return Brushes.Black;
+                return Brushes.Orange;
             case "Done":
-                return Brushes.Black;
+                return Brushes.Green;
             case "InJeopardy":
-                return Brushes.Black;
+                return Brushes.Red;
             default:
-                return Brushes.AliceBlue;
+                return Brushes.Black;
         }
     }
 

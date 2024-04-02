@@ -1,19 +1,7 @@
 ﻿using PL.Engineer;
 using PL.Task;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PL
 {
@@ -22,18 +10,19 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        //static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public static readonly DependencyProperty StatusMessageProperty =
-          DependencyProperty.Register("StatusMessage", typeof(string), typeof(MainWindow));
 
-        public string StatusMessage
+        public static readonly DependencyProperty StartDateProperty =
+          DependencyProperty.Register("StartDate", typeof(DateTime), typeof(MainWindow));
+
+        public DateTime StartDate
         {
-            get { return (string)GetValue(StatusMessageProperty); }
-            set { SetValue(StatusMessageProperty, value); }
+            get { return (DateTime)GetValue(StartDateProperty); }
+            set { SetValue(StartDateProperty, value); }
         }
         public MainWindow()
         {
             InitializeComponent();
+            StartDate = App.s_bl.Clock;
         }
 
         private void btnEngineer_Click(object sender, RoutedEventArgs e)
@@ -57,15 +46,20 @@ namespace PL
         {
             new TaskListWindow().ShowDialog();
         }
-       
         private void btnCreateSAuto_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                App.s_bl.CreateProject();
-                MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (StartDate != null)
+                {
+                    App.s_bl.CreateProject(StartDate);
+                    MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                    MessageBox.Show("you must insert a start date");
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message);
             }
         }
@@ -73,7 +67,7 @@ namespace PL
         {
             try
             {
-               // App.s_bl.s();
+                // App.s_bl.s();
                 MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -85,7 +79,10 @@ namespace PL
 
         private void btnGant_Click(object sender, RoutedEventArgs e)
         {
-            new GantWindow().ShowDialog();
+            if (App.s_bl.IsCreate)
+                new GantWindow().ShowDialog();
+            else
+                MessageBox.Show("Impossible to see the gantt chart before creating the project!");
         }
 
     }

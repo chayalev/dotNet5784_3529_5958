@@ -49,7 +49,6 @@ namespace PL
 
             dataTable.Columns.Add("Task Id", typeof(int));
             dataTable.Columns.Add("Task Name", typeof(string));
-            dataTable.Columns.Add("Engineer Id", typeof(int));
             dataTable.Columns.Add("Engineer Name", typeof(string));
 
             int col = 4;
@@ -68,14 +67,15 @@ namespace PL
                 DataRow row = dataTable.NewRow();
                 row[0] = task.Id;
                 row[1] = task.Alias;
-                row[2] = 0;
-                row[3] = "name";
-
+                if (task.Engineer != null)
+                    row[2] = task.Engineer.Name;
+                else
+                    row[2] = "";
                 for (DateTime day = App.s_bl.StartDate ?? App.s_bl.Clock; day <= App.s_bl.EndDate; day = day.AddDays(1))
                 {
                     string strDay = $"{day.Day}-{day.Month}-{day.Year}";
 
-                    if (day < App.s_bl.StartDate || day > App.s_bl.EndDate)
+                    if (day < task.StartDate || day > task.DeadlineDate)
                         row[strDay] = BO.Status.Unscheduled;
                     else
                         row[strDay] = task.StatusTask;

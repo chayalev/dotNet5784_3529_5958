@@ -2,17 +2,17 @@
 <ArrayOfDependency>
   <Dependency>
     <Id>100</Id>
-    <DependentTask>109</DependentTask>
-    <DependsOnTask>123</DependsOnTask>
+    <DependentTask>101</DependentTask>
+    <DependsOnTask>100</DependsOnTask>
   </Dependency>
   <Dependency>
     <Id>101</Id>
-    <DependentTask>108</DependentTask>
-    <DependsOnTask>115</DependsOnTask>
+    <DependentTask>102</DependentTask>
+    <DependsOnTask>101</DependsOnTask>
   </Dependency>
   <Dependency>
     <Id>102</Id>
-    <DependentTask>105</DependentTask>
-    <DependsOnTask>112</DependsOnTask>
+    <DependentTask>103</DependentTask>
+    <DependsOnTask>100</DependsOnTask>
   </Dependency>
 </ArrayOfDependency>

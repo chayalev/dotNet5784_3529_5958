@@ -48,7 +48,7 @@
         <Label Content="Task"  Grid.Row="5" />
         <ComboBox Grid.Row="5" HorizontalAlignment="Left" Height="NaN"
            ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}"  
-           SelectedValue="{Binding Path=Task, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+           SelectedValue="{Binding Path=Task, Mode=TwoWay}"
            VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="114,19,0,0"/>
 
         <Button Grid.Row="6" Grid.Column="1" Content="{Binding Path=Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 

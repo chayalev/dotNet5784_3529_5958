@@ -15,5 +15,6 @@
         <Button Content="+ Month" HorizontalAlignment="Left" Height="20" Margin="278,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddMonth_Click" RenderTransformOrigin="-2.485,3.852"/>
         <Button Content="+ Day" HorizontalAlignment="Left" Height="20" Margin="349,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddDay_Click"/>
         <Button Content="+ Hour" HorizontalAlignment="Left" Height="20" Margin="420,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddHour_Click"/>
+        <Button Content="Reset" HorizontalAlignment="Left" Height="20" Margin="491,127,0,0" VerticalAlignment="Top" Width="65" Click="btnRestClock_Click"/>
     </Grid>
 </Window>
