@@ -320,5 +320,21 @@ internal class TaskImplementation : ITask
             Status = task.StatusTask
         });
     }
+    public IEnumerable<TaskInList> AllTaskInListByEngineer(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
+    {
+        return ReadAll(task =>
+            task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר
+            task.ComplexityLevel <= engineerExperience && // רמת המורכבות תואמת את ניסיון המהנדס
+            (task.Dependencies != null ? task.Dependencies.All(subtask => Read(subtask.Id)!.Engineer != null) : true) // all the dependent tasks were taken by engineer
+        )
+        .Select(task => new TaskInList
+        {
+            Id = task.Id,
+            Alias = task.Alias,
+            Description = task.Description,
+            Status = task.StatusTask
+        });
+
+    }
 }
 

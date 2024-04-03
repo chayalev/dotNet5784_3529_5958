@@ -78,8 +78,11 @@ namespace PL
                 {
                     try
                     {
-                        App.s_bl.Engineer.Read(id);
-                        new EngeneerTaskWindow(id).ShowDialog();
+                        var engineer = App.s_bl.Engineer.Read(id)?.Task;
+                        if (engineer is not null)
+                            new EngeneerTaskWindow(id).ShowDialog();
+                        else
+                            new EngineerChooseTaskWindow(id).ShowDialog();
                     }
                     catch (Exception ex)
                     {

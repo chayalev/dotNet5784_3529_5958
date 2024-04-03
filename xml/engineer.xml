@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <Id>272937292</Id>
-    <Name>Kewin Klein</Name>
-    <Level>AdvancedBeginner</Level>
-    <Email>Kewin Klein@gmail.com</Email>
-    <Cost>295744</Cost>
-  </Engineer>
-  <Engineer>
     <Id>270726538</Id>
     <Name>Dan Segal</Name>
     <Level>Proficient</Level>
@@ -27,5 +20,12 @@
     <Level>Competent</Level>
     <Email>Alice Weiss@gmail.com</Email>
     <Cost>366302</Cost>
+  </Engineer>
+  <Engineer>
+    <Id>272937292</Id>
+    <Name>Kewin Klein</Name>
+    <Level>AdvancedBeginner</Level>
+    <Email>Kewin Klein@gmail.com</Email>
+    <Cost>295744</Cost>
   </Engineer>
 </ArrayOfEngineer>
