@@ -57,12 +57,12 @@
 
         <Label Content="Level" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="5" Grid.Column="0" />
         <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="left"  Height="NaN" Margin="3"
-         Text="{Binding ComplexityLevel}"
+         Text="{Binding ComplexityLevel , TargetNullValue=none}"
            VerticalAlignment="center"  Width="120"/>
         <!--SelectionChanged="cbLevelSelector_SelectionChanged"-->
         <Label Content="RequiredEffortTime" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="7" Grid.Column="0" />
         <TextBlock Text="{Binding RequiredEffortTime}" InputScope="Number" 
-             Grid.Row="7" Grid.Column="1" Margin="10,10,591,13"/>
+             Grid.Row="7" Grid.Column="1" Margin="21,11,535,11"/>
         <Button Content="Finish!" HorizontalAlignment="Left" Height="23" Margin="33,0,0,0" Grid.Row="9" VerticalAlignment="Center" Width="75" Click="FinishTask_Click"/>
 
 

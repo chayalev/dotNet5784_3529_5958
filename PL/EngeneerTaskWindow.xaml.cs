@@ -54,7 +54,7 @@ namespace PL
             Task.Engineer = null;
             App.s_bl.Task.Update(Task);
             MessageBox.Show($"The task: {Task.Alias} completed", "complete!");
-            this.Close();
+            Close();
         }
     }
 }

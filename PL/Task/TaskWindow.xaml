@@ -63,7 +63,7 @@
         <Label Content="RequiredEffortTime" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="7" Grid.Column="0" />
         <TextBox Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" InputScope="Number" 
                  Grid.Row="7" Grid.Column="1" Margin="10,10,591,13"/>
-
+        <Label Content="dependent tasks" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" Margin="21,0,0,0"></Label>
         <ListBox ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}" Grid.Row="8" Grid.Column="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>

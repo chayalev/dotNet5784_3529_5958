@@ -53,9 +53,25 @@ namespace PL.Task
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            finally
+            {
+                Closed += TaskWindow_Closed!;
+                Close();
+            }
 
-            Close();
-
+        }
+        private void TaskWindow_Closed(object sender, EventArgs e)
+        {
+            // An instance of the main window TaskListWindow
+            var mainWindow = Application.Current.Windows
+                                            .OfType<TaskListWindow>()
+                                            .FirstOrDefault();
+            if (mainWindow != null)
+            {
+                // Updating the list of engineers in the main window by calling the BL
+                // function that returns the list of engineers
+                mainWindow.TaskList = App.s_bl.Task.AllTaskInList()!;
+            }
         }
     }
 }

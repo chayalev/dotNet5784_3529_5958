@@ -23,8 +23,9 @@ namespace PL.Task
     {
         public TaskListWindow()
         {
-            InitializeComponent();
+
             TaskList = App.s_bl?.Task.AllTaskInList()!;
+            InitializeComponent();
 
         }
         public IEnumerable<BO.TaskInList> TaskList

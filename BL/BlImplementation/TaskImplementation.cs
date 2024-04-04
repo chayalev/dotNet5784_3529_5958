@@ -320,12 +320,13 @@ internal class TaskImplementation : ITask
             Status = task.StatusTask
         });
     }
-    public IEnumerable<TaskInList> AllTaskInListByEngineer(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
+    public IEnumerable<TaskInList> AllTaskInListByEngineerLevel(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
     {
         return ReadAll(task =>
             task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר
+             task.StatusTask != BO.Status.Done && 
             task.ComplexityLevel <= engineerExperience && // רמת המורכבות תואמת את ניסיון המהנדס
-            (task.Dependencies != null ? task.Dependencies.All(subtask => Read(subtask.Id)!.Engineer != null) : true) // all the dependent tasks were taken by engineer
+            (task.Dependencies != null ? task.Dependencies.All(subtask => subtask.Status == BO.Status.Done) : true) // כל המשימות המשניות סגורות
         )
         .Select(task => new TaskInList
         {
