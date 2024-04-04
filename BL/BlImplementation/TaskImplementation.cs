@@ -54,6 +54,7 @@ internal class TaskImplementation : ITask
         return true;
 
     }
+
     /// <summary>
     /// create a new task
     /// </summary>
@@ -250,7 +251,7 @@ internal class TaskImplementation : ITask
                     throw new BlWrongDateException($"A start date is less than the end date of the tasks that task {item.Id} depends on");
             }
             ///If the start date is less than the start date of the entire project
-            if (!Bl._dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >=_bl.StartDate)
+            if (!Bl._dal.Dependency.ReadAll().Any(dep => dep?.DependentTask == item.Id) && item.StartDate >= _bl.StartDate)
             {
                 throw new BlWrongDateException($" The task: {item.Id}- start date is earlier than the project start date");
             }
@@ -258,12 +259,22 @@ internal class TaskImplementation : ITask
             if (item.StartDate > item.DeadlineDate)
                 throw new BlWrongDateException($"The task:{item.Id}  start date is later than the end date");
             ///When you want to update an engineer who already has another engineer for this task
-            if (Bl._dal.Task.Read(item.Id)?.EngineerId != null &&item.Engineer!=null&& Bl._dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
+            if (Bl._dal.Task.Read(item.Id)?.EngineerId != null && item.Engineer != null && Bl._dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
                 throw new wrongInput($"The task:{item.Id} was taken by another engineer");
             ///End date calculator
             var deadLineDate = item.StartDate + item.RequiredEffortTime;
             ///duration calculator
             var requiredEffortTime = item.DeadlineDate - item.StartDate;
+            if (item.Dependencies != null)
+                foreach (var dep in item.Dependencies)
+                {
+                    var newDepemdency = new Dependency
+                    {
+                        DependentTask = item.Id,
+                        DependsOnTask = dep.Id,
+                    };
+                    Bl._dal.Dependency.Create(newDepemdency);
+                }
             taskUpdate = new DO.Task
            (item.Id, item.Description, requiredEffortTime, item.Alias, false, null, null, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
         }
@@ -288,6 +299,24 @@ internal class TaskImplementation : ITask
             Status = task.StatusTask
         });
     }
+
+    public IEnumerable<TaskInList> AllTaskInListByEngineerLevel(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
+    {
+        return ReadAll(task =>
+            task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר
+             task.StatusTask != BO.Status.Done &&
+            task.ComplexityLevel <= engineerExperience && // רמת המורכבות תואמת את ניסיון המהנדס
+            (task.Dependencies != null ? task.Dependencies.All(subtask => subtask.Status == BO.Status.Done) : true) // כל המשימות המשניות סגורות
+        )
+        .Select(task => new TaskInList
+        {
+            Id = task.Id,
+            Alias = task.Alias,
+            Description = task.Description,
+            Status = task.StatusTask
+        });
+
+    }
     public IEnumerable<TaskInEngineer> AllTaskInEngineer(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
     {
         /////Checking if all the tasks that this task depends on have already been done
@@ -297,18 +326,24 @@ internal class TaskImplementation : ITask
         //    Id = task.Id,
         //    Alias = task.Alias
         //});
+
+
         return ReadAll(task =>
             task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר
             task.StatusTask != BO.Status.Done &&                         // משימה לא הסתיימה
-            task.ComplexityLevel <= engineerExperience && // רמת המורכבות תואמת את ניסיון המהנדס
-            (task.Dependencies != null ? task.Dependencies.All(subtask => subtask.Status == BO.Status.Done) :true) // כל המשימות המשניות סגורות
+            task.ComplexityLevel <= engineerExperience  // רמת המורכבות תואמת את ניסיון המהנדס
+            //&& (task.Dependencies != null ? task.Dependencies.All(subtask => subtask.Status == BO.Status.Done) : true) // כל המשימות המשניות סגורות
         )
         .Select(task => new TaskInEngineer
         {
             Id = task.Id,
             Alias = task.Alias
         });
-
+        //return ReadAll().Select(task => new TaskInEngineer
+        //{
+        //    Id = task.Id,
+        //    Alias = task.Alias
+        //});
     }
     public IEnumerable<TaskInList> TaskInListByLevel(BO.EngineerExperience? engineerExperience)
     {

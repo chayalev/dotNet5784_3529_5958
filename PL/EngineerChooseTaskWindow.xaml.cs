@@ -25,7 +25,7 @@ namespace PL
         public EngineerChooseTaskWindow(int id)
         {
             engineer = App.s_bl!.Engineer.Read(id)!;
-            TaskList = App.s_bl?.Task.AllTaskInEngineer(engineer.Level)!;
+            TaskList = App.s_bl?.Task.AllTaskInListByEngineerLevel(engineer.Level)!;
             InitializeComponent();
         }
 
