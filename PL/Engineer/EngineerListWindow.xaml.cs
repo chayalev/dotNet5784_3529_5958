@@ -31,9 +31,11 @@ namespace PL.Engineer
         /// <param name="e"></param>
         private void Engineer_doubleClick(object sender, MouseButtonEventArgs e)
         {
+            //when is not an empty list
             if (sender is ListView listView && listView.SelectedItems.Count > 0)
             {
-                BO.Engineer selectedEngineer = listView.SelectedItem as BO.Engineer;
+
+                BO.Engineer selectedEngineer = (listView.SelectedItem as BO.Engineer)!;
 
                 if (selectedEngineer != null)
                 {
@@ -53,19 +55,29 @@ namespace PL.Engineer
             DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
         public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.None;
-
+        /// <summary>
+        /// When choosing an engineer level, the list is filtered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             EngineerList = (Level == BO.EngineerExperience.None) ?
                             App.s_bl?.Engineer.ReadAll()! : App.s_bl?.Engineer.ReadAll(eng => eng.Level == Level)!;
 
         }
-
+        /// <summary>
+        /// To add Engineer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Add_Engineer(object sender, RoutedEventArgs e)
         {
             new EngineerWindow().ShowDialog();
         }
-
+        /// <summary>
+        /// After add or update engineer-refresh the EngineerList
+        /// </summary>
         public void RefreshEngineerList()
         {
             EngineerList = (Level == BO.EngineerExperience.None) ?

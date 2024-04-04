@@ -27,7 +27,6 @@ namespace PL
         {
             InitializeComponent();
             CurrentTime = App.s_bl.Clock;
-            
         }
 
         public DateTime CurrentTime

@@ -26,11 +26,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <!--Engineer level filtering-->
             <Label Content="search by level:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Margin="271,16,0,0" />
             <ComboBox ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}" SelectedValue="{Binding Path=Level, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbLevelSelector_SelectionChanged"/>
         </Grid>
+        <!--All the engineers-->
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}" MouseDoubleClick="Engineer_doubleClick" />
+        <!--To add engineer-->
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="Add_Engineer"/>
     </Grid>
-
 </Window>

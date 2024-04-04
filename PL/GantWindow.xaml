@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="GantWindow" Height="450" Width="800"
-         Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\gant.png"
+        Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\graph.png"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.Resources>
@@ -21,7 +21,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,346,0,0">
             <!-- Unscheduled -->
             <StackPanel Orientation="Horizontal">
-                <Border Width="15" Height="15" Background="White" Margin="5"/>
+                <Border Width="15" Height="15" Background="White" Margin="5" BorderBrush="Black" BorderThickness="1"/>
                 <TextBlock Text="Unscheduled" VerticalAlignment="Center"/>
             </StackPanel>
 

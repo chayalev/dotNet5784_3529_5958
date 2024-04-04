@@ -25,14 +25,13 @@ namespace PL
         {
             InitializeComponent();
             engineer = App.s_bl.Engineer.Read(id)!;
-            var task  = App.s_bl.Engineer.Read(id)?.Task;
+            var task = App.s_bl.Engineer.Read(id)?.Task;
             if (task != null)
             {
                 Task = App.s_bl.Task.Read(task.Id)!;
             }
 
         }
-
         public BO.Task Task
         {
             get { return (BO.Task)GetValue(TaskProperty); }
@@ -42,20 +41,27 @@ namespace PL
         public static readonly DependencyProperty TaskProperty =
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(EngeneerTaskWindow), new PropertyMetadata(null));
 
-        private void TaskForEngineer_Click(object sender, RoutedEventArgs e)
-        {
-            App.s_bl.Task.AllTaskInEngineer(engineer.Level);
-        }
+
         //When the engineer finish his Task
         private void FinishTask_Click(object sender, RoutedEventArgs e)
         {
+            //Updates the status to done, the engineer, and the completion date of the task according to the values 
             Task.StatusTask = BO.Status.Done;
             Task.ComleteDate = DateTime.Now;
             Task.Engineer = null;
-            App.s_bl.Task.Update(Task);
-            MessageBox.Show($"The task: {Task.Alias} completed", "complete!");
-            Close();
-            new EngineerChooseTaskWindow(engineer.Id).ShowDialog();
+            try
+            {
+                App.s_bl.Task.Update(Task);
+                MessageBox.Show($"The task: {Task.Alias} completed", "complete!");
+                Close();
+                //Allows the engineer to select a new task
+                new EngineerChooseTaskWindow(engineer.Id).ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+                
         }
     }
 }

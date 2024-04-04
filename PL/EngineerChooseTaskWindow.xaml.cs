@@ -41,44 +41,36 @@ namespace PL
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(EngineerChooseTaskWindow), new PropertyMetadata(null));
 
-
+        /// <summary>
+        /// When the engineer selects a task from the list of tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBox listBox = sender as ListBox;
+            ListBox listBox = (sender as ListBox)!;
+            //In case you did not enter a start date for the selected task
             if (RealStartDate == null )
             {
-               
                 MessageBox.Show($"Please insert the start date for this task", "Insert Start Date", MessageBoxButton.OK, MessageBoxImage.Information);
-                listBox.SelectedIndex = -1;     
+                listBox!.SelectedIndex = -1;     
             }
             else
             {
                 try
                 {
-                    //if (listBox != null)
-                    //{
-                    //    var chosenTask = listBox.SelectedItem as BO.TaskInList;
-                    //    App.s_bl.Task.Read(chosenTask!.Id)!.StartDate = StartDate;
-                    //    var taskInEngineer = new TaskInEngineer { Id = chosenTask!.Id, Alias = chosenTask.Alias };
-                    //    engineer.Task = taskInEngineer;
-                    //    var task = App.s_bl.Task.Read(chosenTask!.Id);
-                    //    if (task != null)
-                    //    {
-                    //        task.Engineer = new EngineerInTask { Id = engineer.Id, Name = engineer.Name };
-                    //        App.s_bl.Task.Update(task);
-                    //    }
-                    //    App.s_bl.Engineer.Update(engineer);
-                    //}
                     if (listBox != null)
                     {
                         var chosenTask = listBox.SelectedItem as BO.TaskInList;
-                        var task = App.s_bl.Task.Read(chosenTask.Id);
+                        var task = App.s_bl.Task.Read(chosenTask!.Id);
+                        //Checks if the selected task is found and updates it accordingly
                         if (task != null)
                         {
-                            task.BaselineStartDate = RealStartDate; // עדכון התאריך של המשימה
+                            task.BaselineStartDate = RealStartDate; 
                             task.Engineer = new EngineerInTask { Id = engineer.Id, Name = engineer.Name };
                             App.s_bl.Task.Update(task);
                         }
+                        //Creates a task of type task in the engineer and updates the engineer to be responsible for that task
                         engineer.Task = new TaskInEngineer { Id = chosenTask.Id, Alias = chosenTask.Alias };
                         App.s_bl.Engineer.Update(engineer);
                     }
@@ -88,6 +80,7 @@ namespace PL
                     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 Close();
+                //After updating, a window opens for him with the details of the selected task
                 new EngeneerTaskWindow(engineer.Id).ShowDialog();
             }
 

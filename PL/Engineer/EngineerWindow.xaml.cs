@@ -41,15 +41,22 @@ namespace PL.Engineer
             DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
 
         public static BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.None;
+        /// <summary>
+        /// Add and update the enginner
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                //Update
                 if ((string)(sender as Button)!.Content == "Update")
                 {
                     App.s_bl.Engineer.Update(Engineer);
                     MessageBox.Show($"The engineer: {Engineer.Name} update successfully", "Update successfully");
                 }
+                //Add
                 else
                 {
                     App.s_bl.Engineer.Create(Engineer);
@@ -72,9 +79,14 @@ namespace PL.Engineer
 
 
         }
+        /// <summary>
+        /// When adding or updating an engineer - refreshes the list of engineers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EngineerWindow_Closed(object sender, EventArgs e)
         {
-            // An instance of the main window EngineerListWindow
+          // An instance of the main window EngineerListWindow
             var mainWindow = Application.Current.Windows
                                             .OfType<EngineerListWindow>()
                                             .FirstOrDefault();

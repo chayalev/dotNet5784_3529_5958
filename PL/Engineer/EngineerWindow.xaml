@@ -45,17 +45,16 @@
         <ComboBox Grid.Row="4" HorizontalAlignment="Left"  Height="NaN"
                   ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}"
                   SelectedValue="{Binding Path=Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.ColumnSpan="2" Margin="114,22,0,19" />
-        <!--SelectionChanged="cbLevelSelector_SelectionChanged"-->
-        <!--<Label Content="Task"  Grid.Row="5" />
-        <ComboBox Grid.Row="5" HorizontalAlignment="Left" Height="NaN"
-           ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}"  
-           SelectedValue="{Binding Path=Task, Mode=TwoWay}" 
-           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="114,19,0,0" />-->
+          <!--choose a task to engineer-->
+         <!--<Label Content="Task"  Grid.Row="5" />
+            <ComboBox Grid.Row="5" HorizontalAlignment="Left" Height="NaN"
+              ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}"  
+              SelectedValue="{Binding Path=Task, Mode=TwoWay}" 
+             VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="114,19,0,0" />-->
 
         <Button Grid.Row="5" Grid.Column="1" Content="{Binding Path=Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
             HorizontalAlignment="Left" Margin="348,19,0,0"  VerticalAlignment="Top" 
             Padding="5" Click="btnAddUpdate_Click" RenderTransformOrigin="28.22,2.25"/>
 
-        <!--<TextBlock Margin="5" Grid.Row="1" Text="{Binding Path=Engineer}" />-->
     </Grid>
 </Window>

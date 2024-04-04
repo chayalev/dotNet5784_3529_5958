@@ -10,7 +10,9 @@ using System.Windows.Data;
 using System.Windows.Media;
 
 namespace PL;
-
+/// <summary>
+/// converter to Add and update buttons
+/// </summary>
 internal class ConvertIdToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -23,7 +25,9 @@ internal class ConvertIdToContent : IValueConverter
         throw new NotImplementedException();
     }
 }
-
+/// <summary>
+/// convert the enabled- when we cant chage the data 
+/// </summary>
 internal class IsEnableConverter : IValueConverter
 {
     //convert from source property type to target property type
@@ -43,7 +47,9 @@ internal class IsEnableConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
-
+/// <summary>
+/// Converts the visibility
+/// </summary>
 public class VisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -64,8 +70,9 @@ public class VisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
-
-
+/// <summary>
+/// Converts the cell colors background in the Gantt chart
+/// </summary>
 class ConvertTaskStatusToBackgroundColor : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -95,7 +102,9 @@ class ConvertTaskStatusToBackgroundColor : IValueConverter
         throw new NotImplementedException();
     }
 }
-
+/// <summary>
+/// Converts the cell colors foreground in the Gantt chart
+/// </summary>
 class ConvertTaskStatusToForegroundColor : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
