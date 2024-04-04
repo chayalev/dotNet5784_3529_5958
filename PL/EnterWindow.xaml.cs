@@ -29,8 +29,6 @@ namespace PL
             CurrentTime = App.s_bl.Clock;
         }
 
-
-
         public DateTime CurrentTime
         {
             get { return (DateTime)GetValue(CurrentTimeProperty); }

@@ -15,6 +15,7 @@ public interface ITask
     public void Update(BO.Task item);
     public void Delete(int id);
     public IEnumerable<TaskInList> AllTaskInList();
+    public IEnumerable<TaskInList> AllTaskInListByEngineerLevel(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None);
     public IEnumerable<TaskInList> TaskInListByLevel(BO.EngineerExperience? engineerExperience=BO.EngineerExperience.None);
     public IEnumerable<TaskInList> AllTaskInListByEngineerLevel(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None);
     public IEnumerable<TaskInEngineer> AllTaskInEngineer(BO.EngineerExperience? engineerExperience);

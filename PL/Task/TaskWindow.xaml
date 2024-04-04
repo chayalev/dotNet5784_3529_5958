@@ -46,25 +46,30 @@
         <TextBox Grid.Row="3" Grid.Column="1" 
        Text="{Binding Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  
        HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+
         <Label Content="Remarks" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="4" Grid.Column="0" />
         <TextBox Grid.Row="4" Grid.Column="1" 
         Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  
           HorizontalAlignment="Left" Height="NaN" Margin="3,18,0,0"  VerticalAlignment="Top" Width="120"/>
-        <Label Content="Startdate" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="6" Grid.Column="0" />
 
+        <Label Content="Startdate" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="6" Grid.Column="0" />
         <DatePicker VerticalAlignment="Center" Grid.Row="6" Margin="3,0,520,0" Grid.Column="1" SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
 
         <Label Content="Level" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="5" Grid.Column="0" />
         <ComboBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="left"  Height="NaN" Margin="3"
-              ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}"
+              ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}" Text="{Binding Path=Level, Mode=TwoWay}"
               SelectedValue="{Binding Path=Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
                VerticalAlignment="center"  Width="120"/>
+
         <!--SelectionChanged="cbLevelSelector_SelectionChanged"-->
         <Label Content="RequiredEffortTime" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Row="7" Grid.Column="0" />
         <TextBox Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" InputScope="Number" 
                  Grid.Row="7" Grid.Column="1" Margin="10,10,591,13"/>
-        <Label Content="dependent tasks" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" Margin="21,0,0,0"></Label>
-        <ListBox ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}" Grid.Row="8" Grid.Column="1">
+
+        <Label Content="Dependencies" HorizontalAlignment="Center" Grid.Row="8" />
+        <ListBox Margin="10,5,248,5" Grid.Row="8" ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}" SelectionChanged="ListBox_SelectionChanged" SelectionMode="Extended" Grid.Column="1" />
+
+        <!--<ListBox ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}" Grid.Row="8" Grid.Column="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -73,7 +78,8 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
+
         <Button Grid.Row="9" Content="{Binding Path=Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
         HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Top" 
         Padding="5" Click="btnAddUpdate_Click"/>

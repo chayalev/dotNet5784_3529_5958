@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using BO;
+using PL.Engineer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,15 +40,51 @@ namespace PL.Task
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
 
         public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.None;
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox listBox = sender as ListBox;
+            if (listBox != null)
+            {
+                //var dependencies = listBox as IEnumerable<TaskInEngineer>;
+                //var dependencies = listBox.Items.Cast<TaskInEngineer>();
+                var dependencies = listBox.SelectedItems.OfType<TaskInEngineer>();
+
+                foreach (var selectedItem in dependencies)
+                {
+                    var task = App.s_bl.Task.Read(selectedItem.Id)!;
+                    var dependecy = new TaskInList
+                    {
+                        Alias = task.Alias,
+                        Description = task.Description,
+                        Id = task.Id,
+                        Status = task.StatusTask
+                    };
+                    if (Task.Dependencies == null)
+                    {
+                        Task.Dependencies = new List<TaskInList>();
+                    }
+
+                    Task.Dependencies.Add(dependecy);
+
+                }
+                if (Task.Id == 0)
+                    App.s_bl.Task.Create(Task);
+                else
+                    App.s_bl.Task.Update(Task);
+            }
+        }
 
         public void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if ((string)(sender as Button)!.Content == "Update")
-                    App.s_bl.Task.Update(Task);
-                else
-                    App.s_bl.Task.Create(Task);
+                if (Task.Dependencies != null || Task.Id == 0)
+                {
+                    if ((string)(sender as Button)!.Content == "Update")
+                        App.s_bl.Task.Update(Task);
+                    else
+                        App.s_bl.Task.Create(Task);
+                }
             }
             catch (Exception ex)
             {
