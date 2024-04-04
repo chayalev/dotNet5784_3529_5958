@@ -27,9 +27,10 @@
             </Grid.ColumnDefinitions>
             <Label Content="Label" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Column="0" />
             <ComboBox ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}" SelectedValue="{Binding Path=Level, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbLevelSelector_SelectionChanged"/>
-
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" MouseDoubleClick="Task_doubleClick" SelectionChanged="ListView_SelectionChanged" />
+        <!--The task list-->
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" MouseDoubleClick="Task_doubleClick" />
+        <!--Create a new task-->
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="Add_Task"/>
     </Grid>
 

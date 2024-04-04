@@ -18,7 +18,6 @@ internal class Bl : IBl
 
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
-    //public static DateTime MyClock { get; set; }
 
     /// <summary>
     /// Checking whether the project status is after or before creating the schedule
@@ -36,33 +35,11 @@ internal class Bl : IBl
         ///Finding all the dependencies the task dependent
         var dependencies = _dal.Dependency.ReadAll(dep => dep.DependentTask == task.Id);
         if (dependencies.Any())
-        {
             ///Set start time to the latest time a task that the current task depends on ends
-            //earliestDate = _dal.Task.Read((int)dependencies.First()!.DependsOnTask!)?.DeadlineDate;
-            //foreach (var item in dependencies)
-            //{
-            //    DateTime endDate = _dal.Task.Read((int)item!.DependsOnTask!)?.DeadlineDate ?? throw new BO.BlWrongDateException($"You dont have a deadline date to task with id:{item.Id}");
-            //    earliestDate = endDate > earliestDate ? endDate : earliestDate;
-            //}
             return dependencies.Max(dep => _dal.Task.Read((int)dep!.DependsOnTask!)?.DeadlineDate)!.Value.AddHours(1);
-
-        }
         else
             return StartDate;
     }
-
-    /// <summary>
-    ///// Receiving the initial bid from the manager
-    ///// </summary>
-    ///// <returns></returns>
-    ///// <exception cref="BO.BlWrongInput"></exception>
-    //private DateTime GetStartDate()
-    //{
-    //    Console.WriteLine("insert the start date:");
-    //    ///Saving in a temporary variable the start time entered by the manager
-    //    var startDate = DateTime.TryParse(Console.ReadLine(), out DateTime result) ? result : throw new BO.BlWrongDateException("must insert value!");
-    //    return startDate;
-    //}
 
     /// <summary>
     /// Sending the task to update the times in dal
@@ -87,11 +64,11 @@ internal class Bl : IBl
         while (taskQueue.Count > 0)
         {
             var currentTask = taskQueue.Dequeue();
-           
-                ///Sending to a function that finds the earliest time to start the task
-                DateTime? earliestDate = EarliestStartDate(currentTask);
-                updateTask(currentTask, earliestDate);
-            
+
+            ///Sending to a function that finds the earliest time to start the task
+            DateTime? earliestDate = EarliestStartDate(currentTask);
+            updateTask(currentTask, earliestDate);
+
             ///Finding all the following tasks and putting them into the queue
             var dependedInPrevTask = _dal.Dependency
                 .ReadAll(dep => dep.DependsOnTask == currentTask?.Id)
@@ -113,14 +90,12 @@ internal class Bl : IBl
     /// </summary>
     public void CreateProject(DateTime startDate)
     {
-        // var startDate = _dal.Task.ReadAll().Min(x => x!.StartDate);
         StartDate = startDate;
         var tasks = _dal.Task.ReadAll();
         ///Updates the first tasks
         var firstTasks = tasks.Where(task => !_dal.Dependency.ReadAll(dep => dep.DependentTask == task?.Id).Any()).ToList();
-       // firstTasks.ForEach(task => updateTask(task!, startDate));
         UpdateNextTask(firstTasks!).ToList();
-        //update the start and end days of the project
+        ///update the start and end days of the project
         var allTask = _dal.Task.ReadAll();
         EndDate = allTask.Max(tsk => tsk?.DeadlineDate);
         _dal.EndDate = EndDate;
@@ -129,10 +104,15 @@ internal class Bl : IBl
     }
 
     public void InitializeDB() => DalTest.Initialization.Do();
+
     /// <summary>
     /// Deleting the database
     /// </summary>
-    public void ResetDB() => DalTest.Initialization.Reset();
+    public void ResetDB()
+    {
+        IsCreate = false;
+        DalTest.Initialization.Reset();
+    }
 
     #region Clock
     //private static DateTime s_Clock = DateTime.Now.Date;

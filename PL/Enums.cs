@@ -5,6 +5,9 @@ using System.Collections;
 namespace PL;
 internal class LevelsCollection : IEnumerable
 {
+    /// <summary>
+    /// Engineer experience levels
+    /// </summary>
     static readonly IEnumerable<BO.EngineerExperience> s_enums =
     (Enum.GetValues(typeof(BO.EngineerExperience)) as IEnumerable<BO.EngineerExperience>)!;
 

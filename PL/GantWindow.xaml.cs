@@ -24,8 +24,9 @@ namespace PL
     /// </summary>
     public partial class GantWindow : Window
     {
-
-      //  static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        /// <summary>
+        /// The chart table
+        /// </summary>
         public DataTable dataTable
         {
             get { return (DataTable)GetValue(dataTableProperty); }
@@ -38,8 +39,7 @@ namespace PL
 
         public GantWindow()
         {
-            buildDataTable();
-
+            buildDataTable(); //table initialization
             InitializeComponent();
         }
 
@@ -47,12 +47,14 @@ namespace PL
         {
             dataTable = new DataTable();
 
+            ///Creating columns of task details
             dataTable.Columns.Add("Task Id", typeof(int));
             dataTable.Columns.Add("Task Name", typeof(string));
             dataTable.Columns.Add("Engineer Name", typeof(string));
             dataTable.Columns.Add("Depend On Tasks", typeof(string));
             int col = 4;
 
+            ///Creating columns of project days
             for (DateTime day = App.s_bl.StartDate ?? App.s_bl.Clock; day <= App.s_bl.EndDate; day = day.AddDays(1))
             {
                 string strDay = $"{day.Day}-{day.Month}-{day.Year}";
@@ -60,10 +62,12 @@ namespace PL
                 col++;
             }
 
+            ///Task sorting
             IEnumerable<BO.Task> orderedTasks = App.s_bl.Task.ReadAll().OrderBy(x => x.StartDate);
+            
+            ///Filling the table
             foreach (BO.Task task in orderedTasks)
             {
-
                 DataRow row = dataTable.NewRow();
                 row[0] = task.Id;
                 row[1] = task.Alias;
@@ -84,10 +88,7 @@ namespace PL
                         row[strDay] = task.StatusTask;
                 }
                 dataTable.Rows.Add(row);
-
             }
-
-
         }
     }
 }
