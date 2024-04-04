@@ -145,8 +145,11 @@ internal class TaskImplementation : ITask
                     else if (_bl.Clock > doTask.DeadlineDate)
                         status = BO.Status.InJeopardy;
                     //while the task on track
-                    else
+                    else if (doTask.EngineerId != null)
                         status = BO.Status.OnTrack;
+                    else
+                        status = BO.Status.Available;
+
                 //before the start date
                 else
                     status = BO.Status.Scheduled;
@@ -176,6 +179,7 @@ internal class TaskImplementation : ITask
                 ComleteDate = doTask.CompleteDate,
                 Deliverables = doTask.Deliverables,
                 Remarks = doTask.Remarks,
+                RequiredEffortTime = doTask.RequiredEffortTime,
                 Engineer = doTask.EngineerId != null
                 ? new EngineerInTask { Id = (int)doTask.EngineerId, Name = Bl._dal.Engineer.Read((int)doTask.EngineerId)?.Name }
                 : null,
@@ -222,7 +226,7 @@ internal class TaskImplementation : ITask
             if (item!.Dependencies?.Count() > 0 && !ImpossibleDependency(item!))
                 throw new BlWrongInputException("You cant insert a circle dependencies");
             taskUpdate = new DO.Task
-            (item.Id, item.Description, item.RequiredEffortTime, item.Alias, false, null, null, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+            (item.Id, item.Description, item.RequiredEffortTime, item.Alias, false, item.CreateAtDate, item.StartDate, item.BaselineStartDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
             ///If this task has dependent tasks
             if (item.Dependencies != null)
             {
@@ -261,10 +265,10 @@ internal class TaskImplementation : ITask
             ///When you want to update an engineer who already has another engineer for this task
             if (Bl._dal.Task.Read(item.Id)?.EngineerId != null && item.Engineer != null && Bl._dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
                 throw new wrongInput($"The task:{item.Id} was taken by another engineer");
-            ///End date calculator
-            var deadLineDate = item.StartDate + item.RequiredEffortTime;
+            /////End date calculator
+            //var deadLineDate = item.StartDate + item.RequiredEffortTime;
             ///duration calculator
-            var requiredEffortTime = item.DeadlineDate - item.StartDate;
+            //var requiredEffortTime = item.DeadlineDate - item.StartDate;
             if (item.Dependencies != null)
                 foreach (var dep in item.Dependencies)
                 {
@@ -276,7 +280,7 @@ internal class TaskImplementation : ITask
                     Bl._dal.Dependency.Create(newDepemdency);
                 }
             taskUpdate = new DO.Task
-           (item.Id, item.Description, requiredEffortTime, item.Alias, false, null, null, item.ForecastDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
+           (item.Id, item.Description, item.RequiredEffortTime, item.Alias, false, item.CreateAtDate, item.StartDate, item.BaselineStartDate, item.DeadlineDate, item.ComleteDate, item.Deliverables, item.Remarks, item.Engineer?.Id, (DO.EngineerExperience?)item.ComplexityLevel);
         }
         ///Test Data
         try
@@ -300,33 +304,10 @@ internal class TaskImplementation : ITask
         });
     }
 
-    public IEnumerable<TaskInList> AllTaskInListByEngineerLevel(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
-    {
-        return ReadAll(task =>
-            task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר
-             task.StatusTask != BO.Status.Done &&
-            task.ComplexityLevel <= engineerExperience && // רמת המורכבות תואמת את ניסיון המהנדס
-            (task.Dependencies != null ? task.Dependencies.All(subtask => subtask.Status == BO.Status.Done) : true) // כל המשימות המשניות סגורות
-        )
-        .Select(task => new TaskInList
-        {
-            Id = task.Id,
-            Alias = task.Alias,
-            Description = task.Description,
-            Status = task.StatusTask
-        });
 
-    }
     public IEnumerable<TaskInEngineer> AllTaskInEngineer(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
     {
         /////Checking if all the tasks that this task depends on have already been done
-        //bool isAllDone = dependencies.All(dep => Factory.Get().Task.Read((int)dep!.DependsOnTask!)?.StatusTask == Status.Done);
-        //return ReadAll(task => task.Engineer == null && task.ComplexityLevel <= engineerExperience).Select(task => new TaskInEngineer
-        //{
-        //    Id = task.Id,
-        //    Alias = task.Alias
-        //});
-
 
         return ReadAll(task =>
             task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר

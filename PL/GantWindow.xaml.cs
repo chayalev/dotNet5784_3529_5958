@@ -50,7 +50,7 @@ namespace PL
             dataTable.Columns.Add("Task Id", typeof(int));
             dataTable.Columns.Add("Task Name", typeof(string));
             dataTable.Columns.Add("Engineer Name", typeof(string));
-
+            dataTable.Columns.Add("Depend On Tasks", typeof(IEnumerable<int>));
             int col = 4;
 
             for (DateTime day = App.s_bl.StartDate ?? App.s_bl.Clock; day <= App.s_bl.EndDate; day = day.AddDays(1))
@@ -71,6 +71,8 @@ namespace PL
                     row[2] = task.Engineer.Name;
                 else
                     row[2] = "";
+
+                row[3] = task.Dependencies.Select(x => x.Id) ?? null;
                 for (DateTime day = App.s_bl.StartDate ?? App.s_bl.Clock; day <= App.s_bl.EndDate; day = day.AddDays(1))
                 {
                     string strDay = $"{day.Day}-{day.Month}-{day.Year}";

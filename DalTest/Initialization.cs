@@ -196,15 +196,17 @@ public static class Initialization
     }
     private static void CreateTask()
     {
-        int firstTask, secondTask, thirdTask, fourthTask;
-        Task tsk = new(0, "Planning the appearance of the web page", TimeSpan.FromDays(3), "first Planing", false, null,DateTime.Now, null, null, null, null, null,null,(EngineerExperience)2) ;
+        int firstTask, secondTask, thirdTask, fourthTask,fifthTask;
+        Task tsk = new(0, "Planning the appearance of the web page", TimeSpan.FromDays(5), "first Planing", false, null,null, null, null, null, null, null,null,(EngineerExperience)1) ;
         firstTask = s_dal!.Task.Create(tsk);
-        tsk = new(0, "Building a database with appropriate values", TimeSpan.FromDays(5), "build database", false, null, DateTime.Now.AddDays(10), null, null, null, null, null, null, (EngineerExperience)3);
+        tsk = new(0, "Building a database with appropriate values", TimeSpan.FromDays(3), "build database", false, null, null, null, null, null, null, null, null, (EngineerExperience)3);
         secondTask = s_dal!.Task.Create(tsk);
-        tsk = new(0, "Writing server and client code", TimeSpan.FromDays(2), "code", false, null, DateTime.Now.AddDays(12), null, null, null, null, null, null, (EngineerExperience)1);
+        tsk = new(0, "Writing server and client code", TimeSpan.FromDays(10), "code", false, null,null, null, null, null, null, null, null, (EngineerExperience)1);
         thirdTask = s_dal!.Task.Create(tsk);
-        tsk = new(0, "User page display design and code usage", TimeSpan.FromDays(7), "design", false, null, DateTime.Now.AddDays(5), null, null, null, null, null, null, (EngineerExperience)2);
+        tsk = new(0, "User page display design and code usage", TimeSpan.FromDays(7), "design", false, null, null, null, null, null, null, null, null, (EngineerExperience)2);
         fourthTask = s_dal!.Task.Create(tsk);
+        tsk = new(0, "organize the computer", TimeSpan.FromDays(3), "organized", false, null, null, null, null, null, null, null, null, (EngineerExperience)1);
+        fifthTask = s_dal!.Task.Create(tsk);
 
         Dependency dependency = new Dependency(0, secondTask, firstTask);
         int depId = s_dal.Dependency.Create(dependency);

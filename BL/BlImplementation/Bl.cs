@@ -18,6 +18,7 @@ internal class Bl : IBl
 
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
+    //public static DateTime MyClock { get; set; }
 
     /// <summary>
     /// Checking whether the project status is after or before creating the schedule
@@ -134,6 +135,7 @@ internal class Bl : IBl
     public void ResetDB() => DalTest.Initialization.Reset();
 
     #region Clock
+    //private static DateTime s_Clock = DateTime.Now.Date;
     private static DateTime s_Clock = DateTime.Now.Date;
     public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
     public void ResetClock()

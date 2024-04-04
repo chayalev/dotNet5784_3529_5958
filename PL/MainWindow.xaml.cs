@@ -63,18 +63,18 @@ namespace PL
                 MessageBox.Show(ex.Message);
             }
         }
-        private void btnCreateSManual_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // App.s_bl.s();
-                MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+        //private void btnCreateSManual_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        // App.s_bl.s();
+        //        MessageBox.Show("the project was began!", "success!!", MessageBoxButton.OK, MessageBoxImage.Information);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
 
 
         private void btnGant_Click(object sender, RoutedEventArgs e)

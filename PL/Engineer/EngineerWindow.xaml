@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
         Title="EngineerWindow" Height="450" Width="800"
+         Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\engineer.png"
+         Background="{StaticResource BackgroundImageKey}"
         DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -45,13 +46,13 @@
                   ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}"
                   SelectedValue="{Binding Path=Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.ColumnSpan="2" Margin="114,22,0,19" />
         <!--SelectionChanged="cbLevelSelector_SelectionChanged"-->
-        <Label Content="Task"  Grid.Row="5" />
+        <!--<Label Content="Task"  Grid.Row="5" />
         <ComboBox Grid.Row="5" HorizontalAlignment="Left" Height="NaN"
            ItemsSource="{Binding Source={StaticResource TaskToChooseKey}}"  
-           SelectedValue="{Binding Path=Task, Mode=TwoWay}"
-           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="114,19,0,0"/>
+           SelectedValue="{Binding Path=Task, Mode=TwoWay}" 
+           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="114,19,0,0" />-->
 
-        <Button Grid.Row="6" Grid.Column="1" Content="{Binding Path=Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+        <Button Grid.Row="5" Grid.Column="1" Content="{Binding Path=Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
             HorizontalAlignment="Left" Margin="348,19,0,0"  VerticalAlignment="Top" 
             Padding="5" Click="btnAddUpdate_Click" RenderTransformOrigin="28.22,2.25"/>
 

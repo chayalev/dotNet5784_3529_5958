@@ -27,6 +27,7 @@ namespace PL
         {
             InitializeComponent();
             CurrentTime = App.s_bl.Clock;
+            
         }
 
         public DateTime CurrentTime
@@ -76,11 +77,16 @@ namespace PL
                 {
                     try
                     {
-                        var engineer = App.s_bl.Engineer.Read(id)?.Task;
-                        if (engineer is not null)
-                            new EngeneerTaskWindow(id).ShowDialog();
+                        if (!App.s_bl.IsCreate)
+                            MessageBox.Show("Can not choose a task before project schedule", "Error", MessageBoxButton.OK);
                         else
-                            new EngineerChooseTaskWindow(id).ShowDialog();
+                        {
+                            var engineer = App.s_bl.Engineer.Read(id)?.Task;
+                            if (engineer is not null)
+                                new EngeneerTaskWindow(id).ShowDialog();
+                            else
+                                new EngineerChooseTaskWindow(id).ShowDialog();
+                        }
                     }
                     catch (Exception ex)
                     {

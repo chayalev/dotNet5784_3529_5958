@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="TaskListWindow" Height="450" Width="800"
+          Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\task.png"
+  Background="{StaticResource BackgroundImageKey}"
      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid >
         <Grid.ColumnDefinitions>

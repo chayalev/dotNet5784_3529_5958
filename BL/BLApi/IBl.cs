@@ -8,6 +8,7 @@ public interface IBl
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
+    public static DateTime MyClock { get; set; }
     public bool IsCreate { get; set; }
     public void CreateProject(DateTime startDate);
     public void InitializeDB();

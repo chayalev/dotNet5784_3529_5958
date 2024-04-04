@@ -27,6 +27,11 @@ sealed internal class DalXml : IDal
         get => XMLTools.GetDate(s_data_config_xml, "EndDate");
         set => XMLTools.ChangeDate(s_data_config_xml, "EndDate", value);
     }
+    //public static DateTime MyClock
+    //{
+    //    get => XMLTools.GetClock(s_data_config_xml, "MyClock");
+    //    set => XMLTools.ChangeClock(s_data_config_xml, "MyClock", value);
+    //}
 
     public void Reset()
     {

@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PL"
              StartupUri="EnterWindow.xaml">
+
     <Application.Resources>
+        <ImageBrush x:Key="BackgroundImageKey" ImageSource="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\background.jpg"/>
         <local:LevelsCollection x:Key="LevelsCollectionKey" />
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:IsEnableConverter x:Key="IsEnableConverterKey"/>

@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
+         Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\man.png"
+        Background="{StaticResource BackgroundImageKey}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid>
@@ -19,7 +21,7 @@
         <Button Content="create scheduel automatic"  VerticalAlignment="Top" Click="btnCreateSAuto_Click" Height="67" Margin="289,61,310,0"/>
         <!---כפתור ליצירת לוז  ידני-->
         <DatePicker  SelectedDate="{Binding StartDate, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="339,133,0,0" RenderTransformOrigin="1.899,2.96"/>
-        <Button Content="create scheduel manualy"  VerticalAlignment="Top" Click="btnCreateSManual_Click" Height="67" Margin="289,162,322,0"/>
+        <!--<Button Content="create scheduel manualy"  VerticalAlignment="Top" Click="btnCreateSManual_Click" Height="67" Margin="289,162,322,0"/>-->
 
 
         <Button Content="allTask" HorizontalAlignment="Left" Margin="84,158,0,0" VerticalAlignment="Top" Click="btnTask_Click" Height="79" Width="138"/>

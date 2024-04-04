@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="EnterWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\task.png"
+        Background="{StaticResource BackgroundImageKey}"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Grid>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Button Content="Manager" HorizontalAlignment="Left" Height="92" Margin="62,276,0,0" VerticalAlignment="Top" Width="249" Click="EnterManager_Click"/>
         <Button Content="Enginner" HorizontalAlignment="Left" Height="92" Margin="349,276,0,0" VerticalAlignment="Top" Width="272" Click="EnterEngineer_Click"/>
         <Label Content="{Binding CurrentTime}" FontSize="40px" HorizontalAlignment="Left" Height="76" Margin="207,51,0,0" VerticalAlignment="Top" Width="368"/>

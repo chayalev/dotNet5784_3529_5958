@@ -67,10 +67,6 @@ namespace PL.Task
                     Task.Dependencies.Add(dependecy);
 
                 }
-                if (Task.Id == 0)
-                    App.s_bl.Task.Create(Task);
-                else
-                    App.s_bl.Task.Update(Task);
             }
         }
 

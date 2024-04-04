@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
         Title="EngineerListWindow" Height="640" Width="800" 
+         Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\engineers.png"
+         Background="{StaticResource BackgroundImageKey}"
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <!--Extrnal Grid-->
     <Grid >

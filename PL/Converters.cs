@@ -77,8 +77,10 @@ class ConvertTaskStatusToBackgroundColor : IValueConverter
                 return Brushes.White;
             case "Scheduled":
                 return Brushes.Pink;
-            case "OnTrack":
+            case "Available":
                 return Brushes.Orange;
+            case "OnTrack":
+                return Brushes.Yellow;
             case "Done":
                 return Brushes.Green;
             case "InJeopardy":
@@ -105,8 +107,10 @@ class ConvertTaskStatusToForegroundColor : IValueConverter
                 return Brushes.White;
             case "Scheduled":
                 return Brushes.Pink;
-            case "OnTrack":
+            case "Available":
                 return Brushes.Orange;
+            case "OnTrack":
+                return Brushes.Yellow;
             case "Done":
                 return Brushes.Green;
             case "InJeopardy":

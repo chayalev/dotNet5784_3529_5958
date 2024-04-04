@@ -58,6 +58,18 @@ static class XMLTools
         return root.ToDateTimeNullable(elemName) ?? throw new DllNotFoundException("not found the date");
     }
 
+    //public static DateTime GetClock(string data_config_xml, string elemName)
+    //{
+    //    XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
+    //    return (DateTime)root.Element(elemName)!;
+    //}
+    //public static void ChangeClock(string data_config_xml, string elemName, DateTime dateT)
+    //{
+    //    XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
+    //    root.Element(elemName)?.SetValue((dateT).ToString());
+    //    XMLTools.SaveListToXMLElement(root, data_config_xml);
+    //}
+
     #endregion
 
     #region SaveLoadWithXElement
