@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using PL.Engineer;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,7 +25,6 @@ namespace PL.Task
     {
         public TaskListWindow()
         {
-
             TaskList = App.s_bl?.Task.AllTaskInList()!;
             InitializeComponent();
         }
@@ -45,33 +46,37 @@ namespace PL.Task
         /// <param name="e"></param>
         private void Task_doubleClick(object sender, MouseButtonEventArgs e)
         {
+            //If a task is selected
             if (sender is ListView listView && listView.SelectedItems.Count > 0)
             {
-                BO.TaskInList selectedTask = listView.SelectedItem as BO.TaskInList;
+                BO.TaskInList? selectedTask = listView.SelectedItem as BO.TaskInList;
 
+                ///Messenger to the task editing page
                 if (selectedTask != null)
-                {
                     new TaskWindow(selectedTask.Id).ShowDialog();
-                }
             }
         }
 
-      
+        /// <summary>
+        /// Selecting tasks that match the level of the engineer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TaskList = (Level == BO.EngineerExperience.None) ?
                             App.s_bl?.Task.AllTaskInList()! : App.s_bl?.Task.TaskInListByLevel(Level)!;
-
         }
 
+        /// <summary>
+        /// Opening the Add Task page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Add_Task(object sender, RoutedEventArgs e)
         {
             new TaskWindow().ShowDialog();
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 internal class EngineerImplementation : IEngineer
 {
    
-   
     /// <summary>
     /// Check the id of Engineer
     /// </summary>
@@ -36,8 +35,6 @@ internal class EngineerImplementation : IEngineer
             throw new BlWrongDateException($"Id {id} is not valid");
         }
     }
-
-
 
     /// <summary>
     /// Check the email of engineer
@@ -185,10 +182,6 @@ internal class EngineerImplementation : IEngineer
             throw new BO.BlAlreadyExistsException($"Engineer with ID={eng.Id} already exists", ex);
         }
     }
-
-   
-
-
    
 }
 

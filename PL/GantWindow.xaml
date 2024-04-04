@@ -9,6 +9,7 @@
          Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\gant.png"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
+        <!--Coloring squares in the table-->
         <Grid.Resources>
             <Style TargetType="DataGridCell">
                 <Setter Property="Background" Value="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}, Converter= {StaticResource ConvertTaskStatusToBackgroundColorKey}}"/>
@@ -16,12 +17,14 @@
             </Style>
         </Grid.Resources>
 
+        <!--Creating the table-->
         <DataGrid ItemsSource="{Binding dataTable}" IsReadOnly="True"/>
-        <!-- מקרא צבעים -->
+        <!-- color book -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,346,0,0">
+            
             <!-- Unscheduled -->
             <StackPanel Orientation="Horizontal">
-                <Border Width="15" Height="15" Background="White" Margin="5"/>
+                <Border Width="15" Height="15" Background="White" Margin="5" BorderBrush="Black" BorderThickness="1"/>
                 <TextBlock Text="Unscheduled" VerticalAlignment="Center"/>
             </StackPanel>
 
@@ -36,22 +39,24 @@
                 <Border Width="15" Height="15" Background="Yellow" Margin="5"/>
                 <TextBlock Text="OnTrack" VerticalAlignment="Center"/>
             </StackPanel>
+            
             <!-- Available -->
             <StackPanel Orientation="Horizontal">
                 <Border Width="15" Height="15" Background="Orange" Margin="5"/>
                 <TextBlock Text="Available" VerticalAlignment="Center"/>
             </StackPanel>
+            
             <!-- Done -->
             <StackPanel Orientation="Horizontal">
                 <Border Width="15" Height="15" Background="Green" Margin="5"/>
                 <TextBlock Text="Done" VerticalAlignment="Center"/>
             </StackPanel>
+            
             <!-- InJeopardy -->
             <StackPanel Orientation="Horizontal">
                 <Border Width="15" Height="15" Background="Red" Margin="5"/>
                 <TextBlock Text="InJeopardy" VerticalAlignment="Center"/>
             </StackPanel>
-
 
         </StackPanel>
     </Grid>
