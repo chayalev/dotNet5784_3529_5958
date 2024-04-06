@@ -7,21 +7,68 @@
         mc:Ignorable="d"
         Title="EnterWindow" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
-        Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\task.png"
-        Background="{StaticResource BackgroundImageKey}"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    
+         <!--Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\PL\images\task.png"
+        Background="{StaticResource BackgroundImageKey}"-->
+
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Button Content="Manager" HorizontalAlignment="Left" Height="92" Margin="62,276,0,0" VerticalAlignment="Top" Width="249" Click="EnterManager_Click"/>
         <Button Content="Enginner" HorizontalAlignment="Left" Height="92" Margin="349,276,0,0" VerticalAlignment="Top" Width="272" Click="EnterEngineer_Click"/>
         <!--Clock display-->
-        <Label Content="{Binding CurrentTime}" FontSize="40px" HorizontalAlignment="Left" Height="76" Margin="207,51,0,0" VerticalAlignment="Top" Width="368"/>
-        <Button Content="+ Year" HorizontalAlignment="Left" Height="20" Margin="207,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddYear_Click"/>
-        <Button Content="+ Month" HorizontalAlignment="Left" Height="20" Margin="278,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddMonth_Click" RenderTransformOrigin="-2.485,3.852"/>
-        <Button Content="+ Day" HorizontalAlignment="Left" Height="20" Margin="349,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddDay_Click"/>
-        <Button Content="+ Hour" HorizontalAlignment="Left" Height="20" Margin="420,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddHour_Click"/>
-        <!--Initialize clock to current time-->
-        <Button Content="Reset" HorizontalAlignment="Left" Height="20" Margin="491,127,0,0" VerticalAlignment="Top" Width="65" Click="btnRestClock_Click"/>
+        <Label Content="{Binding CurrentTime}" FontSize="40px" HorizontalAlignment="Left" Height="76" Margin="207,51,0,0" VerticalAlignment="Top" Width="384"/>
+        <Button Content="+ Year" HorizontalAlignment="Left" Margin="207,127,0,0" VerticalAlignment="Top" Width="66" Height="66" Click="btnAddYear_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Fill="LightBlue"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Content="+ Month" HorizontalAlignment="Left" Margin="278,127,0,0" VerticalAlignment="Top" Width="66" Height="66" Click="btnAddMonth_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Fill="LightBlue"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button Content="+ Day" HorizontalAlignment="Left" Height="66" Margin="349,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddDay_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Fill="LightBlue"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button Content="+ Hour" HorizontalAlignment="Left" Height="66" Margin="420,127,0,0" VerticalAlignment="Top" Width="66" Click="btnAddHour_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Fill="LightBlue"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button Content="Reset" HorizontalAlignment="Left" Height="66" Margin="491,127,0,0" VerticalAlignment="Top" Width="65" Click="btnRestClock_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Fill="LightBlue"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
-    
+
 </Window>

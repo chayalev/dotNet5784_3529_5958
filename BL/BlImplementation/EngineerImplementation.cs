@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 internal class EngineerImplementation : IEngineer
 {
-   
+
     /// <summary>
     /// Check the id of Engineer
     /// </summary>
@@ -65,7 +65,7 @@ internal class EngineerImplementation : IEngineer
     public int Create(BO.Engineer eng)
     {
         DO.Engineer doEngineer = new DO.Engineer
-          (GetValidId(eng.Id), eng.Name, (DO.EngineerExperience?)eng.Level,GetValidEmail( eng.Email), eng.Cost);
+          (GetValidId(eng.Id), eng.Name, (DO.EngineerExperience?)eng.Level, GetValidEmail(eng.Email), eng.Cost);
         try
         {
             int idStud = Bl._dal.Engineer.Create(doEngineer);
@@ -182,6 +182,15 @@ internal class EngineerImplementation : IEngineer
             throw new BO.BlAlreadyExistsException($"Engineer with ID={eng.Id} already exists", ex);
         }
     }
-   
+
+    public IEnumerable<EngineerInTask> AllEngineerInTask()
+    {
+        return ReadAll(eng => eng.Task == null).Select(eng => new EngineerInTask
+        {
+            Id = eng.Id,
+            Name = eng.Name,
+        });
+    }
+
 }
 

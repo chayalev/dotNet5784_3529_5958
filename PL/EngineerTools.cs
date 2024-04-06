@@ -15,3 +15,9 @@ internal class TaskToChoose : IEnumerable
     public IEnumerator GetEnumerator() => s_taskInEng.GetEnumerator();
 }
 
+
+internal class EngineerToChoose : IEnumerable
+{
+    static readonly IEnumerable<BO.EngineerInTask> s_taskInEng = BlApi.Factory.Get().Engineer.AllEngineerInTask();
+    public IEnumerator GetEnumerator() => s_taskInEng.GetEnumerator();
+}

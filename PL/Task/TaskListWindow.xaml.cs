@@ -3,6 +3,7 @@ using DO;
 using PL.Engineer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -76,6 +77,26 @@ namespace PL.Task
         private void Add_Task(object sender, RoutedEventArgs e)
         {
             new TaskWindow().ShowDialog();
+        }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                string filterText = textBox.Text.ToLower(); // ממירים את הטקסט לאותיות קטנות כדי להתעלם מהאותיות גדולות או קטנות
+                ICollectionView view = CollectionViewSource.GetDefaultView(TaskList);
+                if (view != null)
+                {
+                    view.Filter = (item) =>
+                    {
+                        if (item is BO.TaskInList task)
+                        {
+                            string taskDescription = task.Alias!.ToLower(); // ממירים את תיאור המשימה לאותיות קטנות כדי להתעלם מהאותיות גדולות או קטנות
+                            return taskDescription.StartsWith(filterText); // בודקים אם התיאור מתחיל במחרוזת המוזנת
+                        }
+                        return false;
+                    };
+                }
+            }
         }
 
     }

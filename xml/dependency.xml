@@ -15,24 +15,4 @@
     <DependentTask>103</DependentTask>
     <DependsOnTask>100</DependsOnTask>
   </Dependency>
-  <Dependency>
-    <Id>103</Id>
-    <DependentTask>105</DependentTask>
-    <DependsOnTask>100</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>104</Id>
-    <DependentTask>105</DependentTask>
-    <DependsOnTask>100</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>105</Id>
-    <DependentTask>105</DependentTask>
-    <DependsOnTask>104</DependsOnTask>
-  </Dependency>
-  <Dependency>
-    <Id>106</Id>
-    <DependentTask>105</DependentTask>
-    <DependsOnTask>100</DependsOnTask>
-  </Dependency>
 </ArrayOfDependency>

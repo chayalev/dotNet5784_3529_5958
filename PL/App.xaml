@@ -5,26 +5,61 @@
              StartupUri="EnterWindow.xaml">
 
     <Application.Resources>
-        <ImageBrush x:Key="BackgroundImageKey" ImageSource="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\background.png"/>
+        <ImageBrush x:Key="BackgroundImageKey" ImageSource="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\PL\images\background.png"/>
         <local:LevelsCollection x:Key="LevelsCollectionKey" />
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:IsEnableConverter x:Key="IsEnableConverterKey"/>
         <local:VisibilityConverter x:Key="VisibilityConverterKey"/>
+        <local:TaskToChoose x:Key="TaskToChooseKey"/>
+        <local:EngineerToChoose x:Key="EngineerToChooseKey"/>
+        <local:VisibilityConverterAfterCreate x:Key="VisibilityConverterAfterCreateKey"/>
         <local:ConvertTaskStatusToBackgroundColor x:Key="ConvertTaskStatusToBackgroundColorKey"/>
         <local:ConvertTaskStatusToForegroundColor x:Key="ConvertTaskStatusToForegroundColorKey"/>
-        <local:TaskToChoose x:Key="TaskToChooseKey"/>
+
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <DockPanel>
+                <Border BorderBrush="Red" BorderThickness="1" Margin="2">
+                    <AdornedElementPlaceholder x:Name="placeholder"/>
+                </Border>
+            </DockPanel>
+        </ControlTemplate>
+
         <Style TargetType="Button">
             <Setter Property="Background" Value="LightBlue" />
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="FontFamily" Value="Georgia" />
             <Setter Property="FontWeight" Value="bold" />
             <Setter Property="Margin" Value="21,10,0,0" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="DarkBlue" />
+                </Trigger>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.1" To="17" Storyboard.TargetProperty="FontSize"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.1" To="13" Storyboard.TargetProperty="FontSize"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
         </Style>
+
         <Style TargetType="TextBox">
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="FontFamily" Value="Georgia" />
             <Setter Property="Margin" Value="0,22,0,0" />
-            <!--<Setter Property="Width" Value="190" />-->
+            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ValidationErrorTemplate}"/>
         </Style>
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="Georgia" />

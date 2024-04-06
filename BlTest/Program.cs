@@ -339,7 +339,7 @@ namespace BlTest
                 ans = Console.ReadLine() ?? throw new BlWrongInputException("Wrong input");
                 if (ans == "Y")
                 {
-                    s_bl.CreateProject();
+                    s_bl.CreateProject(DateTime.Now);
                 }
                 Console.WriteLine("Please press a number:\n 1-Engineer,2-Task \n 0 to exit");
                 if (int.TryParse(Console.ReadLine(), out result))

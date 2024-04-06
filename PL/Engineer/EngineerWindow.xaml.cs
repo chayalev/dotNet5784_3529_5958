@@ -64,17 +64,15 @@ namespace PL.Engineer
 
 
                 }
+                Closed += EngineerWindow_Closed!;
+                Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
             }
-            finally
-            {
-                Closed += EngineerWindow_Closed!;
-                Close();
-            }
+            
+               
 
 
 

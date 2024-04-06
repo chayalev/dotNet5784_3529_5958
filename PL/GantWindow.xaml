@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="GantWindow" Height="450" Width="800"
-        Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\graph.png"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        <!--Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\PL\images\graph.png"-->
     <Grid>
         <!--Coloring squares in the table-->
         <Grid.Resources>

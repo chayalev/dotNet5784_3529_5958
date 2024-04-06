@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,5 +38,7 @@ public interface IEngineer
     /// </summary>
     /// <returns>collection of engineers</returns>
     public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null);
+
+    public IEnumerable<EngineerInTask> AllEngineerInTask();
 }
 

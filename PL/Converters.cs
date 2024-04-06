@@ -70,6 +70,26 @@ public class VisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
+public class VisibilityConverterAfterCreate : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+
+        if (App.s_bl.IsCreate)
+        {
+            return Visibility.Visible;
+        }
+        else
+        {
+            return Visibility.Collapsed;
+        }
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 /// <summary>
 /// Converts the cell colors background in the Gantt chart
 /// </summary>

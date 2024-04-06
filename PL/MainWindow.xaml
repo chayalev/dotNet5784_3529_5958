@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-         Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\man.png"
-        Background="{StaticResource BackgroundImageKey}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        <!--Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\PL\images\man.png"
+        Background="{StaticResource BackgroundImageKey}"-->
 
     <Grid>
         <!--a button that, when clicked, will lead to the initialization of the database (creating initial data)-->
@@ -20,11 +20,11 @@
         <!--a button that clicking on it will lead to cleaning (reset) the database-->
         <Button Content="create scheduel automatic"  VerticalAlignment="Top" Click="btnCreateSAuto_Click" Height="67" Margin="289,61,310,0"/>
         <!---Selection of a start date for the project-->
-        <DatePicker  SelectedDate="{Binding StartDate, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="339,133,0,0" RenderTransformOrigin="1.899,2.96"/>
+        <DatePicker  SelectedDate="{Binding StartDate, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="339,143,0,0" RenderTransformOrigin="1.899,2.96"/>
         <!--Button to display all tasks in the project-->
         <Button Content="allTask" HorizontalAlignment="Left" Margin="84,158,0,0" VerticalAlignment="Top" Click="btnTask_Click" Height="79" Width="138"/>
         <!--Button to display the Gantt chart-->
-        <Button Content="Gannt" HorizontalAlignment="Left" Height="20" Margin="569,267,0,0" VerticalAlignment="Top" Width="66" Click="btnGant_Click"/>
+        <Button Content="Gannt" HorizontalAlignment="Left" Height="138" Margin="289,223,0,0" VerticalAlignment="Top" Width="192" Click="btnGant_Click" RenderTransformOrigin="-0.015,0.502"/>
 
     </Grid>
 </Window>

@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="TaskListWindow" Height="450" Width="800"
-          Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\images\task.png"
-  Background="{StaticResource BackgroundImageKey}"
      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+          <!--Icon="C:\Users\Home Pc\source\repos\chayalev\dotNet5784_3529_5958\PL\images\task.png"
+  Background="{StaticResource BackgroundImageKey}"-->
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="47*"/>
@@ -28,6 +28,7 @@
             <Label Content="Label" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.Column="0" />
             <ComboBox ItemsSource="{Binding Source={StaticResource LevelsCollectionKey}}" SelectedValue="{Binding Path=Level, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="cbLevelSelector_SelectionChanged"/>
         </Grid>
+        <TextBox TextChanged="TextBox_TextChanged" Margin="127,8,425,9" />
         <!--The task list-->
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" MouseDoubleClick="Task_doubleClick" />
         <!--Create a new task-->

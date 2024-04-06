@@ -265,6 +265,9 @@ internal class TaskImplementation : ITask
             ///When you want to update an engineer who already has another engineer for this task
             if (Bl._dal.Task.Read(item.Id)?.EngineerId != null && item.Engineer != null && Bl._dal.Task.Read(item.Id)?.EngineerId != item.Engineer?.Id)
                 throw new wrongInput($"The task:{item.Id} was taken by another engineer");
+            if(item.Engineer!=null)
+                 if ((BO.EngineerExperience)Bl._dal.Engineer.Read(item.Engineer.Id)!.Level! >= (BO.EngineerExperience)item.ComplexityLevel!)
+                     throw new BlWrongInputException($"The level of the task:{item.Id} doesnt feet the level of the engineer");
             /////End date calculator
             //var deadLineDate = item.StartDate + item.RequiredEffortTime;
             ///duration calculator
@@ -336,13 +339,24 @@ internal class TaskImplementation : ITask
             Status = task.StatusTask
         });
     }
+    /// <summary>
+    /// check if all the dependencies of the func done
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    private bool isAllDepDone(BO.Task task)
+    {
+        if(task.Dependencies!=null) 
+            return task.Dependencies.All(dep => dep.Status == BO.Status.Done);
+        return true;
+    }
     public IEnumerable<TaskInList> AllTaskInListByEngineerLevel(BO.EngineerExperience? engineerExperience = BO.EngineerExperience.None)
     {
         return ReadAll(task =>
             task.Engineer == null &&                      // משימה לא מבוצעת על ידי מהנדס אחר
-             task.StatusTask != BO.Status.Done && 
-            task.ComplexityLevel <= engineerExperience && // רמת המורכבות תואמת את ניסיון המהנדס
-            (task.Dependencies != null ? task.Dependencies.All(subtask => subtask.Status == BO.Status.Done) : true) // כל המשימות המשניות סגורות
+             task.StatusTask != BO.Status.Done &&
+            task.ComplexityLevel <= engineerExperience  // רמת המורכבות תואמת את ניסיון המהנדס
+            //&&isAllDepDone(task)// כל המשימות המשניות סגורות
         )
         .Select(task => new TaskInList
         {
